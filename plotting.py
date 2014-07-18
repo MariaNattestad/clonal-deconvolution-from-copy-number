@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import matplotlib.pyplot as plt
 from matplotlib.mlab import *
 from numpy import *
@@ -10,147 +11,16 @@ import colorsys # for pseudocolor function
 
 import time
 
-def deconvolve(D,numclones,numtrials=10000,max_falling_iterations=15):
-    before = time.time()
-    
-    numsources=numclones
-    numsignals=D.shape[0]
-    numbins=D.shape[1]
-    
-    print "number of samples: %d" % numsignals
-    print "hypothetical number of clones: %d" % numsources
-    print "number of bins in genome: %d" % numbins
-    
-    costs = []
-    numfalls=[]
-    allS=[]
-    
-    best_cost=10000000000000
-    best_R=array([])
-    best_S=array([])
-    
-    
-    for i in xrange(numtrials):       
-        
-        R=generate_random_R(numsignals,numsources)
-        S=abs(around((pinv(R).dot(D))))
-        
-        
-        iterationcounter=0
-        diff=10
-        
-        while diff > 0.00000001 and iterationcounter < max_falling_iterations:
-            previousS=S
-        
-            R=D.dot(pinv(S))
-            
-            ############### Normalize R again ##########################
-            
-            # normalize rows of R to total 1 again
-            R=abs(R)
-            row_sums = R.sum(axis=1)
-            R = R / row_sums[:, numpy.newaxis]
-            ############## Solve for S #################################
-            ############## Round S to nearest integers #################
-            
-            
-            # Solve for S and round it to nearest positive integers
-            S=abs(around((pinv(R).dot(D))))
-    
-            ############## Adjust R to fit after S is rounded ##########
-            
-            
-            
-            
-            diff = calc_S_similarity(previousS,S)
-            
-            iterationcounter+=1
-        
-        
-        
-        cost = sum((R.dot(S)-D)**2)
-        
-        
-        
-        
-        if cost < best_cost:
-            best_cost=cost
-            best_R=R
-            best_S=S
-        
-        costs.append(cost)
-        numfalls.append(iterationcounter)
-        allS.append(S)
-        
-    
-        if i==100:
-            estimate=(time.time()-before)*numtrials/100.0
-            print "estimated run-time for %d trials: %d seconds or %d minutes" % (numtrials,estimate,estimate/60.0)
-        if (i+1) % (numtrials/10)==0:
-            print "progress: %d%%" % ((i+1)*100/numtrials)
-    
-    
-    return costs, numfalls, best_R, best_cost, best_S,allS
-       
-       
-       
 
-def fall(normalized_R,D,verbose=False,max_falling_iterations=15):
+def plot_R(R,title=""):
+    
+    R1=sort_R(R)
+    stack_bar_plot(R1,title=title)
 
-    R=normalized_R
-    S=abs(around((pinv(R).dot(D))))
-    iterationcounter=0
-    diff = 10
-    while diff > 0.0001 and iterationcounter<max_falling_iterations:
-        previousS=S
-       
-        ############## Solve for S #################################
-        ############## Round S to nearest integers #################
-        
-        
-        # Solve for S and round it to nearest positive integers
-        S=abs(around((pinv(R).dot(D))))
-
-        ############## Adjust R to fit after S is rounded ##########
-        
-        R=D.dot(pinv(S))
-        
-        ############### Normalize R again ##########################
-        
-        # normalize rows of R to total 1 again
-        R=abs(R)
-        row_sums = R.sum(axis=1)
-        R = R / row_sums[:, numpy.newaxis]
-
-        if verbose:
-            print R
-        
-        
-        diff = calc_S_similarity(previousS,S)
-        if verbose:
-            if diff<0.00000001:
-                print "match"
-                #return R,S
-            else:
-                print "changed"
-        iterationcounter+=1
-        
-    if max_falling_iterations<1:
-         S=abs(around((pinv(R).dot(D))))
-    return R,S
-
-
-
-def get_random_colors(num,pastels=False):
-    if pastels==True:
-        colors=(1-rand(num,3)/2)
-        return colors
-    else:
-        colors=rand(num,3)
-        return colors
-
-
-
+def plot_S(S,chromosomes=[],title="Copy number profiles"):
+    S1=sort_S(S)
+    plotcells(S1,chromosomes=chromosomes,title=title)
+    
 
 
      
@@ -216,6 +86,65 @@ def Smap(R_answer,S_answer,precision = 10,max_falling_iterations=1):
     plt.show()
     return S_collection,r1_collection,r2_collection
  
+
+
+def fall(normalized_R,D,verbose=False,max_falling_iterations=15):
+
+    R=normalized_R
+    S=abs(around((pinv(R).dot(D))))
+    iterationcounter=0
+    diff = 10
+    while diff > 0.0001 and iterationcounter<max_falling_iterations:
+        previousS=S
+       
+        ############## Solve for S #################################
+        ############## Round S to nearest integers #################
+        
+        
+        # Solve for S and round it to nearest positive integers
+        S=abs(around((pinv(R).dot(D))))
+
+        ############## Adjust R to fit after S is rounded ##########
+        
+        R=D.dot(pinv(S))
+        
+        ############### Normalize R again ##########################
+        
+        # normalize rows of R to total 1 again
+        R=abs(R)
+        row_sums = R.sum(axis=1)
+        R = R / row_sums[:, numpy.newaxis]
+
+        if verbose:
+            print R
+        
+        
+        diff = calc_S_similarity(previousS,S)
+        if verbose:
+            if diff<0.00000001:
+                print "match"
+                #return R,S
+            else:
+                print "changed"
+        iterationcounter+=1
+        
+    if max_falling_iterations<1:
+         S=abs(around((pinv(R).dot(D))))
+    return R,S
+
+
+
+def get_random_colors(num,pastels=False):
+    if pastels==True:
+        colors=(1-rand(num,3)/2)
+        return colors
+    else:
+        colors=rand(num,3)
+        return colors
+
+
+
+
 
 
 
@@ -776,185 +705,4 @@ def calc_S_similarity(S1,S2):
     
     diff=sum((s1-s2)**2)
     return diff
-
-
-def plot_R(R,title=""):
-    
-    R1=sort_R(R)
-    stack_bar_plot(R1,title=title)
-
-def plot_S(S,chromosomes=[],title="Copy number profiles"):
-    S1=sort_S(S)
-    plotcells(S1,chromosomes=chromosomes,title=title)
-    
-
-
-
-
-
-
-
-
-
-##########################################################################################
-##########################################################################################
-##########################        generate data        ###################################
-##########################################################################################
-##########################################################################################
-
-
-def read_uber(filename,round_to_whole_numbers=True):
-    f = open(filename,'r')
-    
-    
-    cell = 0
-    cellnames=[]
-    header = True
-    
-    data = []
-    
-    for line in f:
-        neat = (line.strip()).split()
-        
-        if header:
-            cellnames=neat[3:]
-            
-            header = False
-            numcells=len(cellnames)
-            for i in xrange(numcells):
-                data.append([])
-        else:
-            if round_to_whole_numbers:
-                for cell in xrange(numcells):
-                    data[cell].append(round(float(neat[3+cell])))
-            else:
-                for cell in xrange(numcells):
-                    data[cell].append(float(neat[3+cell]))
-    f.close()
-    
-    data=array(data)
-    # 86 by 5000
-    
-    return {'data':data, 'cell names':array(cellnames)}
-
-
-def getsinglecells(cellnum):
-    
-    ss_filenames=[
-    "uber.YL2671P31Baseline.5k.seg.quantal.primary.txt",
-    "uber.YL2671P1.5k.seg.quantal.primary.txt",
-    "uber.YL2671P11.5k.seg.quantal.primary.txt",
-    "uber.YL2671P20.5k.seg.quantal.primary.txt",
-    "uber.YL2671P22.5k.seg.quantal.primary.txt",
-    "uber.YL2671P37.5k.seg.quantal.primary.txt",
-    "uber.YL2671P41.5k.seg.quantal.primary.txt",
-    "uber.YL2671P58.5k.seg.quantal.primary.txt",
-    "uber.YL2671P59.5k.seg.quantal.primary.txt",
-    "uber.YL2671P5Baseline.5k.seg.quantal.primary.txt",
-    "uber.YL2672P14.5k.seg.quantal.primary.txt",
-    "uber.YL2672P15.5k.seg.quantal.primary.txt",
-    "uber.YL2672P16.5k.seg.quantal.primary.txt",
-    "uber.YL2672P4.5k.seg.quantal.primary.txt",
-    "uber.YL2672P5.5k.seg.quantal.primary.txt",
-    "uber.YL2672P9.5k.seg.quantal.primary.txt"
-    ]
-    filename=ss_filenames[cellnum%len(ss_filenames)]
-
-    result=read_uber(filename,round_to_whole_numbers=False)
-   
-    data=result['data']
-    
-    return array(data)
-
-
-
-
-def getbulk(filename="CTB5804.hg19.5k.k50.varbin.data.txt",segmented=True,remove_sex_chromosomes=True,return_chromosomes=False):
-    
-    f=open(filename,'r')
-    
-    bulkdata=[]
-    #counter = 0
-    header = True
-    indx=6
-    chromosomes=[]
-    autosomes=arange(1,22)
-    if segmented:
-        indx = 9
-        
-        #indx=7 #for not quantized data, not integers but still segmented
-    for line in f:
-        neat = (line.strip()).split()
-        #print neat[indx]
-        #counter += 1
-        #if counter>10:
-        #    break
-        if header == False:
-            if remove_sex_chromosomes==False or int(neat[0]) in autosomes: #neat[0] is chromosome number
-                bulkdata.append(float(neat[indx]))
-                chromosomes.append(int(neat[0]))
-        else:
-            header = False
-            
-    f.close()
-    
-    if return_chromosomes==True:
-        chromosomes=array(chromosomes)
-        return chromosomes
-    else:
-        bulkdata=array(bulkdata)
-        return bulkdata
-
-
-##########################################################################################
-##########################################################################################
-##########################################################################################
-##########################################################################################
-##########################################################################################
-#chromosomes=loadmatrix("chromosomes.txt")
-#
-#
-#R_answer=loadmatrix("R_answer.txt")
-#
-#S_answer=loadmatrix("S_answer.txt")
-#
-#numclones=2
-#D=generate_noisy_D(R_answer,S_answer,noise_max=0)
-##D=loadmatrix("D.txt")
-#
-#costs, numfalls, best_R, best_cost, best_S,allS = deconvolve(D,numclones,numtrials=1000,max_falling_iterations=15)
-#
-#
-#costs=array(costs)
-#allS=array(allS)
-#
-#
-#
-#
-#
-#
-#
-#
-#cool_costs=unique(around(costs[costs<=median(costs)],6))
-#c=around(costs,6)
-#
-#indices=[]
-#for i in xrange(len(cool_costs)):
-#    indices.append(find(c==cool_costs[i])[0])
-#
-#
-#for indx in indices:
-#    plotcells(allS[indx],chromosomes=chromosomes,title="cost: %f" % costs[indx])
-#    CN_distribution=allS[indx].flatten()
-#    
-#    plt.figure()
-#    hist(CN_distribution,bins=arange(min(CN_distribution)-1,max(CN_distribution))+0.5)
-#
-#    plt.title("cost: %f" % costs[indx])
-#    plt.show()
-
-
-#int(find(cost_ranks==2))
-
-
 
