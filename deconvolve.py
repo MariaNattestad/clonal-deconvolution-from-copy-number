@@ -7,11 +7,11 @@ from numpy.linalg import *
 import numpy
 import time
 
-def run_deconvolve_from_file(filename,outdir,numclones=2,numtrials=10000):
+def run_deconvolve_from_file(filename,outdir,numclones=2):
     D=loadmatrix(filename)
     print D.shape
     
-    costs, numfalls, best_R, best_cost, best_S,allS = deconvolve(D,numclones,numtrials)
+    costs, numfalls, best_R, best_cost, best_S,allS = deconvolve(D,numclones)
     print best_R
     print costs.shape
     print allS.shape
@@ -110,12 +110,20 @@ def matrixtofile(X,filename,use_float=True):
         
     
     
-def deconvolve(D,numclones,numtrials=10000,max_falling_iterations=15):
+def deconvolve(D,numclones,max_falling_iterations=15):
+    
     before = time.time()
     
     numsources=numclones
     numsignals=D.shape[0]
     numbins=D.shape[1]
+    
+    numtrials = 10000
+    
+    if numsources==4:
+        numtrials = 50000
+    if numsources==5:
+        numtrials = 1000000
     
     print "number of samples: %d" % numsignals
     print "hypothetical number of clones: %d" % numsources
