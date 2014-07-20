@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>File Upload Test</title>
+    <link href="css/dropzone.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+<form id="my-awesome-dropzone" action="/target" class="dropzone"></form>
+
+
+<form action="file_upload.php"
+      target="formDestination"
+      class="dropzone"
+      id="my-awesome-dropzone"></form>
+
+      <!--acts like: <input type="file" name="file" />-->
+      
+      
+<iframe name="formDestination">
+    
+</iframe>  
+
+<!--scripts at the end of the file so they don't slow down the html loading-->
+<script src="js/dropzone.js"></script>
+
+
+</body>
+</html>
