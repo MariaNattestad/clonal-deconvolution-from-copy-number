@@ -1,56 +1,86 @@
 #!/bin/bash
-progname=$0
+progname=run_copycat
 #set -xv
-threads=1
-
-testing=False
-
 
 function usage () {
     cat <<EOF
-Usage: $progname [-d] [-j threads] code Dfilename
+Usage: $progname [-d] [-j threads]  -c code  -f Dfilename
+$progname -h for help
 EOF
     exit 0
 }
 
-while getopts ":j:d" opt; do
-  case $opt in
-    j)
-      threads=$OPTARG
-      echo "-j: $threads threads" >&2
-      ;;
-    d)
-      echo "-d: debug mode initiated" >&2
-      testing=True
-      ;;
-    \?) usage ;;
+function guide () {
+    cat <<EOF
+Usage: $progname [-d] [-j threads]  -c code  -f Dfilename
+[-h] help displays this help menu
+[-d] debug mode, runs algorithm only 100 times at each condition to debug code
+[-j threads] number of threads for running in parallel
+-c code *required field: a code value (can mix letters and numbers) so users can revisit their data later,
+        this becomes the run directory inside user_data/
+        must match the code used for prepare_copycat
+-f Dfilename *required field: a name for the file a user uploaded from the web app
+        must match the filename used for prepare_copycat
+EOF
+    exit 0
+}
+
+
+threads=1
+testing=False
+code=0
+Dfilename=D.txt
+outdir=user_data/0
+
+found_c=False
+found_f=False
+
+while getopts ":j:c:f:dh" option
+do
+  case $option in
+    j )
+        threads=$OPTARG
+        if [ $threads -gt 0 ]; then
+          echo "-j: $threads threads" >&2
+        else
+          echo "please enter a positive integer indicating the number of threads you wish to use after the -j option, otherwise leave out -j to run on a single node or cpu"
+          usage
+        fi
+        ;;
+    d )
+        testing=True
+        echo "-d: debug mode initiated" >&2;;
+    c )
+        code=$OPTARG
+        outdir=user_data/$code
+        
+        if [ ! -d $outdir ]; then
+            echo ERROR: ----------Directory does not exist: $outdir------------
+            echo first run this command to create info.txt file: ./prepare_copycat $code $Dfilename
+            echo or if you have already run it, make sure you are inserting the right code here
+            usage
+        fi
+        echo "-c: code=$code" >&2
+        echo output directory: $outdir;;
+    f )
+        Dfilename=$OPTARG
+        echo "-f: filename of input data: $Dfilename" >&2;;
+    h ) guide;;
+    : ) echo "Missing option argument for -$OPTARG" >&2; exit 1;;
+    \? ) usage ;;
+    * ) echo "Unimplemented option: -$OPTARG" >&2; exit 1;;
   esac
 done
 
+
 shift $(($OPTIND - 1))
 
-
-code=$1 # from the website, or if running in the command line, make it up yourself
-Dfilename=$2
-outdir=user_data/$code
-echo output directory: $outdir
-
-
-###########################################################################################
-### check that outdir is a directory
-
-
-if [ -d $outdir ]; then
-    echo Directory $outdir exists--check
-else
-    echo ERROR: ----------Directory does not exist: $outdir------------
-    echo first run this command create info.txt file: ./prepare_copycat $code $Dfilename
-    exit 1
+if [ ! -f $outdir/$Dfilename ];then
+    echo file not found: $outdir/$Dfilename
+    usage
 fi
 
 
-### check that outdir/info.txt exists
-### read info.txt file to find number of samples
 
 numsamples=0
 numbins=0
@@ -73,8 +103,8 @@ if [ -f $file ]; then
     done <"$file"
 else
     echo ERROR: ----------File does not exist: $outdir/info.txt------------
-    echo first run this command create info.txt file: ./prepare_copycat $code $Dfilename
-    exit 0
+    echo first run this command to create info.txt file: ./prepare_copycat $code $Dfilename
+    usage
 fi
 
 echo samples: $numsamples
@@ -89,24 +119,30 @@ echo Running algorithm on 2 up to $max_num_clones clones
 
 
 if [ $threads -gt 1 ]; then
-    echo "running parallel"
-    /data/schatz/software/bin/parallel -j $threads --dryrun ./deconvolve_for_x_clones -d $testing $code $Dfilename {1} ::: $(seq 2 $max_num_clones)
+    echo "running algorithm in parallel"
+    if [ $testing ];then
+        echo /data/schatz/software/bin/parallel -j $threads --dryrun ./deconvolve_for_x_clones -d -c $code -f $Dfilename -n {1} ::: $(seq 2 $max_num_clones)
+    else
+        echo /data/schatz/software/bin/parallel -j $threads ./deconvolve_for_x_clones -c $code -f $Dfilename -n {1} ::: $(seq 2 $max_num_clones)
+    fi
 else
-    #echo "running without parallel as less than 2 threads were indicated"
-    ########## write for loop here ############# from 2 to $max_num_clones ################
     for i in `seq 2 $max_num_clones`;
     do
-        ./deconvolve_for_x_clones -d $code $Dfilename $i
+        ./deconvolve_for_x_clones -c $code -f $Dfilename -n $i
     done
    
-    #######################################################################################
+    
 fi
 
+if [ ! -d $outdir/2_clones ]; then
+    echo "no costs.txt file was created at $outdir/costs.txt"
+    echo "algorithm must not have run"
+    exit 0
+fi
 
+echo "collecting costs from all analyses"
 
-#echo "collecting costs from all analyses"
-#
-#python -c "import deconvolve; deconvolve.collect_costs('$outdir')"
+python -c "import deconvolve; deconvolve.collect_costs('$outdir')"
 
 
 

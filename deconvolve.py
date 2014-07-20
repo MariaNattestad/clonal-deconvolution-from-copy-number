@@ -17,20 +17,20 @@ def collect_costs(outdir):
     while done==False:
         directory = "%s/%d_clones" % (outdir,num)
         if os.path.isdir(directory):
-            print "%s is a directory" % directory
+            #print "%s is a directory" % directory
             cost_list = []
             list_done=False
             soln=0
             while list_done==False:
                 filename="%s/cost_%d" % (directory,soln)
                 if os.path.exists(filename):
-                    print "%s is a file" % filename
+                    #print "%s is a file" % filename
                     f = open(filename,'r')
                     content=f.readlines()
                     cost_list.append(content[0])
                     f.close()
                 else:
-                    print "%s is not a file" % filename
+                    #print "%s is not a file" % filename
                     list_done=True
             
                 soln+=1
@@ -40,9 +40,7 @@ def collect_costs(outdir):
             num+=1
         else:
             done=True
-            print "%s is not a directory" % directory
-    print costs
-    print maxnum
+            #print "%s is not a directory" % directory
     
     f_costs=open("%s/costs.txt" % outdir,'w')
     
@@ -54,6 +52,7 @@ def collect_costs(outdir):
         f_costs.write("\n")
     
     f_costs.close()
+    print "Collected costs in %s/costs.txt" % outdir
     
 
 def check_file(filename,outdir):

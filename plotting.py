@@ -22,8 +22,6 @@ def plot_S(S,chromosomes=[],title="Copy number profiles"):
     plotcells(S1,chromosomes=chromosomes,title=title)
     
 
-
-     
 def Smap(R_answer,S_answer,precision = 10,max_falling_iterations=1):
     S_collection = []
     

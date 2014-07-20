@@ -1,16 +1,57 @@
 #!/bin/bash
 
-code=$1 # becomes the run directory inside user_data
-Dfilename=$2
+progname=prepare_copycat
 
+function usage () {
+    cat <<EOF
+Usage: $progname -c code  -f Dfilename
+$progname -h for help
+EOF
+    exit 0
+}
+
+
+function guide () {
+    cat <<EOF
+Usage: $progname [-d] [-j threads]  -c code  -f Dfilename
+[-h] help displays this help menu
+-c code *required field: a code value (can mix letters and numbers) so users can revisit their data later,
+        this becomes the run directory inside user_data/
+        must match the filename used next in run_copycat
+-f Dfilename *required field: a name for the file a user uploaded from the web app
+        must match the filename used next in run_copycat
+EOF
+    exit 0
+}
+
+
+
+code=0 # becomes the run directory inside user_data
+Dfilename=D.txt
 outdir=user_data/$code
+
+while getopts ":hc:f:" opt; do
+  case $opt in
+    h)
+      guide;;
+    c )
+        code=$OPTARG
+        outdir=user_data/$code
+        echo "-c: code=$code" >&2
+        echo output directory: $outdir;;
+    f )
+        Dfilename=$OPTARG
+        echo "-f: filename of input data: $Dfilename" >&2;;
+    \?) usage ;;
+  esac
+done
+
+
 mkdir $outdir
 
 echo Run directory:  $outdir
 
 D=$outdir/$Dfilename
-
-
 
 ######################## change this to move the user's file into their run directory ###############################
 cp test1_D.txt $D

@@ -14,5 +14,11 @@ def test():
     
     
     
-test()
+def plotting_test():
+    D=plotting.loadmatrix("test1_D.txt")
+    plotting.plot_S(D)
+    savefig('foo.png')
+    
+plotting_test()
+    
 
