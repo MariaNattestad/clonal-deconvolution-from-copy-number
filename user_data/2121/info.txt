@@ -1,2 +1,0 @@
-samples	5
-bins	5000
