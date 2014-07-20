@@ -7,16 +7,97 @@ from numpy.linalg import *
 import numpy
 import time
 
-def run_deconvolve_from_file(filename,outdir,numclones=2):
+def collect_costs(outdir):
+    import os
+    
+    costs = dict()
+    done = False
+    num=2
+    maxnum=0
+    while done==False:
+        directory = "%s/%d_clones" % (outdir,num)
+        if os.path.isdir(directory):
+            print "%s is a directory" % directory
+            cost_list = []
+            list_done=False
+            soln=0
+            while list_done==False:
+                filename="%s/cost_%d" % (directory,soln)
+                if os.path.exists(filename):
+                    print "%s is a file" % filename
+                    f = open(filename,'r')
+                    content=f.readlines()
+                    cost_list.append(content[0])
+                    f.close()
+                else:
+                    print "%s is not a file" % filename
+                    list_done=True
+            
+                soln+=1
+
+            costs[num]=cost_list
+            maxnum=num
+            num+=1
+        else:
+            done=True
+            print "%s is not a directory" % directory
+    print costs
+    print maxnum
+    
+    f_costs=open("%s/costs.txt" % outdir,'w')
+    
+    for i in xrange(2,maxnum+1):
+        mylist=costs[i]
+        
+        for j in xrange(len(mylist)):
+            f_costs.write("%s\t" % mylist[j])
+        f_costs.write("\n")
+    
+    f_costs.close()
+    
+
+def check_file(filename,outdir):
+    D=loadmatrix(filename)
+    
+    numsignals=D.shape[0]
+    numbins=D.shape[1]
+    print "Data indicates %d samples, and the genome is split into %d bins" % (numsignals,numbins)
+    print "(If this is false, make sure the input file has the samples as rows and the bins as columns)"
+    
+    if numsignals < 2:
+        print "There must be at least 2 samples from a tumor to run this program."
+    
+    f = open('%s/info.txt' % outdir,'w')
+    f.write("samples\t%d \nbins\t%d" % (numsignals,numbins))
+    f.close()
+    
+    
+def read_info(filename):
+    f = open(filename,'r')
+    numsamples = 0
+    numbins = 0
+    for line in f:
+        neat = (line.strip()).split()
+        if neat[0]=="samples":
+            numsamples = int(neat[1])
+        if neat[0]=="bins":
+            numbins = int(neat[1])
+    if numsamples==0 or numbins==0:
+        print "error, info file %s did not contain non-zero samples and bins counts" % filename
+    return numsamples, numbins
+
+def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False):
+    testing = bool(testing)
+    print testing
     D=loadmatrix(filename)
     print D.shape
-    
-    costs, numfalls, best_R, best_cost, best_S,allS = deconvolve(D,numclones)
-    print best_R
-    print costs.shape
-    print allS.shape
-    
-    print "Unique costs"
+    numclones = int(numclones)
+    costs, numfalls, best_R, best_cost, best_S,allS = deconvolve(D,numclones,testing=testing)
+    #print best_R
+    #print costs.shape
+    #print allS.shape
+    #
+    #print "Unique costs"
     
     indices = costs.argsort()
     sorted_costs = costs[indices]
@@ -29,10 +110,10 @@ def run_deconvolve_from_file(filename,outdir,numclones=2):
         c =  sorted_costs[i]
         S = sorted_S[i]
         if c not in cost_set:
-            print "added %f" % c
+            #print "added %f" % c
             cost_set.append(c)
             S_set.append(S)
-            print mean(S)
+            #print mean(S)
     
     
     num_solns_to_display = 5
@@ -57,7 +138,7 @@ def run_deconvolve_from_file(filename,outdir,numclones=2):
         f = open("%s/cost_%d" % (outdir,i),'w')
         f.write("%.10f" % cost_set[i])
         f.close()
-        
+    
     return costs,allS
     
     
@@ -110,7 +191,7 @@ def matrixtofile(X,filename,use_float=True):
         
     
     
-def deconvolve(D,numclones,max_falling_iterations=15):
+def deconvolve(D, numclones, testing=False, max_falling_iterations=15):
     
     before = time.time()
     
@@ -118,12 +199,18 @@ def deconvolve(D,numclones,max_falling_iterations=15):
     numsignals=D.shape[0]
     numbins=D.shape[1]
     
+    
     numtrials = 10000
     
     if numsources==4:
         numtrials = 50000
     if numsources==5:
         numtrials = 1000000
+    
+    if testing==True:
+        numtrials=100 
+    
+    print "running %d random initializations" % (numtrials)
     
     print "number of samples: %d" % numsignals
     print "hypothetical number of clones: %d" % numsources

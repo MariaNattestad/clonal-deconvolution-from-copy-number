@@ -1,0 +1,48 @@
+#!/bin/bash
+echo ====================================================
+function usage () {
+    cat <<EOF
+Usage: $progname [-d]
+EOF
+    exit 0
+}
+
+
+testing=False
+
+while getopts ":d" opt; do
+  case $opt in
+    d)
+      echo "-d: debug mode initiated" >&2
+      testing=True
+      ;;
+    \?)
+    usage ;;
+  esac
+done
+
+shift $(($OPTIND - 1))
+
+
+code=$1 # becomes the run directory inside user_data
+Dfilename=$2
+numclones=$3
+
+
+echo $numclones
+
+outdir=user_data/$code/$numclones\_clones/
+mkdir $outdir
+echo ___________________________________________________
+echo Running algorithm for tumor with $numclones clones
+echo Run directory:  $outdir
+echo ___________________________________________________
+
+
+D=user_data/$code/$Dfilename
+
+echo $D
+echo ====================================================
+echo python -c "import deconvolve; deconvolve.run_deconvolve_from_file('$D','$outdir',numclones='$numclones',testing='$testing')"
+python -c "import deconvolve; deconvolve.run_deconvolve_from_file('$D','$outdir',numclones='$numclones',testing='$testing')"
+

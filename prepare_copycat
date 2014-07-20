@@ -1,0 +1,26 @@
+#!/bin/bash
+
+code=$1 # becomes the run directory inside user_data
+Dfilename=$2
+
+outdir=user_data/$code
+mkdir $outdir
+
+echo Run directory:  $outdir
+
+D=$outdir/$Dfilename
+
+
+
+######################## change this to move the user's file into their run directory ###############################
+cp test1_D.txt $D
+#####################################################################################################################
+
+
+
+python -c "import deconvolve; deconvolve.check_file('$D','$outdir')"
+
+
+
+
+

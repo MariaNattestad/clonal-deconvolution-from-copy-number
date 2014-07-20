@@ -1,7 +1,0 @@
-#!/bin/bash
-
-$Dfilename = $1
-$outdir = $2
-$numclones = $3
-
-python -c "import deconvolve; deconvolve.run_deconvolve_from_file('$Dfilename','$outdir',numclones='$numclones')"

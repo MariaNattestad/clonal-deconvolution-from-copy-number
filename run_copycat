@@ -1,0 +1,113 @@
+#!/bin/bash
+progname=$0
+#set -xv
+threads=1
+
+testing=False
+
+
+function usage () {
+    cat <<EOF
+Usage: $progname [-d] [-j threads] code Dfilename
+EOF
+    exit 0
+}
+
+while getopts ":j:d" opt; do
+  case $opt in
+    j)
+      threads=$OPTARG
+      echo "-j: $threads threads" >&2
+      ;;
+    d)
+      echo "-d: debug mode initiated" >&2
+      testing=True
+      ;;
+    \?) usage ;;
+  esac
+done
+
+shift $(($OPTIND - 1))
+
+
+code=$1 # from the website, or if running in the command line, make it up yourself
+Dfilename=$2
+outdir=user_data/$code
+echo output directory: $outdir
+
+
+###########################################################################################
+### check that outdir is a directory
+
+
+if [ -d $outdir ]; then
+    echo Directory $outdir exists--check
+else
+    echo ERROR: ----------Directory does not exist: $outdir------------
+    echo first run this command create info.txt file: ./prepare_copycat $code $Dfilename
+    exit 1
+fi
+
+
+### check that outdir/info.txt exists
+### read info.txt file to find number of samples
+
+numsamples=0
+numbins=0
+
+file="$outdir/info.txt"
+if [ -f $file ]; then
+    echo $file exists--check
+    
+    while IFS=$'\t' read -r key value
+    do
+        if [ "$key" = "samples" ]
+        then
+            numsamples=$value
+            #echo set numsamples
+        elif [ "$key" = "bins" ]
+        then
+            numbins=$value
+            #echo set numbins
+        fi
+    done <"$file"
+else
+    echo ERROR: ----------File does not exist: $outdir/info.txt------------
+    echo first run this command create info.txt file: ./prepare_copycat $code $Dfilename
+    exit 0
+fi
+
+echo samples: $numsamples
+echo bins: $numbins
+
+max_num_clones=5
+if [ $max_num_clones -gt $numsamples ]; then
+    max_num_clones=$numsamples
+fi
+echo Running algorithm on 2 up to $max_num_clones clones
+
+
+
+if [ $threads -gt 1 ]; then
+    echo "running parallel"
+    /data/schatz/software/bin/parallel -j $threads --dryrun ./deconvolve_for_x_clones -d $testing $code $Dfilename {1} ::: $(seq 2 $max_num_clones)
+else
+    #echo "running without parallel as less than 2 threads were indicated"
+    ########## write for loop here ############# from 2 to $max_num_clones ################
+    for i in `seq 2 $max_num_clones`;
+    do
+        ./deconvolve_for_x_clones -d $code $Dfilename $i
+    done
+   
+    #######################################################################################
+fi
+
+
+
+#echo "collecting costs from all analyses"
+#
+#python -c "import deconvolve; deconvolve.collect_costs('$outdir')"
+
+
+
+
