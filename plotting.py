@@ -10,19 +10,20 @@ import numpy
 import colorsys # for pseudocolor function
 
 import time
+import pylab
 
 
-def plot_R(R,title=""):
+def plot_R(R,title="",filename=""):
     
     R1=sort_R(R)
-    stack_bar_plot(R1,title=title)
+    stack_bar_plot(R1,title=title,filename=filename)
 
-def plot_S(S,chromosomes=[],title="Copy number profiles"):
+def plot_S(S,chromosomes=[],title="Copy number profiles",filename=""):
     S1=sort_S(S)
-    plotcells(S1,chromosomes=chromosomes,title=title)
+    plotcells(S1,chromosomes=chromosomes,title=title,filename=filename)
     
 
-def Smap(R_answer,S_answer,precision = 10,max_falling_iterations=1):
+def Smap(R_answer,S_answer,precision = 10,max_falling_iterations=1,filename=""):
     S_collection = []
     
     r1_collection = []
@@ -81,7 +82,10 @@ def Smap(R_answer,S_answer,precision = 10,max_falling_iterations=1):
     plt.figure()   
     for i in xrange(len(S_collection)):
         plt.plot(r1_collection[i],r2_collection[i],'s',color=colors[i],mec=colors[i])
-    plt.show()
+    if filename=="":
+        plt.show()
+    else:
+        pylab.savefig(filename)
     return S_collection,r1_collection,r2_collection
  
 
@@ -147,7 +151,7 @@ def get_random_colors(num,pastels=False):
 
 
 
-def plotcells(data,chromosomes=[],title="Copy number profile"):
+def plotcells(data,chromosomes=[],title="Copy number profile",filename=""):
     data=array(data)
     if len(data.shape)==2:
         numcells=data.shape[0]
@@ -221,7 +225,10 @@ def plotcells(data,chromosomes=[],title="Copy number profile"):
         plt.setp([a.get_xticklabels() for a in f.axes[:-1]], visible=False)
         plt.xlabel('Genome position in bins')
         
-        plt.show()
+        if filename=="":
+            plt.show()
+        else:
+            pylab.savefig(filename)
     else:
         f, ax = plt.subplots(1, sharex=True, sharey=True)
         ax.plot(standard,'r')
@@ -247,11 +254,14 @@ def plotcells(data,chromosomes=[],title="Copy number profile"):
         plt.xlabel('Genome position in bins')
         plt.ylabel("Copy Number")
         
-        plt.show()
+        if filename=="":
+            plt.show()
+        else:
+            pylab.savefig(filename)
          
       
                
-def plot_1_cell(cell_data):
+def plot_1_cell(cell_data,filename=""):
     standard=ones(len(cell_data))*2
     
     f, ax = plt.subplots()
@@ -262,7 +272,10 @@ def plot_1_cell(cell_data):
     ax.set_title('Copy number')
     plt.ylabel("Copy number")
     plt.xlabel('Genome position in bins')
-    plt.show()
+    if filename=="":
+        plt.show()
+    else:
+        pylab.savefig(filename)
 
 def tiedrank(X,axis=-1):
     Y=array(X)
@@ -306,9 +319,6 @@ def ranklist(X):
 
 def matrixtofile(X,filename,use_float=True):
     # write a matrix to a file with the given filename
-    
-   
-   
    
     if len(X.shape)==2:
         f2 = open(filename,'w')
@@ -356,7 +366,7 @@ def loadmatrix(filename):
 
     
 
-def heatmap(data,title = '',large=False,use_rank=False,inverted=False):
+def heatmap(data,title = '',large=False,use_rank=False,inverted=False,filename=""):
     # heatmap function for visualizing data during debugging, was very slow on matrices over 800 by 800, so don't use for large matrices like the whole genome. 
     
     
@@ -389,9 +399,12 @@ def heatmap(data,title = '',large=False,use_rank=False,inverted=False):
     #ax.xaxis.tick_top()
     ax.set_title(title)
     
-    plt.show()
+    if filename=="":
+        plt.show()
+    else:
+        pylab.savefig(filename)
 
-def costmap(R_answer,S_answer,precision=100,title="costmap",use_rank=False,num_echoes_to_indicate=0,max_falling_iterations=1,plot_it=True):  
+def costmap(R_answer,S_answer,precision=100,title="costmap",use_rank=False,num_echoes_to_indicate=0,max_falling_iterations=1,plot_it=True,filename=""):  
     row,col=R_answer.shape
     if row!=2 or col!=2:
         print "R_answer must be a 2 by 2 array"
@@ -452,11 +465,14 @@ def costmap(R_answer,S_answer,precision=100,title="costmap",use_rank=False,num_e
                 plt.plot(R_answer[1,1]/divisor*precision,R_answer[0,1]/divisor*precision,'r.')
                 plt.plot((1-R_answer[1,1]/divisor)*precision,(1-R_answer[0,1]/divisor)*precision,'r.')
         plt.plot()
-        plt.show()
+        if filename=="":
+            plt.show()
+        else:
+            pylab.savefig(filename)
     return array(costs)
 
 
-def quivermap(R_answer,S_answer,precision=20,title="quivermap",num_echoes_to_indicate=0,plot_it=True,max_falling_iterations=1):  
+def quivermap(R_answer,S_answer,precision=20,title="quivermap",num_echoes_to_indicate=0,plot_it=True,max_falling_iterations=1,filename=""):  
     row,col=R_answer.shape
     if row!=2 or col!=2:
         print "R_answer must be a 2 by 2 array"
@@ -512,9 +528,13 @@ def quivermap(R_answer,S_answer,precision=20,title="quivermap",num_echoes_to_ind
                 plt.plot(R_answer[1,1]/divisor,R_answer[0,1]/divisor,'r.')
                 plt.plot((1-R_answer[1,1]/divisor),(1-R_answer[0,1]/divisor),'r.')
         plt.plot()
+        if filename=="":
+            plt.show()
+        else:
+            pylab.savefig(filename)
     return U,V
 
-def cost_and_quiver(R_answer,costs,U,V,use_rank=False,num_echoes_to_indicate=0,title="costmap with quiver plot"):
+def cost_and_quiver(R_answer,costs,U,V,use_rank=False,num_echoes_to_indicate=0,title="costmap with quiver plot",filename=""):
     N=len(U)
     costprecision=costs.shape[0]
     print "precision = %d" % N
@@ -543,11 +563,14 @@ def cost_and_quiver(R_answer,costs,U,V,use_rank=False,num_echoes_to_indicate=0,t
             plt.plot(R_answer[1,1]/divisor*costprecision,R_answer[0,1]/divisor*costprecision,'r.')
             plt.plot((1-R_answer[1,1]/divisor*costprecision),(1-R_answer[0,1]/divisor*costprecision),'r.')
     plt.plot()
-    plt.show()
+    if filename=="":
+        plt.show()
+    else:
+        pylab.savefig(filename)
 
 
 
-def costmap_from_D(D,precision=100,title="costmap",use_rank=False,max_falling_iterations=1,plot_it=True):  
+def costmap_from_D(D,precision=100,title="costmap",use_rank=False,max_falling_iterations=1,plot_it=True,filename=""):  
     row = D.shape[0]
     if row!=2:
         print "D must be a 2 by N array"
@@ -596,7 +619,7 @@ def pseudocolor(val, minval,maxval):
     r, g, b = colorsys.hsv_to_rgb(h/360, 1., 1.) 
     return r,g,b
     
-def stack_bar_plot(R,title=""):
+def stack_bar_plot(R,title="",filename=""):
     numsamples,numclones=R.shape
     # numsamples becomes the number of stacks
     # numclones becomes the number of segments within each stack
@@ -633,8 +656,11 @@ def stack_bar_plot(R,title=""):
     plt.yticks(np.arange(0,1.1,0.1))
     plt.title(title)
     plt.legend( p1, clonenames )
-    
-    plt.show()
+    if filename=="":
+        plt.show()
+    else:
+        pylab.savefig(filename)
+        
 
 def generate_random_R(numsignals,numsources):
     R=rand(numsignals,numsources)
