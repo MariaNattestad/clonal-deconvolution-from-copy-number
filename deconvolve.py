@@ -91,7 +91,7 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False):
     D=loadmatrix(filename)
     print D.shape
     numclones = int(numclones)
-    costs, numfalls, best_R, best_cost, best_S,allS = deconvolve(D,numclones,testing=testing)
+    costs,allS,allR = deconvolve(D,numclones,testing=testing)
     #print best_R
     #print costs.shape
     #print allS.shape
@@ -101,17 +101,21 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False):
     indices = costs.argsort()
     sorted_costs = costs[indices]
     sorted_S = allS[indices]
+    sorted_R = allR[indices]
     
     cost_set = list()
     S_set = list()
+    R_set = list()
     for i in xrange(len(sorted_costs)):
         
         c =  sorted_costs[i]
         S = sorted_S[i]
+        R = sorted_R[i]
         if c not in cost_set:
             #print "added %f" % c
             cost_set.append(c)
             S_set.append(S)
+            R_set.append(R)
             #print mean(S)
     
     
@@ -120,6 +124,10 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False):
         num_solns_to_display = len(cost_set)
         print "showing all solutions"
     
+    ####################################################################################################
+    ## still need to check intelligently for duplicate solutions using calc_S_similarity
+    print "still need to check intelligently for duplicate solutions using calc_S_similarity"
+    ####################################################################################################
     
     
     #############################################
@@ -130,17 +138,14 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False):
     
     for i in xrange(num_solns_to_display):
         S = S_set[i]
-        R=D.dot(pinv(S))
+        R = R_set[i]
         matrixtofile(S,"%s/S_%d" % (outdir,i), use_float=False)
         matrixtofile(R,"%s/R_%d" % (outdir,i), use_float=True)
         
         f = open("%s/cost_%d" % (outdir,i),'w')
         f.write("%.10f" % cost_set[i])
         f.close()
-    
-    return costs,allS
-    
-    
+
 
 def loadmatrix(filename):
     # load a matrix from the file
@@ -218,6 +223,7 @@ def deconvolve(D, numclones, testing=False, max_falling_iterations=15):
     costs = []
     numfalls=[]
     allS=[]
+    allR=[]
     
     best_cost=10000000000000
     best_R=array([])
@@ -264,9 +270,7 @@ def deconvolve(D, numclones, testing=False, max_falling_iterations=15):
         
         cost = sum((R.dot(S)-D)**2)
         
-        
-        
-        
+
         if cost < best_cost:
             best_cost=cost
             best_R=R
@@ -275,6 +279,7 @@ def deconvolve(D, numclones, testing=False, max_falling_iterations=15):
         costs.append(cost)
         numfalls.append(iterationcounter)
         allS.append(S)
+        allR.append(R)
         
     
         if i==100:
@@ -285,8 +290,9 @@ def deconvolve(D, numclones, testing=False, max_falling_iterations=15):
     
     costs=array(costs)
     allS=array(allS)
-    return costs, numfalls, best_R, best_cost, best_S,allS
-
+    allR=array(allR)
+    #return costs, numfalls, best_R, best_cost, best_S,allS
+    return costs,allS,allR
 
 
 

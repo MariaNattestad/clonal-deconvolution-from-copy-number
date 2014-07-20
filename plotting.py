@@ -12,7 +12,34 @@ import colorsys # for pseudocolor function
 import time
 import pylab
 
+def cost_value_plot(costs,filename=""):    
+    
+    print costs.shape
+    
+    x=arange(2,costs.shape[0]+2)
+    
+    plt.figure()
+    
+    y=numpy.min(costs,axis=1)
+    bottom=numpy.min(costs,axis=1)
+    top=numpy.max(costs,axis=1)
+    
+    plt.errorbar(x, y, yerr=[y-bottom,top-y], fmt='b-o',ecolor='g')
+    
+    plt.title("Cost range of best solutions for each number of clones tested")
+    plt.ylabel("cost")
+    plt.xlabel("number of clones")
+    plt.xticks(x)
+    plt.ylim( (0,max(y)*1.05))
+    
+    if filename=="":
+        plt.show()
+    else:
+        pylab.savefig(filename)
+        plt.close()
 
+    
+    
 def plot_R(R,title="",filename=""):
     
     R1=sort_R(R)
@@ -146,11 +173,6 @@ def get_random_colors(num,pastels=False):
 
 
 
-
-
-
-
-
 def plotcells(data,chromosomes=[],title="Copy number profile",filename=""):
     data=array(data)
     if len(data.shape)==2:
@@ -229,6 +251,7 @@ def plotcells(data,chromosomes=[],title="Copy number profile",filename=""):
             plt.show()
         else:
             pylab.savefig(filename)
+            plt.close()
     else:
         f, ax = plt.subplots(1, sharex=True, sharey=True)
         ax.plot(standard,'r')
@@ -258,6 +281,7 @@ def plotcells(data,chromosomes=[],title="Copy number profile",filename=""):
             plt.show()
         else:
             pylab.savefig(filename)
+            plt.close()
          
       
                
@@ -656,11 +680,12 @@ def stack_bar_plot(R,title="",filename=""):
     plt.yticks(np.arange(0,1.1,0.1))
     plt.title(title)
     plt.legend( p1, clonenames )
+    
     if filename=="":
         plt.show()
     else:
         pylab.savefig(filename)
-        
+        plt.close()
 
 def generate_random_R(numsignals,numsources):
     R=rand(numsignals,numsources)

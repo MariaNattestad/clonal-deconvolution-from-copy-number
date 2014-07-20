@@ -23,12 +23,14 @@ def test():
     
     
 def plotting_test():
+    #
+    #D=plotting.loadmatrix("test1_D.txt")
+    #R=plotting.loadmatrix("test1_R_answer.txt")
+    #plotting.plot_R(R,filename="bar.png")
+    #
     
-    D=plotting.loadmatrix("test1_D.txt")
-    R=plotting.loadmatrix("test1_R_answer.txt")
-    plotting.plot_R(R,filename="bar.png")
-    
-    
+    R=plotting.loadmatrix("user_data/003/5_clones/R_0")
+    plotting.plot_R(R)
     
 plotting_test()
     
