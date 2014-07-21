@@ -4,7 +4,7 @@ progname=run_copycat
 
 function usage () {
     cat <<EOF
-Usage: $progname [-d] [-j threads]  -c code  -f Dfilename
+Usage: $progname [-d] [-j threads]  -c code 
 $progname -h for help
 EOF
     exit 0
@@ -19,12 +19,12 @@ Usage: $progname [-d] [-j threads]  -c code  -f Dfilename
 -c code *required field: a code value (can mix letters and numbers) so users can revisit their data later,
         this becomes the run directory inside user_data/
         must match the code used for prepare_copycat
--f Dfilename *required field: a name for the file a user uploaded from the web app
-        must match the filename used for prepare_copycat
+
 EOF
     exit 0
 }
-
+#-f Dfilename *required field: a name for the file a user uploaded from the web app
+#        must match the filename used for prepare_copycat
 
 threads=1
 testing=False
@@ -62,9 +62,9 @@ do
         fi
         echo "-c: code=$code" >&2
         echo output directory: $outdir;;
-    f )
-        Dfilename=$OPTARG
-        echo "-f: filename of input data: $Dfilename" >&2;;
+    #f )
+    #    Dfilename=$OPTARG
+    #    echo "-f: filename of input data: $Dfilename" >&2;;
     h ) guide;;
     : ) echo "Missing option argument for -$OPTARG" >&2; exit 1;;
     \? ) usage ;;
