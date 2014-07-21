@@ -9,24 +9,34 @@
 <body>
 
 
-<form id="my-awesome-dropzone" action="/target" class="dropzone"></form>
-
 
 <form action="file_upload.php"
-      target="formDestination"
-      class="dropzone"
-      id="my-awesome-dropzone"></form>
+    class="dropzone"
+    id="Dfile-dropzone">
+    <input type="hidden" name="code_hidden" value="">
+</form>
 
-      <!--acts like: <input type="file" name="file" />-->
-      
-      
-<iframe name="formDestination">
+<div id="code">  </div>
+
+<form name="input_code_form" action="analysis.html" id="analysis_form" method="get">
+<!--    set from within copycat.js-->
+</form>
     
-</iframe>  
+
+    
+
+    
+    
+    
+    
+    
 
 <!--scripts at the end of the file so they don't slow down the html loading-->
+<script src="js/copycat.js"></script>
 <script src="js/dropzone.js"></script>
-
-
+<script Dropzone.options.DfileDropzone = {
+    paramName: 
+};
+</script>
 </body>
 </html>

@@ -6,6 +6,16 @@ reload(plotting)
 import os
 import shutil 
 
+def plot_D(outdir,Dfilename):
+    #########################################################################
+    ########   input D plotted for comparison to results                                                
+    #########################################################################
+    
+    filename=Dfilename
+    D_answer=plotting.loadmatrix(filename)
+    plotting.plotcells(D_answer,filename="%s/D_answer.png" % (outdir))
+
+
 def make_plots(outdir,Dfilename):
     if os.path.isdir(outdir)==False:
         print "Directory does not exist: %s" % outdir
@@ -27,10 +37,7 @@ def make_plots(outdir,Dfilename):
     ########   input D plotted for comparison to results                                                
     #########################################################################
     
-    filename=Dfilename
-    D_answer=plotting.loadmatrix(filename)
-    plotting.plotcells(D_answer,filename="%s/D_answer.png" % (outdir))
-    
+    plot_D(outdir,Dfilename)
     
     #########################################################################
     ########   grab S and R, calculate D inferred from solutions                                         
