@@ -39,69 +39,42 @@
 <body role="document">
 
 <!--    NAVIGATION BAR-->
-
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <img class="kitty_icon" src="images/cat_icon2_white.png"/>
-      <div class="container">
-        
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">     Copycat</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="./about">About</a></li>
-            <li><a href="./contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="./analysis.php?code=axxMRHjn4p4PJOUfp6nC#">Example 1</a></li>
-                <li><a href="#">Example 2</a></li>
-                <li><a href="#">Example 3</a></li>
-                <!--<li class="divider"></li>-->
-                <!--<li class="dropdown-header">Nav header</li>-->
-                <!--<li><a href="#">Separated link</a></li>-->
-                <!--<li><a href="#">One more separated link</a></li>-->
-              </ul>
-            </li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
-
-    
+    <?php include "header.html";?>
     
     
 <!--    TITLES   -->
     <div id="header_bar" class="jumbotron">
     <h1>Copycat Results</h1>
-    <h3>Analysis complete!</h3>
+    <h3 id="status">
+        
+    </h3>
     </div>
     <p>
-        
+       
+       
+         
         <?php
             $code=$_GET["code"];
-///////////////////////////////////// check for if files already exist, otherwise run the algorithm ////////////////////
-            //echo $code;
-            //echo "<p>";
-            //echo shell_exec("./prepare_copycat -c $code" );
-            //echo shell_exec("./run_copycat -d -c $code" );
-            //echo "</p>";
-        ?>
-       
-       
-        <?php
-            echo "<img class=\"cost_plot\" src=\"user_data/$code/costs.png\">";
-            echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/S_0.png\">";
-            echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/R_0.png\">";
-            echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/D_0.png\">";
-            echo "<img class=\"cost_plot\" src=\"user_data/$code/D_answer.png\">";
+///////////// check for if prep files already exist, otherwise run the algorithm /////////////
+            
+            $filename="user_data/$code/info.txt";
+            if (file_exists($filename)) {
+                echo "old query";
+                echo "<img class=\"cost_plot\" src=\"user_data/$code/costs.png\">";
+                echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/S_0.png\">";
+                echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/R_0.png\">";
+                echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/D_0.png\">";
+                echo "<img class=\"cost_plot\" src=\"user_data/$code/D_answer.png\">";
+                    
+            } else {
+                echo "new query: ";
+                echo $code;
+                echo "<p>";
+                echo shell_exec("./prepare_copycat -c $code > prepare_copycat.log"); 
+                echo shell_exec("./run_copycat -d -c $code > run_copycat.log &" );
+                echo "</p>";
+            
+            }
         ?>
         
         

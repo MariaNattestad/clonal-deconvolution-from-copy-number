@@ -1,4 +1,4 @@
-var analysis_path="localhost/copy_number/analysis.html?code="
+var analysis_path="http://localhost/copy_number/analysis.php?code="
 
 function makeid()
 {
@@ -13,8 +13,9 @@ function makeid()
 
 function showCode() {
     var code = makeid();
-    document.getElementById("code").innerHTML = "Return to view your results at any time: " + analysis_path + code;
-    document.getElementById("analysis_form").innerHTML = '<input type="hidden" name="code" value="' + code + '"><button type="submit">Submit</button>';
+    var url = analysis_path + code
+    document.getElementById("code").innerHTML = "Return to view your results at any time: <a href=\"" + url + "\">" + url + "</a>";
+    document.getElementById("analysis_form").innerHTML = '<input type="hidden" name="code" value="' + code + '"><button type="submit" id="submit_button" class="btn btn-lg btn-primary">Submit</button>';
     document.getElementById("Dfile-dropzone").innerHTML = '<input type="hidden" name="code_hidden" value=' + code + '>';
 }
 

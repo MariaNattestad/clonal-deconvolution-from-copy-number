@@ -1,0 +1,5 @@
+ERROR: ----------Directory does not exist: user_data/r8rVpixP56rzzXHR9mhp------------
+first run this command to create info.txt file: ./prepare_copycat r8rVpixP56rzzXHR9mhp D.txt
+or if you have already run it, make sure you are inserting the right code here
+Usage: run_copycat [-d] [-j threads]  -c code 
+run_copycat -h for help

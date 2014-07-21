@@ -41,8 +41,8 @@ while getopts ":hc:" opt; do
             exit 4
         fi
         outdir=user_data/$code
-        echo "-c: code=$code" >&2
-        echo output directory: $outdir;;
+        echo "-c: code=$code" >&2;;
+        
     #f )
     #    Dfilename=$OPTARG
     #    echo "-f: filename of input data: $Dfilename" >&2;;
@@ -52,6 +52,12 @@ done
 
 
 mkdir $outdir
+if [ $? -ne 0 ] ; then
+    echo "Error: could not create directory. Check permissions on user_data/"
+else
+    echo "success"
+fi
+
 
 echo Run directory:  $outdir
 

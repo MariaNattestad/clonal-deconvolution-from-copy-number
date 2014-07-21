@@ -19,28 +19,56 @@
       <link href="theme.css" rel="stylesheet">
       <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 	 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"> -->
+	 
+      <style>
+	.codepanel {
+	    margin:150px 50px 50px 50px;
+	}
+	#submit_button {
+	    
+	    float:right;
+	    margin: 40px 40px 40px 40px;
+	    
+	}
+	
+      </style>
 </head>
 
 <body>
 
-
-
+ <?php include "header.html";?>
+<div id="header_bar" class="jumbotron">
+    <h1>CopyCAT</h1>
+    <h3>
+        Copy number Clonal Analysis of Tumors
+    </h3>
+    </div>
 <form action="file_upload.php"
     class="dropzone"
     id="Dfile-dropzone">
     <input type="hidden" name="code_hidden" value="">
 </form>
 
-<div id="code">  </div>
 
 <form name="input_code_form" action="analysis.php" id="analysis_form" method="get">
 <!--    set from within copycat.js-->
 </form>
-    
 
-    
-    
-    
+<p>
+<!--<div class="col-lg-4">-->
+<div class="codepanel">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+	<h3 class="panel-title">View analysis later</h3>
+      </div>
+      <div id="code" class="panel-body">
+      </div>
+    </div>
+  <!--</div><!-- /.col-sm-4 -->
+  </div>
+</p>
+
+
     
     
     
@@ -49,9 +77,7 @@
 <!--scripts at the end of the file so they don't slow down the html loading-->
 <script src="js/copycat.js"></script>
 <script src="js/dropzone.js"></script>
-<script Dropzone.options.DfileDropzone = {
-    paramName: 
-};
+
 </script>
 </body>
 </html>

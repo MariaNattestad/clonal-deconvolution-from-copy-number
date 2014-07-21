@@ -12,6 +12,7 @@ def plot_D(outdir,Dfilename):
     #########################################################################
     
     filename=Dfilename
+                                         
     D_answer=plotting.loadmatrix(filename)
     plotting.plotcells(D_answer,filename="%s/D_answer.png" % (outdir))
 
@@ -21,8 +22,7 @@ def make_plots(outdir,Dfilename):
         print "Directory does not exist: %s" % outdir
         return
     
-    
-    
+    print "Dfilename in make_plots.py: %s" % Dfilename
     #########################################################################
     ########   costs                                                
     #########################################################################
@@ -36,9 +36,9 @@ def make_plots(outdir,Dfilename):
     #########################################################################
     ########   input D plotted for comparison to results                                                
     #########################################################################
-    
+    print "Before plotting D"
     plot_D(outdir,Dfilename)
-    
+    print "After plotting D"
     #########################################################################
     ########   grab S and R, calculate D inferred from solutions                                         
     #########################################################################

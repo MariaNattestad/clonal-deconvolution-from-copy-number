@@ -146,6 +146,8 @@ python -c "import deconvolve; deconvolve.collect_costs('$outdir')"
 
 echo "plotting everything"
 
-python -c "import make_plots; make_plots.make_plots('$outdir','$Dfilename')"
+
+Dfilename_and_path=$outdir/$Dfilename
+python -c "import make_plots; make_plots.make_plots('$outdir','$Dfilename_and_path')"
 
 
