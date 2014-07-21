@@ -7,13 +7,18 @@
     <?php include "header.html";?>
     
     
+    
 <!--    GRAY AREA -- jumbotron   -->
     <div id="header_bar" class="jumbotron">
         
         <div class="row">
             <!--LEFT-->
             <div class="col-lg-6">
-                <h1>Copycat Results</h1>
+                <h1>CopyCAT</h1>
+                <h3>
+                    Copy number Clonal Analysis of Tumors
+                </h3>
+                <br/>
                 <h3 id="status">
                     
                 </h3>
@@ -48,15 +53,17 @@
 <!--PROGRESS BAR-->
     <div class="progress" id="progress-bar">
         <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="0" aria-valuemin="10" aria-valuemax="100" style="width: 0%">
-            2 clones 0%
+            0%
         </div>
-        <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="0" aria-valuemin="10" aria-valuemax="100" style="width: 0%">
-            3 clones 0%
-        </div>
+        <!--<div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="0" aria-valuemin="10" aria-valuemax="100" style="width: 0%">-->
+        <!--    3 clones 0%-->
+        <!--</div>-->
     </div>
     <p>
         
         <?php
+            $code=$_GET["code"];
+            echo $code;
             $filename="user_data/$code/info.txt";
             if (file_exists($filename)) {
                 echo "old query";
@@ -65,21 +72,12 @@
                 echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/R_0.png\">";
                 echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/D_0.png\">";
                 echo "<img class=\"cost_plot\" src=\"user_data/$code/D_answer.png\">";
-                
-            } else {
-                echo "new query: ";
-                echo $code;
-                echo "<p>";
-                echo shell_exec("./prepare_copycat -c $code > prepare_copycat.log"); 
-                echo shell_exec("./run_copycat -d -c $code > run_copycat.log &" );
-                echo "</p>";
             }
         ?>
         
         
         
     </p>
-    
     
     
     
@@ -98,6 +96,7 @@
 <!--   jquery must be first because bootstrap depends on it   -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/copycat_analysis.js"></script>
 </body>
 </html>
 

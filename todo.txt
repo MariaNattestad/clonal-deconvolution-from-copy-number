@@ -1,0 +1,41 @@
+To do:
+
+
+Figure out why plotting isn't working again. Probably permissions issues as always, try what Robert said and make PHP create the folders to possibly avoid future issues.
+
+Fix progress bar to estimate how much time is left
+
+Make sure running it again queues the job instead of interrupting the old job, so make sure there is no way the user can accidentally interrupt the run
+
+What to do if run is interrupted on server side?
+- Start over?
+- Enable starting from a certain point in the analysis?
+
+
+Make sure a file is uploaded.
+
+Do input validation on uploaded file and display helpful alert messages.
+
+
+make javascript call php and split these into run.php and check_progress.php:
+
+<?php
+            $code=$_GET["code"];
+            $filename="user_data/$code/info.txt";
+            if (file_exists($filename)) {
+                echo "old query";
+                echo "<img class=\"cost_plot\" src=\"user_data/$code/costs.png\">";
+                echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/S_0.png\">";
+                echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/R_0.png\">";
+                echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/D_0.png\">";
+                echo "<img class=\"cost_plot\" src=\"user_data/$code/D_answer.png\">";
+                
+            } else {
+                echo "new query: ";
+                echo $code;
+                echo "<p>";
+                echo shell_exec("./prepare_copycat -c $code > prepare_copycat.log"); 
+                echo shell_exec("./run_copycat -d -c $code > run_copycat.log &" );
+                echo "</p>";
+            }
+        ?>
