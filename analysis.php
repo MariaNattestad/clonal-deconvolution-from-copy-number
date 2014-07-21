@@ -23,8 +23,17 @@
     <!--    custom styles-->
     <style>
         .jumbotron {margin-top:-20px; padding-top:10px;}
-        .kitty_icon {width:50px; float:left; padding:10px 10px 10px 10px; margin-left:80px;}
+        .kitty_icon {width:50px; float:left; padding:4px 4px 4px 4px; margin-left:80px;}
     </style>
+    <link rel="shortcut icon" type="image/png" href="images/cat_icon2_black.png"/>
+    <link rel="icon" type="image/png" href="images/cat_icon2_black.png"/>
+    
+    
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 
 <body role="document">
@@ -32,11 +41,10 @@
 <!--    NAVIGATION BAR-->
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <img class="kitty_icon" src="images/cat_icon_white.png"/>
+    <img class="kitty_icon" src="images/cat_icon2_white.png"/>
       <div class="container">
         
         <div class="navbar-header">
-            
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -53,13 +61,13 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
+                <li><a href="./analysis.php?code=axxMRHjn4p4PJOUfp6nC#">Example 1</a></li>
+                <li><a href="#">Example 2</a></li>
+                <li><a href="#">Example 3</a></li>
+                <!--<li class="divider"></li>-->
+                <!--<li class="dropdown-header">Nav header</li>-->
+                <!--<li><a href="#">Separated link</a></li>-->
+                <!--<li><a href="#">One more separated link</a></li>-->
               </ul>
             </li>
           </ul>
@@ -99,6 +107,12 @@
         
         
     </p>
+    
+<!--   jquery must be first because bootstrap depends on it   -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script src="js/bootstrap.min.js"></script>
+
 </body>
 </html>
 
