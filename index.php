@@ -1,67 +1,57 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-    <title>Copycat</title>
-    <link href="css/dropzone.css" rel="stylesheet">
-        <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="description" content="">
-      <meta name="author" content="">
-      <link rel="icon" href="../../favicon.ico">
-      <title>Central Dogma</title>
-      <!-- Bootstrap core CSS -->
-      <link href="bootstrap.min.css" rel="stylesheet">
-      <!-- Bootstrap theme -->
-      <link href="bootstrap-theme.min.css" rel="stylesheet">
-      <!-- Custom styles for this template -->
-      <link href="theme.css" rel="stylesheet">
-      <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-	 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"> -->
-	 
-      <style>
-	.codepanel {
-	    margin:150px 50px 50px 50px;
-	}
-	#submit_button {
-	    
-	    float:right;
-	    margin: 40px 40px 40px 40px;
-	    
-	}
-	
-      </style>
-</head>
 
-<body>
-
- <?php include "header.html";?>
+<!--    NAVIGATION BAR-->
+<?php include "header.html";?>
+ 
+ 
+ <!--    TITLES   -->
 <div id="header_bar" class="jumbotron">
     <h1>CopyCAT</h1>
     <h3>
         Copy number Clonal Analysis of Tumors
     </h3>
     </div>
-<form action="file_upload.php"
-    class="dropzone"
-    id="Dfile-dropzone">
-    <input type="hidden" name="code_hidden" value="">
-</form>
-
-
-<form name="input_code_form" action="analysis.php" id="analysis_form" method="get">
-<!--    set from within copycat.js-->
-</form>
 
 <p>
-<!--<div class="col-lg-4">-->
-<div class="codepanel">
+
+
+
+<!--INSTRUCTIONS-->
+
+<div class="center">
     <div class="panel panel-info">
       <div class="panel-heading">
-	<h3 class="panel-title">View analysis later</h3>
+	<h3 class="panel-title">Instructions</h3>
       </div>
-      <div id="code" class="panel-body">
+      <div class="panel-body">
+	<p>
+	    Upload a text file containing copy number data of at least 2 samples from the same tumor. For a tumor made up of N clones, you need at least N samples to have enough information to distill the copy number profiles of those N clones. 
+	</p>
+	<p>
+	    File format: One sample per line. Copy numbers separated by tabs or spaces across each line. Each sample should be separated into the same number of bins; therefore, the lines in the file should also have the same number of items. The number of bins across the genome should be approximately in the thousands for most reliable results.
+	</p>
+	<p>
+	<strong> Example file:</strong>
+	</p>
+	<div class="highlight">
+	    <pre>
+1.977422    1.977422    1.977422    1.977422    1.977422    1.977422    1.977422    1.977422    1.977422    1.977422 .....->   
+1.953893    1.953893    1.953893    1.953893    1.953893    1.953893    1.953893    1.953893    1.953893    1.953893 .....->   
+1.989060    1.989060    1.989060    1.989060    1.989060    1.989060    1.989060    1.989060    1.989060    1.989060 .....->  
+1.902800    1.902800    1.902800    1.902800    1.902800    1.902800    1.902800    1.902800    1.902800    1.902800 .....->
+1.954846    1.954846    1.954846    1.954846    1.954846    1.954846    1.954846    1.954846    1.954846    1.954846 .....->
+	    </pre>
+	    <p>
+		 5 samples, 5000 bins: example 1 from Examples menu above
+	    </p>
+	   
+	</div>
+	
+	
+	
+	
       </div>
     </div>
   <!--</div><!-- /.col-sm-4 -->
@@ -69,7 +59,44 @@
 </p>
 
 
+
+<div class="row">
+    <div class="col-lg-6">
+	<!--    DROPZONE   -->
+	
+	<div class="center"> 
+	<form action="file_upload.php"
+	    class="dropzone"
+	    id="Dfile-dropzone">
+	    <input type="hidden" name="code_hidden" value="">
+	</form>
+	
+	<!--    SUBMIT BUTTON with hidden field to transport code to next page   -->
+	<form name="input_code_form" action="analysis.php" id="analysis_form" method="get">
+			<!--    set from within copycat.js-->
+	</form>
+	
+	</div>  
+	<p>
+    </div>   
+  
+    <div class="col-lg-6">  
+    <!--View analysis later-->
     
+    
+    <div id="codepanel" class="center">
+	<div class="panel panel-info">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">View analysis later</h3>
+	  </div>
+	  <div id="code" class="panel-body">
+	  </div>
+	</div>
+      </div>
+    </p>
+    
+    </div>
+</div>
     
     
     
@@ -77,7 +104,9 @@
 <!--scripts at the end of the file so they don't slow down the html loading-->
 <script src="js/copycat.js"></script>
 <script src="js/dropzone.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+    
 </script>
 </body>
 </html>

@@ -1,5 +1,9 @@
 var analysis_path="http://localhost/copy_number/analysis.php?code="
 
+
+//////////////////////////////////////////////////////////////
+/////// For index page:
+//////////////////////////////////////////////////////////////
 function makeid()
 {
     var text = "";
@@ -21,3 +25,17 @@ function showCode() {
 
 window.onload = showCode();
 
+
+
+
+//////////////////////////////////////////////////////////////
+/////// For analysis page:
+//////////////////////////////////////////////////////////////
+//function showProgress() {
+//    var prog = 5;
+//    document.getElementById("progress-bar").innerHTML = "<div class=\"progress-bar progress-bar-striped active\"  role=\"progressbar\" aria-valuenow=\"" + prog + "\" aria-valuemin=\"3\" aria-valuemax=\"100\" style=\"width: " + prog + "%\">" + prog + "%</div>";
+//}
+//
+//window.onload = showProgress();
+//
+//
