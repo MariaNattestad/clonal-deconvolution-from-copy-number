@@ -1,9 +1,14 @@
 To do:
 
+Get the progress_stats array working between check_progress.php, copycat_analysis.js that accepts the array, and stacked progress bars.
+
+Write check_progress.php
+
+
 
 Figure out why plotting isn't working again. Probably permissions issues as always, try what Robert said and make PHP create the folders to possibly avoid future issues.
 
-Fix progress bar to estimate how much time is left
+
 
 Make sure running it again queues the job instead of interrupting the old job, so make sure there is no way the user can accidentally interrupt the run
 

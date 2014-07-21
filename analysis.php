@@ -49,7 +49,7 @@
     </div>
     
     <!--centered middle of body-->
-    <div class="center">
+    <div class="center" id="landing_for_progress_bars">
 <!--PROGRESS BAR-->
     <div class="progress" id="progress-bar">
         <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="0" aria-valuemin="10" aria-valuemax="100" style="width: 0%">
