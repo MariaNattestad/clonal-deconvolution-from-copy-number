@@ -11,9 +11,10 @@ var analysis_path="http://localhost/copy_number/analysis.php?code=";
 function showProgress() {
     var run_id_code=getUrlVars()["code"];
     var prog=0;
-   
     
-    jQuery.ajax({
+//    remember ajax is asynchronous, so only the stuff inside the success: part will be called after retrieving information. If I put something after the statement, it can't use the info from check_progress.php because it is executed before this php script is called
+
+    jQuery.ajax({ 
         type:"POST",
         url: "check_progress.php",
         dataType: 'json',
@@ -29,7 +30,7 @@ function showProgress() {
                 var message = " ";
                 var btn_colors=[];
                 var colors=[];
-                
+                var alldone=true;
                 
                 for (i = 2; i < prog.length; i++) {
                     var disabled="disabled";
@@ -45,10 +46,15 @@ function showProgress() {
                     else if (prog[i]>=50) {
                         colors[i]="warning";
                         btn_colors[i]="default";
+                        alldone=false;
+                        console.log("alldone=false");
+                        
                     }
                     else {
                         colors[i]="default";
                         btn_colors[i]="default";
+                        alldone=false;
+                        console.log("alldone=false");
                     }
                     
                     message = message + "<div class=\"row\"><div class=\"col-md-2\">     <button id=\"" + i + "_clones_button\" type=\"button\" class=\"" + disabled + " btn btn-" + btn_colors[i] + "\">"+ i +" clones</button></div>       <div class=\"col-lg-10\"><div class=\"progress\" id=\"progress-bar\"><div class=\"progress-bar " + success +" " + active + "\"  role=\"progressbar\" aria-valuenow=\"" + prog[i] + "\" aria-valuemin=\"5\" aria-valuemax=\"100\" style=\"width: " + prog[i] + "%\"><span id=\"progress_shown_values\">" + prog[i] + "%</span></div></div></div></div>";
@@ -63,15 +69,36 @@ function showProgress() {
                 alert(obj.error);
                 
             }
+            
+            
+            
+            if (alldone==true) {
+                document.getElementById("alldone").value="true";
+                
+                
+            }
         }
         
     });
+          
+            
+    var alldone=document.getElementById("alldone").value;
+    if (alldone=="true") {
+         document.getElementById("landing_for_answer_D").innerHTML = "ALL DONE";
     
+        document.getElementById("landing_for_cost_plot").innerHTML = "<img class=\"cost_plot\" src=\"user_data/$code/costs.png\">";
+        document.getElementById("landing_for_current_S").innerHTML = "<img class=\"S_plot\" src=\"user_data/$code/3_clones/S_0.png\">";
+        document.getElementById("landing_for_current_R").innerHTML = "<img class=\"R_plot\" src=\"user_data/$code/3_clones/R_0.png\">";
+        
+        document.getElementById("landing_for_current_D").innerHTML = "D current";
+    }
+    else {
+        setTimeout(function() {showProgress()},1000);
+    }
     
-  
+            
     
    
-    setTimeout(function() {showProgress()},1000);
 }
 
 

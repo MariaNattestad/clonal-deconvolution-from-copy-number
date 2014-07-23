@@ -1,6 +1,6 @@
 in run_copycat
-output directory: user_data/mmoR13BPxAp8pjXLQARK
-user_data/mmoR13BPxAp8pjXLQARK/info.txt exists--check
+output directory: user_data/KMvTOX6AlbASJ4X8jzdN
+user_data/KMvTOX6AlbASJ4X8jzdN/info.txt exists--check
 samples
 5
 bins
@@ -11,16 +11,16 @@ Running algorithm on 2 up to 5 clones
 running algorithms one after the other
 ====================================================
 in deconvolve_for_x_clones
-output directory: user_data/mmoR13BPxAp8pjXLQARK
+output directory: user_data/KMvTOX6AlbASJ4X8jzdN
 ___________________________________________________
 Running algorithm for tumor with 2 clones
-Run directory: user_data/mmoR13BPxAp8pjXLQARK/2_clones/
+Run directory: user_data/KMvTOX6AlbASJ4X8jzdN/2_clones/
 ___________________________________________________
 progress_filename
-user_data/mmoR13BPxAp8pjXLQARK/D.txt
+user_data/KMvTOX6AlbASJ4X8jzdN/D.txt
 ====================================================
-python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/mmoR13BPxAp8pjXLQARK/D.txt','user_data/mmoR13BPxAp8pjXLQARK/2_clones/',numclones='2',testing='True',progress_file='progress_filename')
-Printing progress to user_data/mmoR13BPxAp8pjXLQARK/progress.txt
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/KMvTOX6AlbASJ4X8jzdN/D.txt','user_data/KMvTOX6AlbASJ4X8jzdN/2_clones/',numclones='2',testing='True',progress_file='progress_filename')
+Printing progress to user_data/KMvTOX6AlbASJ4X8jzdN/progress.txt
 (5, 5000)
 (5, 5000)
 in deconvolve()
@@ -130,20 +130,20 @@ progress: 98%
 progress: 99%
 progress: 100%
 elapsed time: 0 minutes, 0 seconds
-length of solutions set: 8
+length of solutions set: 7
 finished deconvolve_for_x_clones
 ====================================================
 in deconvolve_for_x_clones
-output directory: user_data/mmoR13BPxAp8pjXLQARK
+output directory: user_data/KMvTOX6AlbASJ4X8jzdN
 ___________________________________________________
 Running algorithm for tumor with 3 clones
-Run directory: user_data/mmoR13BPxAp8pjXLQARK/3_clones/
+Run directory: user_data/KMvTOX6AlbASJ4X8jzdN/3_clones/
 ___________________________________________________
 progress_filename
-user_data/mmoR13BPxAp8pjXLQARK/D.txt
+user_data/KMvTOX6AlbASJ4X8jzdN/D.txt
 ====================================================
-python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/mmoR13BPxAp8pjXLQARK/D.txt','user_data/mmoR13BPxAp8pjXLQARK/3_clones/',numclones='3',testing='True',progress_file='progress_filename')
-Printing progress to user_data/mmoR13BPxAp8pjXLQARK/progress.txt
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/KMvTOX6AlbASJ4X8jzdN/D.txt','user_data/KMvTOX6AlbASJ4X8jzdN/3_clones/',numclones='3',testing='True',progress_file='progress_filename')
+Printing progress to user_data/KMvTOX6AlbASJ4X8jzdN/progress.txt
 (5, 5000)
 (5, 5000)
 in deconvolve()
@@ -226,6 +226,7 @@ progress: 71%
 progress: 72%
 progress: 73%
 progress: 74%
+update
 progress: 75%
 progress: 76%
 progress: 77%
@@ -233,7 +234,6 @@ progress: 78%
 progress: 79%
 progress: 80%
 progress: 81%
-update
 progress: 82%
 progress: 83%
 progress: 84%
@@ -254,20 +254,20 @@ progress: 98%
 progress: 99%
 progress: 100%
 elapsed time: 0 minutes, 1 seconds
-length of solutions set: 70
+length of solutions set: 82
 finished deconvolve_for_x_clones
 ====================================================
 in deconvolve_for_x_clones
-output directory: user_data/mmoR13BPxAp8pjXLQARK
+output directory: user_data/KMvTOX6AlbASJ4X8jzdN
 ___________________________________________________
 Running algorithm for tumor with 4 clones
-Run directory: user_data/mmoR13BPxAp8pjXLQARK/4_clones/
+Run directory: user_data/KMvTOX6AlbASJ4X8jzdN/4_clones/
 ___________________________________________________
 progress_filename
-user_data/mmoR13BPxAp8pjXLQARK/D.txt
+user_data/KMvTOX6AlbASJ4X8jzdN/D.txt
 ====================================================
-python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/mmoR13BPxAp8pjXLQARK/D.txt','user_data/mmoR13BPxAp8pjXLQARK/4_clones/',numclones='4',testing='True',progress_file='progress_filename')
-Printing progress to user_data/mmoR13BPxAp8pjXLQARK/progress.txt
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/KMvTOX6AlbASJ4X8jzdN/D.txt','user_data/KMvTOX6AlbASJ4X8jzdN/4_clones/',numclones='4',testing='True',progress_file='progress_filename')
+Printing progress to user_data/KMvTOX6AlbASJ4X8jzdN/progress.txt
 (5, 5000)
 (5, 5000)
 in deconvolve()
@@ -313,8 +313,8 @@ progress: 34%
 progress: 35%
 progress: 36%
 progress: 37%
-update
 progress: 38%
+update
 progress: 39%
 progress: 40%
 progress: 41%
@@ -352,9 +352,9 @@ progress: 72%
 progress: 73%
 progress: 74%
 progress: 75%
-update
 progress: 76%
 progress: 77%
+update
 progress: 78%
 progress: 79%
 progress: 80%
@@ -383,16 +383,16 @@ length of solutions set: 100
 finished deconvolve_for_x_clones
 ====================================================
 in deconvolve_for_x_clones
-output directory: user_data/mmoR13BPxAp8pjXLQARK
+output directory: user_data/KMvTOX6AlbASJ4X8jzdN
 ___________________________________________________
 Running algorithm for tumor with 5 clones
-Run directory: user_data/mmoR13BPxAp8pjXLQARK/5_clones/
+Run directory: user_data/KMvTOX6AlbASJ4X8jzdN/5_clones/
 ___________________________________________________
 progress_filename
-user_data/mmoR13BPxAp8pjXLQARK/D.txt
+user_data/KMvTOX6AlbASJ4X8jzdN/D.txt
 ====================================================
-python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/mmoR13BPxAp8pjXLQARK/D.txt','user_data/mmoR13BPxAp8pjXLQARK/5_clones/',numclones='5',testing='True',progress_file='progress_filename')
-Printing progress to user_data/mmoR13BPxAp8pjXLQARK/progress.txt
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/KMvTOX6AlbASJ4X8jzdN/D.txt','user_data/KMvTOX6AlbASJ4X8jzdN/5_clones/',numclones='5',testing='True',progress_file='progress_filename')
+Printing progress to user_data/KMvTOX6AlbASJ4X8jzdN/progress.txt
 (5, 5000)
 (5, 5000)
 in deconvolve()
@@ -464,8 +464,8 @@ progress: 59%
 progress: 60%
 progress: 61%
 progress: 62%
-update
 progress: 63%
+update
 progress: 64%
 progress: 65%
 progress: 66%
@@ -497,8 +497,8 @@ progress: 91%
 progress: 92%
 progress: 93%
 progress: 94%
-update
 progress: 95%
+update
 progress: 96%
 progress: 97%
 progress: 98%
@@ -509,5 +509,5 @@ length of solutions set: 100
 finished deconvolve_for_x_clones
 finished all calls to deconvolve_for_x_clones from run_copycat
 collecting costs from all analyses
-Collected costs in user_data/mmoR13BPxAp8pjXLQARK/costs.txt
+Collected costs in user_data/KMvTOX6AlbASJ4X8jzdN/costs.txt
 plotting everything

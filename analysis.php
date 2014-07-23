@@ -52,6 +52,32 @@
     <div class="center" id="landing_for_progress_bars">
 <!--PROGRESS BARS-->
 <!-- Made by copycat_analysis.js after consulting check_progress.php -->
+    </div>
+    
+    <input type="hidden" id="alldone" value="false">
+    <div class="center" id="landing_for_cost_plot">
+    <!--COST PLOT-->
+    cost
+    </div>
+    
+
+    <div class="center" id="landing_for_current_S">
+        <!--S PLOT-->
+        S
+    </div>
+    <div class="center" id="landing_for_current_R">
+        <!--R PLOT-->
+        R
+    </div>
+    <div class="center" id="landing_for_current_D">
+        <!--D PLOT-->
+        D
+    </div>
+    <div class="center" id="landing_for_answer_D">
+        <!--S PLOT-->
+        D_answer
+    </div>
+    
     
     <p>
         
