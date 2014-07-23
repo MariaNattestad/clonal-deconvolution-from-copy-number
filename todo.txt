@@ -1,47 +1,18 @@
 To do:
 
 
-print progress during deconvolve() all appending with number of clones
-- then update check_progress.php so it reads the progress.txt file
+
+write grab_cost_data.php to take the costs.txt file data and display it using chart.js
 
 
 
-
-
-fix permissions issue in user_data once and for all by creating directories in PHP: May be fixed...
-
-
-
-
-,progress_file=user_data/'$code'/progress.txt
-
-,progress_file=user_data/'$code'/progress.txt
-,progress_file=user_data/'$code'/progress.txt
-
-
-
-
-Get the progress_stats array working between check_progress.php, copycat_analysis.js that accepts the array, and stacked progress bars.
-
-Write check_progress.php
-
-
-
-Figure out why plotting isn't working again. Probably permissions issues as always, try what Robert said and make PHP create the folders to possibly avoid future issues.
-
-
+fix permissions issues on creating plots inside user_data/$code/
 
 Make sure running it again queues the job instead of interrupting the old job, so make sure there is no way the user can accidentally interrupt the run
 
 What to do if run is interrupted on server side?
 - Start over?
 - Enable starting from a certain point in the analysis?
-
-
-
-
-make javascript call php and split these into run.php and check_progress.php:
-
 
 check intelligently for duplicate solutions using calc_S_similarity
 

@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "make_plots.py", line 63, in make_plots
+    plotting.plot_R(R,filename="%s.png" % filename)
+  File "plotting.py", line 46, in plot_R
+    stack_bar_plot(R1,title=title,filename=filename)
+  File "plotting.py", line 687, in stack_bar_plot
+    pylab.savefig(filename)
+  File "/Users/mnattest/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/matplotlib/pyplot.py", line 561, in savefig
+    return fig.savefig(*args, **kwargs)
+  File "/Users/mnattest/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/matplotlib/figure.py", line 1421, in savefig
+    self.canvas.print_figure(*args, **kwargs)
+  File "/Users/mnattest/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/matplotlib/backend_bases.py", line 2220, in print_figure
+    **kwargs)
+  File "/Users/mnattest/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/matplotlib/backend_bases.py", line 1962, in print_png
+    return agg.print_png(*args, **kwargs)
+  File "/Users/mnattest/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/matplotlib/backends/backend_agg.py", line 510, in print_png
+    filename_or_obj = open(filename_or_obj, 'wb')
+IOError: [Errno 13] Permission denied: 'user_data/KMvTOX6AlbASJ4X8jzdN/2_clones/R_0.png'

@@ -71,8 +71,8 @@
             mkdir("user_data/$code");
             umask($oldmask);
             
-            echo shell_exec("./prepare_copycat -c $code > prepare_copycat.log"); 
-            echo shell_exec("./run_copycat -d -c $code > run_copycat.log &" );
+            echo shell_exec("./prepare_copycat -c $code &> user_data/$code/prepare_copycat.log"); 
+            echo shell_exec("./run_copycat -d -c $code &> user_data/$code/run_copycat.log &");
         }
         else {
             echo "<div class=\"alert center alert-info\" role=\"alert\">File already submitted once. Please continue.</div>";

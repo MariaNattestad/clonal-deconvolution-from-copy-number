@@ -43,17 +43,20 @@ def collect_costs(outdir):
             #print "%s is not a directory" % directory
     
     f_costs=open("%s/costs.txt" % outdir,'w')
+    f_min_costs=open("%s/min_costs.txt" % outdir,'w')
     
     for i in xrange(2,maxnum+1):
         mylist=costs[i]
         
         for j in xrange(len(mylist)):
-            f_costs.write("%s\t" % mylist[j])
+            f_costs.write("%s\t" % (mylist[j]))
         f_costs.write("\n")
-    
+        
+        f_min_costs.write("%d,%s\n" % (i,mylist[0]))
     f_costs.close()
+    
+    f_min_costs.close()
     print "Collected costs in %s/costs.txt" % outdir
-
 
 def check_file(filename,outdir):
     print "checking file %s" % (filename)
@@ -120,7 +123,7 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
             S_set.append(S)
             R_set.append(R)
             #print mean(S)
-    
+            
     print "length of solutions set: %d" % (len(cost_set))
     num_solns_to_display = 5
     if num_solns_to_display > len(cost_set):
@@ -145,8 +148,8 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
     for i in xrange(num_solns_to_display):
         S = S_set[i]
         R = R_set[i]
-        matrixtofile(S,"%s/S_%d" % (outdir,i), use_float=False)
-        matrixtofile(R,"%s/R_%d" % (outdir,i), use_float=True)
+        matrixtofile(S,"%s/S_%d" % (outdir,i), use_float=False,csv=False)
+        matrixtofile(R,"%s/R_%d" % (outdir,i), use_float=True,csv=False)
         
         f = open("%s/cost_%d" % (outdir,i),'w')
         f.write("%.10f" % cost_set[i])
@@ -177,32 +180,34 @@ def loadmatrix(filename):
     
     return data
 
-
-def matrixtofile(X,filename,use_float=True):
+def matrixtofile(X,filename,use_float=True,csv=False):
     # write a matrix to a file with the given filename
    
+    delim="\t"
+    if csv==True:
+        delim=","
+        
     if len(X.shape)==2:
         f2 = open(filename,'w')
         for line in X:
             for item in line:
                 if use_float:
-                    f2.write("%f\t" % item)
+                    f2.write("%f%s" % (item,delim))
                 else:
-                    f2.write("%d\t" % item)
+                    f2.write("%d%s" % (item,delim))
             f2.write('\n')
         f2.close()
     elif len(X.shape)==1:
         f2 = open(filename,'w')
         for item in X:
             if use_float:
-                f2.write("%f\t" % item)
+                f2.write("%f%s" % (item,delim))
             else:
-                f2.write("%d\t" % item)
+                f2.write("%d%s" % (item,delim))
         f2.close()
     else:
         print "array must be 1- or 2-dimensional"
-        
- 
+    
 def deconvolve(D, numclones, testing=False, max_falling_iterations=15,progress_file=""):
     print "in deconvolve()"
     print D.shape
@@ -317,8 +322,6 @@ def deconvolve(D, numclones, testing=False, max_falling_iterations=15,progress_f
     #return costs, numfalls, best_R, best_cost, best_S,allS
     return costs,allS,allR
 
-
-
 def generate_random_R(numsignals,numsources):
     R=rand(numsignals,numsources)
     
@@ -345,8 +348,6 @@ def generate_random_S(numsources,numbins,distribution=[]):
         S=abs(around(random.normal(2,1,size=[numsources,numbins])))
         return S
     
-
-    
 def sort_S(S):
     indices1=argsort(mean(S,axis=1))
     S1=S[indices1]
@@ -362,8 +363,7 @@ def sort_R(R):
     indices2=argsort(R1[0])
     R2=R1[:,indices2]
     return R2
-    
-    
+     
 def calc_R_similarity(R1,R2):
     r1=sort_R(R1)
     r2=sort_R(R2)
@@ -378,4 +378,26 @@ def calc_S_similarity(S1,S2):
     diff=sum((s1-s2)**2)
     return diff
 
-
+def tab_to_csv(filename):
+    f = open(filename,'r')
+    f2=open("%s.csv" % filename,'w')
+    
+    firstline=True
+    for line in f:
+        bare=line.strip()
+        if (bare != ""):
+            data=bare.split()
+            
+        csv_line=""
+        for item in data:
+            csv_line+=item + ","
+        if firstline==True:
+            f2.write(csv_line)
+            firstline=False
+        else:
+            f2.write("\n%s" % (csv_line))
+    
+    f.close()
+    f2.close()
+   
+    

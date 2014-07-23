@@ -157,6 +157,6 @@ echo "plotting everything"
 
 
 Dfilename_and_path=$outdir/$Dfilename
-python -c "import make_plots; make_plots.make_plots('$outdir','$Dfilename_and_path')"
+python -c "import make_plots; make_plots.make_plots('$outdir','$Dfilename_and_path')" 2> $outdir/err_plotting.log > $outdir/plotting.log
 
 

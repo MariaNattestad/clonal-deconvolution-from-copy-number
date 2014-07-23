@@ -55,9 +55,12 @@
     </div>
     
     <input type="hidden" id="alldone" value="false">
+        
+        
+        
     <div class="center" id="landing_for_cost_plot">
     <!--COST PLOT-->
-    cost
+    <canvas id="cost_plot_canvas" height="400px" width="400px"></canvas>
     </div>
     
 
@@ -79,24 +82,6 @@
     </div>
     
     
-    <p>
-        
-       <?php
-        //    $code=$_GET["code"];
-        //    echo $code;
-        //    $filename="user_data/$code/info.txt";
-        //    if (file_exists($filename)) {
-        //        echo "<img class=\"cost_plot\" src=\"user_data/$code/costs.png\">";
-        //        echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/S_0.png\">";
-        //        echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/R_0.png\">";
-        //        echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/D_0.png\">";
-        //        echo "<img class=\"cost_plot\" src=\"user_data/$code/D_answer.png\">";
-        //    }
-        ?>
-        
-        
-        
-    </p>
     
     
     
@@ -115,7 +100,10 @@
 <!--   jquery must be first because bootstrap depends on it   -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/dygraph-combined.js"></script>
 <script src="js/copycat_analysis.js"></script>
+
+
 </body>
 </html>
 
