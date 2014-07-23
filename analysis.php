@@ -55,18 +55,17 @@
     
     <p>
         
-        <?php
-            $code=$_GET["code"];
-            echo $code;
-            $filename="user_data/$code/info.txt";
-            if (file_exists($filename)) {
-                echo "old query";
-                echo "<img class=\"cost_plot\" src=\"user_data/$code/costs.png\">";
-                echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/S_0.png\">";
-                echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/R_0.png\">";
-                echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/D_0.png\">";
-                echo "<img class=\"cost_plot\" src=\"user_data/$code/D_answer.png\">";
-            }
+       <?php
+        //    $code=$_GET["code"];
+        //    echo $code;
+        //    $filename="user_data/$code/info.txt";
+        //    if (file_exists($filename)) {
+        //        echo "<img class=\"cost_plot\" src=\"user_data/$code/costs.png\">";
+        //        echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/S_0.png\">";
+        //        echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/R_0.png\">";
+        //        echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/D_0.png\">";
+        //        echo "<img class=\"cost_plot\" src=\"user_data/$code/D_answer.png\">";
+        //    }
         ?>
         
         

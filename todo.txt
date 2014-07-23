@@ -2,6 +2,9 @@ To do:
 
 
 print progress during deconvolve() all appending with number of clones
+- then update check_progress.php so it reads the progress.txt file
+
+
 
 
 
@@ -10,10 +13,10 @@ fix permissions issue in user_data once and for all by creating directories in P
 
 
 
+,progress_file=user_data/'$code'/progress.txt
 
-
-
-
+,progress_file=user_data/'$code'/progress.txt
+,progress_file=user_data/'$code'/progress.txt
 
 
 

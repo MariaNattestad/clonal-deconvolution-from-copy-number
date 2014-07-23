@@ -53,11 +53,11 @@ def collect_costs(outdir):
     
     f_costs.close()
     print "Collected costs in %s/costs.txt" % outdir
-    
+
 
 def check_file(filename,outdir):
+    print "checking file %s" % (filename)
     D=loadmatrix(filename)
-    
     numsignals=D.shape[0]
     numbins=D.shape[1]
     print "Data indicates %d samples, and the genome is split into %d bins" % (numsignals,numbins)
@@ -68,8 +68,8 @@ def check_file(filename,outdir):
     
     f = open('%s/info.txt' % outdir,'w')
     f.write("samples\t%d \nbins\t%d" % (numsignals,numbins))
+    f.write("\n")
     f.close()
-    
     
 def read_info(filename):
     f = open(filename,'r')
@@ -90,7 +90,7 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
         print "Printing progress to %s" % progress_file
     
     testing = bool(testing)
-    print testing
+    
     D=loadmatrix(filename)
     print D.shape
     numclones = int(numclones)
@@ -121,7 +121,7 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
             R_set.append(R)
             #print mean(S)
     
-    
+    print "length of solutions set: %d" % (len(cost_set))
     num_solns_to_display = 5
     if num_solns_to_display > len(cost_set):
         num_solns_to_display = len(cost_set)
@@ -129,7 +129,7 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
     
     ####################################################################################################
     ## still need to check intelligently for duplicate solutions using calc_S_similarity
-    print "still need to check intelligently for duplicate solutions using calc_S_similarity"
+    
     ####################################################################################################
     
     
@@ -137,7 +137,10 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
     ########### check if outdir exists ##########
     #############################################
     import os
-    print(os.path.isdir(outdir))
+    if os.path.isdir(outdir)==False:
+        print "Error in deconvolve.py: run_deconvolve_from_file(): outdir %s does not exist" % (outdir)
+        return
+    
     
     for i in xrange(num_solns_to_display):
         S = S_set[i]
@@ -149,7 +152,6 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
         f.write("%.10f" % cost_set[i])
         f.close()
 
-
 def loadmatrix(filename):
     # load a matrix from the file
     import numpy as np
@@ -158,17 +160,21 @@ def loadmatrix(filename):
     content = f.readlines()
     f.close()
     
-    
     #print "%d contigs" % num
     data = []
     for line in content:
-        data.append(map(float,line.split()))
+        bare=line.strip()
+        if (bare != ""):
+            data.append(map(float,bare.split()))
     
     data = np.array(data)
         
         
     if data.shape[0]==1:
         data=data[0]
+    print data.shape
+    
+    
     return data
 
 
@@ -196,11 +202,12 @@ def matrixtofile(X,filename,use_float=True):
     else:
         print "array must be 1- or 2-dimensional"
         
-    
-    
+ 
 def deconvolve(D, numclones, testing=False, max_falling_iterations=15,progress_file=""):
-    
+    print "in deconvolve()"
+    print D.shape
     before = time.time()
+    last_update_time=time.time()
     
     numsources=numclones
     numsignals=D.shape[0]
@@ -232,7 +239,7 @@ def deconvolve(D, numclones, testing=False, max_falling_iterations=15,progress_f
     best_R=array([])
     best_S=array([])
     
-    
+   
     for i in xrange(numtrials):       
         
         R=generate_random_R(numsignals,numsources)
@@ -290,6 +297,19 @@ def deconvolve(D, numclones, testing=False, max_falling_iterations=15,progress_f
             print "estimated run-time for %d trials: %d seconds or %d minutes" % (numtrials,estimate,estimate/60.0)
         if (i+1) % (int(numtrials/100))==0:
             print "progress: %d%%" % ((i+1)*100/numtrials)
+            now=time.time()
+            if now-last_update_time>1.0: #update every second
+                print "update"
+                last_update_time=time.time()
+                f=open(progress_file,'a')
+                f.write("clones\t%d\tprogress\t%d\n" % (numclones, i*100.0/numtrials))
+                f.close()
+    
+    f=open(progress_file,'a')
+    f.write("clones\t%d\tprogress\t%d\n" % (numclones, 100))
+    f.close()
+    seconds=time.time()-before
+    print "elapsed time: %d minutes, %d seconds" % (seconds/60, seconds%60)
     
     costs=array(costs)
     allS=array(allS)

@@ -1,4 +1,6 @@
-Error: could not create directory. Check permissions on user_data/
-Run directory: user_data/5wQ8dQxbLnw5esRovdFq
-Data indicates 5 samples, and the genome is split into 10 bins
+Run directory: user_data/mmoR13BPxAp8pjXLQARK
+checking file user_data/mmoR13BPxAp8pjXLQARK/D.txt
+(5, 5000)
+Data indicates 5 samples, and the genome is split into 5000 bins
 (If this is false, make sure the input file has the samples as rows and the bins as columns)
+finished prepare_copycat

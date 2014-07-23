@@ -1,23 +1,34 @@
-output directory: user_data/5wQ8dQxbLnw5esRovdFq
-user_data/5wQ8dQxbLnw5esRovdFq/info.txt exists--check
+in run_copycat
+output directory: user_data/mmoR13BPxAp8pjXLQARK
+user_data/mmoR13BPxAp8pjXLQARK/info.txt exists--check
+samples
+5
+bins
+5000
 samples: 5
-bins: 0
+bins: 5000
 Running algorithm on 2 up to 5 clones
+running algorithms one after the other
 ====================================================
-output directory: user_data/5wQ8dQxbLnw5esRovdFq
+in deconvolve_for_x_clones
+output directory: user_data/mmoR13BPxAp8pjXLQARK
 ___________________________________________________
 Running algorithm for tumor with 2 clones
-Run directory: user_data/5wQ8dQxbLnw5esRovdFq/2_clones/
+Run directory: user_data/mmoR13BPxAp8pjXLQARK/2_clones/
 ___________________________________________________
-user_data/5wQ8dQxbLnw5esRovdFq/D.txt
+progress_filename
+user_data/mmoR13BPxAp8pjXLQARK/D.txt
 ====================================================
-python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/5wQ8dQxbLnw5esRovdFq/D.txt','user_data/5wQ8dQxbLnw5esRovdFq/2_clones/',numclones='2',testing='False')
-True
-(5, 10)
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/mmoR13BPxAp8pjXLQARK/D.txt','user_data/mmoR13BPxAp8pjXLQARK/2_clones/',numclones='2',testing='True',progress_file='progress_filename')
+Printing progress to user_data/mmoR13BPxAp8pjXLQARK/progress.txt
+(5, 5000)
+(5, 5000)
+in deconvolve()
+(5, 5000)
 running 100 random initializations
 number of samples: 5
 hypothetical number of clones: 2
-number of bins in genome: 10
+number of bins in genome: 5000
 progress: 1%
 progress: 2%
 progress: 3%
@@ -118,24 +129,29 @@ progress: 97%
 progress: 98%
 progress: 99%
 progress: 100%
-showing all solutions
-still need to check intelligently for duplicate solutions using calc_S_similarity
-True
+elapsed time: 0 minutes, 0 seconds
+length of solutions set: 8
+finished deconvolve_for_x_clones
 ====================================================
-output directory: user_data/5wQ8dQxbLnw5esRovdFq
+in deconvolve_for_x_clones
+output directory: user_data/mmoR13BPxAp8pjXLQARK
 ___________________________________________________
 Running algorithm for tumor with 3 clones
-Run directory: user_data/5wQ8dQxbLnw5esRovdFq/3_clones/
+Run directory: user_data/mmoR13BPxAp8pjXLQARK/3_clones/
 ___________________________________________________
-user_data/5wQ8dQxbLnw5esRovdFq/D.txt
+progress_filename
+user_data/mmoR13BPxAp8pjXLQARK/D.txt
 ====================================================
-python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/5wQ8dQxbLnw5esRovdFq/D.txt','user_data/5wQ8dQxbLnw5esRovdFq/3_clones/',numclones='3',testing='False')
-True
-(5, 10)
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/mmoR13BPxAp8pjXLQARK/D.txt','user_data/mmoR13BPxAp8pjXLQARK/3_clones/',numclones='3',testing='True',progress_file='progress_filename')
+Printing progress to user_data/mmoR13BPxAp8pjXLQARK/progress.txt
+(5, 5000)
+(5, 5000)
+in deconvolve()
+(5, 5000)
 running 100 random initializations
 number of samples: 5
 hypothetical number of clones: 3
-number of bins in genome: 10
+number of bins in genome: 5000
 progress: 1%
 progress: 2%
 progress: 3%
@@ -217,6 +233,7 @@ progress: 78%
 progress: 79%
 progress: 80%
 progress: 81%
+update
 progress: 82%
 progress: 83%
 progress: 84%
@@ -236,24 +253,29 @@ progress: 97%
 progress: 98%
 progress: 99%
 progress: 100%
-showing all solutions
-still need to check intelligently for duplicate solutions using calc_S_similarity
-True
+elapsed time: 0 minutes, 1 seconds
+length of solutions set: 70
+finished deconvolve_for_x_clones
 ====================================================
-output directory: user_data/5wQ8dQxbLnw5esRovdFq
+in deconvolve_for_x_clones
+output directory: user_data/mmoR13BPxAp8pjXLQARK
 ___________________________________________________
 Running algorithm for tumor with 4 clones
-Run directory: user_data/5wQ8dQxbLnw5esRovdFq/4_clones/
+Run directory: user_data/mmoR13BPxAp8pjXLQARK/4_clones/
 ___________________________________________________
-user_data/5wQ8dQxbLnw5esRovdFq/D.txt
+progress_filename
+user_data/mmoR13BPxAp8pjXLQARK/D.txt
 ====================================================
-python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/5wQ8dQxbLnw5esRovdFq/D.txt','user_data/5wQ8dQxbLnw5esRovdFq/4_clones/',numclones='4',testing='False')
-True
-(5, 10)
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/mmoR13BPxAp8pjXLQARK/D.txt','user_data/mmoR13BPxAp8pjXLQARK/4_clones/',numclones='4',testing='True',progress_file='progress_filename')
+Printing progress to user_data/mmoR13BPxAp8pjXLQARK/progress.txt
+(5, 5000)
+(5, 5000)
+in deconvolve()
+(5, 5000)
 running 100 random initializations
 number of samples: 5
 hypothetical number of clones: 4
-number of bins in genome: 10
+number of bins in genome: 5000
 progress: 1%
 progress: 2%
 progress: 3%
@@ -291,6 +313,7 @@ progress: 34%
 progress: 35%
 progress: 36%
 progress: 37%
+update
 progress: 38%
 progress: 39%
 progress: 40%
@@ -329,6 +352,7 @@ progress: 72%
 progress: 73%
 progress: 74%
 progress: 75%
+update
 progress: 76%
 progress: 77%
 progress: 78%
@@ -354,23 +378,29 @@ progress: 97%
 progress: 98%
 progress: 99%
 progress: 100%
-still need to check intelligently for duplicate solutions using calc_S_similarity
-True
+elapsed time: 0 minutes, 2 seconds
+length of solutions set: 100
+finished deconvolve_for_x_clones
 ====================================================
-output directory: user_data/5wQ8dQxbLnw5esRovdFq
+in deconvolve_for_x_clones
+output directory: user_data/mmoR13BPxAp8pjXLQARK
 ___________________________________________________
 Running algorithm for tumor with 5 clones
-Run directory: user_data/5wQ8dQxbLnw5esRovdFq/5_clones/
+Run directory: user_data/mmoR13BPxAp8pjXLQARK/5_clones/
 ___________________________________________________
-user_data/5wQ8dQxbLnw5esRovdFq/D.txt
+progress_filename
+user_data/mmoR13BPxAp8pjXLQARK/D.txt
 ====================================================
-python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/5wQ8dQxbLnw5esRovdFq/D.txt','user_data/5wQ8dQxbLnw5esRovdFq/5_clones/',numclones='5',testing='False')
-True
-(5, 10)
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/mmoR13BPxAp8pjXLQARK/D.txt','user_data/mmoR13BPxAp8pjXLQARK/5_clones/',numclones='5',testing='True',progress_file='progress_filename')
+Printing progress to user_data/mmoR13BPxAp8pjXLQARK/progress.txt
+(5, 5000)
+(5, 5000)
+in deconvolve()
+(5, 5000)
 running 100 random initializations
 number of samples: 5
 hypothetical number of clones: 5
-number of bins in genome: 10
+number of bins in genome: 5000
 progress: 1%
 progress: 2%
 progress: 3%
@@ -402,6 +432,7 @@ progress: 28%
 progress: 29%
 progress: 30%
 progress: 31%
+update
 progress: 32%
 progress: 33%
 progress: 34%
@@ -433,6 +464,7 @@ progress: 59%
 progress: 60%
 progress: 61%
 progress: 62%
+update
 progress: 63%
 progress: 64%
 progress: 65%
@@ -465,14 +497,17 @@ progress: 91%
 progress: 92%
 progress: 93%
 progress: 94%
+update
 progress: 95%
 progress: 96%
 progress: 97%
 progress: 98%
 progress: 99%
 progress: 100%
-still need to check intelligently for duplicate solutions using calc_S_similarity
-True
+elapsed time: 0 minutes, 3 seconds
+length of solutions set: 100
+finished deconvolve_for_x_clones
+finished all calls to deconvolve_for_x_clones from run_copycat
 collecting costs from all analyses
-Collected costs in user_data/5wQ8dQxbLnw5esRovdFq/costs.txt
+Collected costs in user_data/mmoR13BPxAp8pjXLQARK/costs.txt
 plotting everything

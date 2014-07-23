@@ -1,13 +1,51 @@
 <?php
     $code=$_POST['code'];
     
+    $filename="user_data/" . $code . "/progress.txt";
+    file_put_contents( 'yowtf4', $filename);
+    
+    $myfile = fopen($filename, "r") or die("Unable to open file!");
+    
+    
+    
+    
     $progress_stats = array();
     $progress_stats[0]=0;
     $progress_stats[1]=0;
-    $progress_stats[2]=100;
-    $progress_stats[3]=80;
-    $progress_stats[4]=5;
-    $progress_stats[5]=3;
+    $progress_stats[2]=1;
+    $progress_stats[3]=1;
+    $progress_stats[4]=1;
+    $progress_stats[5]=1;
+    
+    
+    
+    while(!feof($myfile)) {
+        $line=fgets($myfile);
+        $line =trim(preg_replace( '/\s+/', ' ', $line ));
+        if ($line=="" or $line==" ") {
+            continue;
+        }
+        $array=array_map("trim",explode(' ',$line));
+        //var_dump($array);
+        //file_put_contents( 'yowtf5', print_r($array,true));
+        $progress_stats[$array[1]]=$array[3];
+    }
+    fclose($myfile);
+    
+    
+    
+    
+    
+    
+    
+    
+    //$progress_stats = array();
+    //$progress_stats[0]=0;
+    //$progress_stats[1]=0;
+    //$progress_stats[2]=100;
+    //$progress_stats[3]=80;
+    //$progress_stats[4]=10;
+    //$progress_stats[5]=3;
     echo json_encode($progress_stats);
     
 ?>

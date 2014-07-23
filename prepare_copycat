@@ -50,14 +50,14 @@ while getopts ":hc:" opt; do
   esac
 done
 
-
-mkdir $outdir
-if [ $? -ne 0 ] ; then
-    echo "Error: could not create directory. Check permissions on user_data/"
-else
-    echo "success"
+if [ ! -d $outdir ]; then
+    mkdir $outdir
+    if [ $? -ne 0 ] ; then
+        echo "Error: could not create directory. Check permissions on user_data/"
+    else
+        echo "success"
+    fi
 fi
-
 
 echo Run directory:  $outdir
 
@@ -67,12 +67,12 @@ D=$outdir/$Dfilename
 
 cp user_uploads/$code $D
 #####################################################################################################################
-
+touch $outdir/progress.txt
 
 
 python -c "import deconvolve; deconvolve.check_file('$D','$outdir')"
 
 
-
+echo finished prepare_copycat
 
 

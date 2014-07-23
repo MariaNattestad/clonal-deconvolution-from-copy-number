@@ -68,11 +68,23 @@ function showProgress() {
     });
     
     
+  
     
-    
-    
+   
+    setTimeout(function() {showProgress()},1000);
 }
 
+
+function makeid()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 20; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
 
 function getUrlVars() {
     var vars = {};
@@ -87,10 +99,14 @@ function test() {
     alert(run_id_code);
 }
 
-$(document).ready(showProgress());
+$(document).ready(function() {showProgress();});
 
-//setInterval(showProgress(),1000);
 
+function repeat() {
+    showProgress();
+    alert(makeid());
+    setTimeout(repeat(),3000);
+}
 
 
 

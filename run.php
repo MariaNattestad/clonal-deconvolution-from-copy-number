@@ -44,13 +44,19 @@
         $bin_counter=0;
         $line=fgets($myfile);
         $line =trim(preg_replace( '/\s+/', ' ', $line ));
+        if ($line=="" or $line==" ") {
+            continue;
+        }
         $array=array_map("trim",explode(' ',$line));
         //var_dump($array);
         $bin_counter=count($array);
         //echo $bin_counter . "<br>";
         //echo $previous_bins. "<br>";
+        
         if ($previous_bins != 0 and $previous_bins != $bin_counter) {
             $consistent=false;
+            echo $line;
+            var_dump($array);
         }
         $previous_bins=$bin_counter;
         $line_counter=$line_counter+1;

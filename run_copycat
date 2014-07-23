@@ -2,6 +2,7 @@
 progname=run_copycat
 #set -xv
 
+echo in run_copycat
 function usage () {
     cat <<EOF
 Usage: $progname [-d] [-j threads]  -c code 
@@ -91,6 +92,8 @@ if [ -f $file ]; then
     
     while IFS=$'\t' read -r key value
     do
+        echo $key
+        echo $value
         if [ "$key" = "samples" ]
         then
             numsamples=$value
@@ -99,6 +102,7 @@ if [ -f $file ]; then
         then
             numbins=$value
             #echo set numbins
+            # this stops working if info.txt doesn't have a newline at the end, check to make sure check_file() in deconvolve.py adds a newline if this ever breaks
         fi
     done <"$file"
 else
@@ -126,13 +130,18 @@ if [ $threads -gt 1 ]; then
         echo /data/schatz/software/bin/parallel -j $threads ./deconvolve_for_x_clones -c $code -f $Dfilename -n {1} ::: $(seq 2 $max_num_clones)
     fi
 else
+    echo "running algorithms one after the other"
     for i in `seq 2 $max_num_clones`;
     do
-        ./deconvolve_for_x_clones -c $code -f $Dfilename -n $i
+        if [ $testing ];then
+            ./deconvolve_for_x_clones -d -c $code -f $Dfilename -n $i
+        else
+            ./deconvolve_for_x_clones -c $code -f $Dfilename -n $i
+        fi
     done
-   
-    
 fi
+
+echo finished all calls to deconvolve_for_x_clones from run_copycat
 
 if [ ! -d $outdir/2_clones ]; then
     echo "no costs.txt file was created at $outdir/costs.txt"
