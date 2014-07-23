@@ -85,13 +85,16 @@ def read_info(filename):
         print "error, info file %s did not contain non-zero samples and bins counts" % filename
     return numsamples, numbins
 
-def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False):
+def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_file=""):
+    if progress_file != "":
+        print "Printing progress to %s" % progress_file
+    
     testing = bool(testing)
     print testing
     D=loadmatrix(filename)
     print D.shape
     numclones = int(numclones)
-    costs,allS,allR = deconvolve(D,numclones,testing=testing)
+    costs,allS,allR = deconvolve(D,numclones,testing=testing,progress_file=progress_file)
     #print best_R
     #print costs.shape
     #print allS.shape
@@ -195,7 +198,7 @@ def matrixtofile(X,filename,use_float=True):
         
     
     
-def deconvolve(D, numclones, testing=False, max_falling_iterations=15):
+def deconvolve(D, numclones, testing=False, max_falling_iterations=15,progress_file=""):
     
     before = time.time()
     
@@ -285,7 +288,7 @@ def deconvolve(D, numclones, testing=False, max_falling_iterations=15):
         if i==100:
             estimate=(time.time()-before)*numtrials/100.0
             print "estimated run-time for %d trials: %d seconds or %d minutes" % (numtrials,estimate,estimate/60.0)
-        if (i+1) % (numtrials/10)==0:
+        if (i+1) % (int(numtrials/100))==0:
             print "progress: %d%%" % ((i+1)*100/numtrials)
     
     costs=array(costs)
@@ -340,7 +343,7 @@ def sort_R(R):
     R2=R1[:,indices2]
     return R2
     
-     
+    
 def calc_R_similarity(R1,R2):
     r1=sort_R(R1)
     r2=sort_R(R2)

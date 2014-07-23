@@ -50,15 +50,9 @@
     
     <!--centered middle of body-->
     <div class="center" id="landing_for_progress_bars">
-<!--PROGRESS BAR-->
-    <div class="progress" id="progress-bar">
-        <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="0" aria-valuemin="10" aria-valuemax="100" style="width: 0%">
-            0%
-        </div>
-        <!--<div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="0" aria-valuemin="10" aria-valuemax="100" style="width: 0%">-->
-        <!--    3 clones 0%-->
-        <!--</div>-->
-    </div>
+<!--PROGRESS BARS-->
+<!-- Made by copycat_analysis.js after consulting check_progress.php -->
+    
     <p>
         
         <?php

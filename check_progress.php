@@ -1,6 +1,5 @@
 <?php
     $code=$_POST['code'];
-    //echo shell_exec("mkdir check_progress_php_was_called_code$code");
     
     $progress_stats = array();
     $progress_stats[0]=0;

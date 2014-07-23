@@ -1,5 +1,478 @@
-ERROR: ----------Directory does not exist: user_data/6UpxVDo8BDjFsBk1YFtG------------
-first run this command to create info.txt file: ./prepare_copycat 6UpxVDo8BDjFsBk1YFtG D.txt
-or if you have already run it, make sure you are inserting the right code here
-Usage: run_copycat [-d] [-j threads]  -c code 
-run_copycat -h for help
+output directory: user_data/5wQ8dQxbLnw5esRovdFq
+user_data/5wQ8dQxbLnw5esRovdFq/info.txt exists--check
+samples: 5
+bins: 0
+Running algorithm on 2 up to 5 clones
+====================================================
+output directory: user_data/5wQ8dQxbLnw5esRovdFq
+___________________________________________________
+Running algorithm for tumor with 2 clones
+Run directory: user_data/5wQ8dQxbLnw5esRovdFq/2_clones/
+___________________________________________________
+user_data/5wQ8dQxbLnw5esRovdFq/D.txt
+====================================================
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/5wQ8dQxbLnw5esRovdFq/D.txt','user_data/5wQ8dQxbLnw5esRovdFq/2_clones/',numclones='2',testing='False')
+True
+(5, 10)
+running 100 random initializations
+number of samples: 5
+hypothetical number of clones: 2
+number of bins in genome: 10
+progress: 1%
+progress: 2%
+progress: 3%
+progress: 4%
+progress: 5%
+progress: 6%
+progress: 7%
+progress: 8%
+progress: 9%
+progress: 10%
+progress: 11%
+progress: 12%
+progress: 13%
+progress: 14%
+progress: 15%
+progress: 16%
+progress: 17%
+progress: 18%
+progress: 19%
+progress: 20%
+progress: 21%
+progress: 22%
+progress: 23%
+progress: 24%
+progress: 25%
+progress: 26%
+progress: 27%
+progress: 28%
+progress: 29%
+progress: 30%
+progress: 31%
+progress: 32%
+progress: 33%
+progress: 34%
+progress: 35%
+progress: 36%
+progress: 37%
+progress: 38%
+progress: 39%
+progress: 40%
+progress: 41%
+progress: 42%
+progress: 43%
+progress: 44%
+progress: 45%
+progress: 46%
+progress: 47%
+progress: 48%
+progress: 49%
+progress: 50%
+progress: 51%
+progress: 52%
+progress: 53%
+progress: 54%
+progress: 55%
+progress: 56%
+progress: 57%
+progress: 58%
+progress: 59%
+progress: 60%
+progress: 61%
+progress: 62%
+progress: 63%
+progress: 64%
+progress: 65%
+progress: 66%
+progress: 67%
+progress: 68%
+progress: 69%
+progress: 70%
+progress: 71%
+progress: 72%
+progress: 73%
+progress: 74%
+progress: 75%
+progress: 76%
+progress: 77%
+progress: 78%
+progress: 79%
+progress: 80%
+progress: 81%
+progress: 82%
+progress: 83%
+progress: 84%
+progress: 85%
+progress: 86%
+progress: 87%
+progress: 88%
+progress: 89%
+progress: 90%
+progress: 91%
+progress: 92%
+progress: 93%
+progress: 94%
+progress: 95%
+progress: 96%
+progress: 97%
+progress: 98%
+progress: 99%
+progress: 100%
+showing all solutions
+still need to check intelligently for duplicate solutions using calc_S_similarity
+True
+====================================================
+output directory: user_data/5wQ8dQxbLnw5esRovdFq
+___________________________________________________
+Running algorithm for tumor with 3 clones
+Run directory: user_data/5wQ8dQxbLnw5esRovdFq/3_clones/
+___________________________________________________
+user_data/5wQ8dQxbLnw5esRovdFq/D.txt
+====================================================
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/5wQ8dQxbLnw5esRovdFq/D.txt','user_data/5wQ8dQxbLnw5esRovdFq/3_clones/',numclones='3',testing='False')
+True
+(5, 10)
+running 100 random initializations
+number of samples: 5
+hypothetical number of clones: 3
+number of bins in genome: 10
+progress: 1%
+progress: 2%
+progress: 3%
+progress: 4%
+progress: 5%
+progress: 6%
+progress: 7%
+progress: 8%
+progress: 9%
+progress: 10%
+progress: 11%
+progress: 12%
+progress: 13%
+progress: 14%
+progress: 15%
+progress: 16%
+progress: 17%
+progress: 18%
+progress: 19%
+progress: 20%
+progress: 21%
+progress: 22%
+progress: 23%
+progress: 24%
+progress: 25%
+progress: 26%
+progress: 27%
+progress: 28%
+progress: 29%
+progress: 30%
+progress: 31%
+progress: 32%
+progress: 33%
+progress: 34%
+progress: 35%
+progress: 36%
+progress: 37%
+progress: 38%
+progress: 39%
+progress: 40%
+progress: 41%
+progress: 42%
+progress: 43%
+progress: 44%
+progress: 45%
+progress: 46%
+progress: 47%
+progress: 48%
+progress: 49%
+progress: 50%
+progress: 51%
+progress: 52%
+progress: 53%
+progress: 54%
+progress: 55%
+progress: 56%
+progress: 57%
+progress: 58%
+progress: 59%
+progress: 60%
+progress: 61%
+progress: 62%
+progress: 63%
+progress: 64%
+progress: 65%
+progress: 66%
+progress: 67%
+progress: 68%
+progress: 69%
+progress: 70%
+progress: 71%
+progress: 72%
+progress: 73%
+progress: 74%
+progress: 75%
+progress: 76%
+progress: 77%
+progress: 78%
+progress: 79%
+progress: 80%
+progress: 81%
+progress: 82%
+progress: 83%
+progress: 84%
+progress: 85%
+progress: 86%
+progress: 87%
+progress: 88%
+progress: 89%
+progress: 90%
+progress: 91%
+progress: 92%
+progress: 93%
+progress: 94%
+progress: 95%
+progress: 96%
+progress: 97%
+progress: 98%
+progress: 99%
+progress: 100%
+showing all solutions
+still need to check intelligently for duplicate solutions using calc_S_similarity
+True
+====================================================
+output directory: user_data/5wQ8dQxbLnw5esRovdFq
+___________________________________________________
+Running algorithm for tumor with 4 clones
+Run directory: user_data/5wQ8dQxbLnw5esRovdFq/4_clones/
+___________________________________________________
+user_data/5wQ8dQxbLnw5esRovdFq/D.txt
+====================================================
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/5wQ8dQxbLnw5esRovdFq/D.txt','user_data/5wQ8dQxbLnw5esRovdFq/4_clones/',numclones='4',testing='False')
+True
+(5, 10)
+running 100 random initializations
+number of samples: 5
+hypothetical number of clones: 4
+number of bins in genome: 10
+progress: 1%
+progress: 2%
+progress: 3%
+progress: 4%
+progress: 5%
+progress: 6%
+progress: 7%
+progress: 8%
+progress: 9%
+progress: 10%
+progress: 11%
+progress: 12%
+progress: 13%
+progress: 14%
+progress: 15%
+progress: 16%
+progress: 17%
+progress: 18%
+progress: 19%
+progress: 20%
+progress: 21%
+progress: 22%
+progress: 23%
+progress: 24%
+progress: 25%
+progress: 26%
+progress: 27%
+progress: 28%
+progress: 29%
+progress: 30%
+progress: 31%
+progress: 32%
+progress: 33%
+progress: 34%
+progress: 35%
+progress: 36%
+progress: 37%
+progress: 38%
+progress: 39%
+progress: 40%
+progress: 41%
+progress: 42%
+progress: 43%
+progress: 44%
+progress: 45%
+progress: 46%
+progress: 47%
+progress: 48%
+progress: 49%
+progress: 50%
+progress: 51%
+progress: 52%
+progress: 53%
+progress: 54%
+progress: 55%
+progress: 56%
+progress: 57%
+progress: 58%
+progress: 59%
+progress: 60%
+progress: 61%
+progress: 62%
+progress: 63%
+progress: 64%
+progress: 65%
+progress: 66%
+progress: 67%
+progress: 68%
+progress: 69%
+progress: 70%
+progress: 71%
+progress: 72%
+progress: 73%
+progress: 74%
+progress: 75%
+progress: 76%
+progress: 77%
+progress: 78%
+progress: 79%
+progress: 80%
+progress: 81%
+progress: 82%
+progress: 83%
+progress: 84%
+progress: 85%
+progress: 86%
+progress: 87%
+progress: 88%
+progress: 89%
+progress: 90%
+progress: 91%
+progress: 92%
+progress: 93%
+progress: 94%
+progress: 95%
+progress: 96%
+progress: 97%
+progress: 98%
+progress: 99%
+progress: 100%
+still need to check intelligently for duplicate solutions using calc_S_similarity
+True
+====================================================
+output directory: user_data/5wQ8dQxbLnw5esRovdFq
+___________________________________________________
+Running algorithm for tumor with 5 clones
+Run directory: user_data/5wQ8dQxbLnw5esRovdFq/5_clones/
+___________________________________________________
+user_data/5wQ8dQxbLnw5esRovdFq/D.txt
+====================================================
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/5wQ8dQxbLnw5esRovdFq/D.txt','user_data/5wQ8dQxbLnw5esRovdFq/5_clones/',numclones='5',testing='False')
+True
+(5, 10)
+running 100 random initializations
+number of samples: 5
+hypothetical number of clones: 5
+number of bins in genome: 10
+progress: 1%
+progress: 2%
+progress: 3%
+progress: 4%
+progress: 5%
+progress: 6%
+progress: 7%
+progress: 8%
+progress: 9%
+progress: 10%
+progress: 11%
+progress: 12%
+progress: 13%
+progress: 14%
+progress: 15%
+progress: 16%
+progress: 17%
+progress: 18%
+progress: 19%
+progress: 20%
+progress: 21%
+progress: 22%
+progress: 23%
+progress: 24%
+progress: 25%
+progress: 26%
+progress: 27%
+progress: 28%
+progress: 29%
+progress: 30%
+progress: 31%
+progress: 32%
+progress: 33%
+progress: 34%
+progress: 35%
+progress: 36%
+progress: 37%
+progress: 38%
+progress: 39%
+progress: 40%
+progress: 41%
+progress: 42%
+progress: 43%
+progress: 44%
+progress: 45%
+progress: 46%
+progress: 47%
+progress: 48%
+progress: 49%
+progress: 50%
+progress: 51%
+progress: 52%
+progress: 53%
+progress: 54%
+progress: 55%
+progress: 56%
+progress: 57%
+progress: 58%
+progress: 59%
+progress: 60%
+progress: 61%
+progress: 62%
+progress: 63%
+progress: 64%
+progress: 65%
+progress: 66%
+progress: 67%
+progress: 68%
+progress: 69%
+progress: 70%
+progress: 71%
+progress: 72%
+progress: 73%
+progress: 74%
+progress: 75%
+progress: 76%
+progress: 77%
+progress: 78%
+progress: 79%
+progress: 80%
+progress: 81%
+progress: 82%
+progress: 83%
+progress: 84%
+progress: 85%
+progress: 86%
+progress: 87%
+progress: 88%
+progress: 89%
+progress: 90%
+progress: 91%
+progress: 92%
+progress: 93%
+progress: 94%
+progress: 95%
+progress: 96%
+progress: 97%
+progress: 98%
+progress: 99%
+progress: 100%
+still need to check intelligently for duplicate solutions using calc_S_similarity
+True
+collecting costs from all analyses
+Collected costs in user_data/5wQ8dQxbLnw5esRovdFq/costs.txt
+plotting everything

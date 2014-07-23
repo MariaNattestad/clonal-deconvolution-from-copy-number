@@ -1,5 +1,23 @@
 To do:
 
+
+print progress during deconvolve() all appending with number of clones
+
+
+
+fix permissions issue in user_data once and for all by creating directories in PHP: May be fixed...
+
+
+
+
+
+
+
+
+
+
+
+
 Get the progress_stats array working between check_progress.php, copycat_analysis.js that accepts the array, and stacked progress bars.
 
 Write check_progress.php
@@ -17,30 +35,21 @@ What to do if run is interrupted on server side?
 - Enable starting from a certain point in the analysis?
 
 
-Make sure a file is uploaded.
-
-Do input validation on uploaded file and display helpful alert messages.
 
 
 make javascript call php and split these into run.php and check_progress.php:
 
-<?php
-            $code=$_GET["code"];
-            $filename="user_data/$code/info.txt";
-            if (file_exists($filename)) {
-                echo "old query";
-                echo "<img class=\"cost_plot\" src=\"user_data/$code/costs.png\">";
-                echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/S_0.png\">";
-                echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/R_0.png\">";
-                echo "<img class=\"cost_plot\" src=\"user_data/$code/3_clones/D_0.png\">";
-                echo "<img class=\"cost_plot\" src=\"user_data/$code/D_answer.png\">";
-                
-            } else {
-                echo "new query: ";
-                echo $code;
-                echo "<p>";
-                echo shell_exec("./prepare_copycat -c $code > prepare_copycat.log"); 
-                echo shell_exec("./run_copycat -d -c $code > run_copycat.log &" );
-                echo "</p>";
-            }
-        ?>
+
+check intelligently for duplicate solutions using calc_S_similarity
+
+
+
+
+
+
+
+
+
+
+
+
