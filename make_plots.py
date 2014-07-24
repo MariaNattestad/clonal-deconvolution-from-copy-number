@@ -21,7 +21,7 @@ def plot_D(outdir,Dfilename):
     plotting.plotcells(D_answer,filename="%s/D_answer.png" % (outdir))
 
 
-def make_plots(outdir,Dfilename):
+def make_plots(outdir,Dfilename,numclones=0):
     if os.path.isdir(outdir)==False:
         print "Directory does not exist: %s" % outdir
         return
@@ -49,6 +49,11 @@ def make_plots(outdir,Dfilename):
     
     done = False
     num=2
+    if numclones==0:
+        num=2
+    else:
+        num=numclones
+        
     while done==False:
         directory = "%s/%d_clones" % (outdir,num)
         if os.path.isdir(directory):
@@ -82,13 +87,15 @@ def make_plots(outdir,Dfilename):
                     
                 if list_done==False:
                     #D=R.dot(S)
-                    D = numpy.dot(R, S)
+                    D=numpy.dot(R,S)
                     filename="%s/D_%d" % (directory,soln) 
                     plotting.matrixtofile(D,filename,use_float=True)
                     plotting.plotcells(D,filename="%s.png" % filename)
                     
                 soln+=1
             num+=1
+            if numclones==0:
+                done=True
         else:
             done=True
             #print "%s is not a directory" % directory
