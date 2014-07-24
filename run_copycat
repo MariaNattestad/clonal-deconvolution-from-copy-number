@@ -159,3 +159,5 @@ Dfilename_and_path=$outdir/$Dfilename
 python -c "import make_plots; make_plots.make_plots('$outdir','$Dfilename_and_path')" &> $outdir/plotting.log
 
 
+
+zip -r user_data/$code/copycat_data_$code user_data/$code

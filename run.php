@@ -65,7 +65,12 @@
     fclose($myfile);
     
     if ($consistent) {
-        echo "<div class=\"alert center alert-success\" role=\"alert\">Great! File was uploaded and has acceptable dimensions:  $line_counter samples by $previous_bins bins</div>";
+        if ($previous_bins > 500) {
+            echo "<div class=\"alert center alert-success\" role=\"alert\">Great! File was uploaded and has acceptable dimensions:  $line_counter samples by $previous_bins bins</div>";
+        } else {
+            echo "<div class=\"alert center alert-warning\" role=\"alert\">File was uploaded and has acceptable dimensions:  $line_counter samples by $previous_bins bins, but the analysis is unlikely to work optimally without more bins. We recommend at least 500 bins for higher accuracy.</div>";
+        }
+        
         if (!file_exists("user_data/$code")) {
             $oldmask = umask(0);
             mkdir("user_data/$code");
@@ -77,9 +82,9 @@
         else {
             echo "<div class=\"alert center alert-info\" role=\"alert\">File already submitted once. Please continue.</div>";
         }
-        echo "<div class=\"row center\"><div class=\"col-md-1\">";
+        echo "<div style=\"margin-left:1%;\"><div class=\"col-sm-1\">";
         echo "$back_button";
-        echo "</div><div class=\"col-md-1\">";
+        echo "</div><div class=\"col-sm-1\">";
         echo "$continue_button";
         echo "</div></div>";
     }

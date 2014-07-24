@@ -9,11 +9,11 @@ from numpy.linalg import *
 
 def plot_D(outdir,Dfilename):
     #########################################################################
-    ########   input D plotted for comparison to results                                                
+    #### input D plotted for comparison to results                                                
     #########################################################################
     
     filename=Dfilename
-                                         
+    
     D_answer=plotting.loadmatrix(filename)
     plotting.plotcells(D_answer,filename="%s/D_answer.png" % (outdir))
 
