@@ -248,7 +248,8 @@ def deconvolve(D, numclones, testing=False, max_falling_iterations=15,progress_f
     for i in xrange(numtrials):       
         
         R=generate_random_R(numsignals,numsources)
-        S=abs(around((pinv(R).dot(D))))
+        #S=abs(around((pinv(R).dot(D))))
+        S=abs(around(( numpy.dot(pinv(R), D))))
         
         
         iterationcounter=0
@@ -257,7 +258,9 @@ def deconvolve(D, numclones, testing=False, max_falling_iterations=15,progress_f
         while diff > 0.00000001 and iterationcounter < max_falling_iterations:
             previousS=S
         
-            R=D.dot(pinv(S))
+            #R=D.dot(pinv(S))
+            R=numpy.dot(D,pinv(S))
+
             
             ############### Normalize R again ##########################
             
@@ -270,7 +273,8 @@ def deconvolve(D, numclones, testing=False, max_falling_iterations=15,progress_f
             
             
             # Solve for S and round it to nearest positive integers
-            S=abs(around((pinv(R).dot(D))))
+            #S=abs(around((pinv(R).dot(D))))
+            S=abs(around(( numpy.dot(pinv(R), D))))
     
             ############## Adjust R to fit after S is rounded ##########
             
@@ -283,7 +287,9 @@ def deconvolve(D, numclones, testing=False, max_falling_iterations=15,progress_f
         
         
         
-        cost = sum((R.dot(S)-D)**2)
+        #cost = sum((R.dot(S)-D)**2)
+        cost = sum((numpy.dot(R,S)-D)**2)
+
         
 
         if cost < best_cost:

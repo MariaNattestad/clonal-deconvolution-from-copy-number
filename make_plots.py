@@ -5,7 +5,10 @@ reload(plotting)
 
 import os
 import shutil
+import numpy
 from numpy.linalg import *
+
+os.environ[ 'MPLCONFIGDIR' ] = '/mnt/data/copycat/mplconfig/'
 
 def plot_D(outdir,Dfilename):
     #########################################################################
@@ -78,7 +81,8 @@ def make_plots(outdir,Dfilename):
                 #calculate inferred D
                     
                 if list_done==False:
-                    D=R.dot(S)
+                    #D=R.dot(S)
+                    D = numpy.dot(R, S)
                     filename="%s/D_%d" % (directory,soln) 
                     plotting.matrixtofile(D,filename,use_float=True)
                     plotting.plotcells(D,filename="%s.png" % filename)

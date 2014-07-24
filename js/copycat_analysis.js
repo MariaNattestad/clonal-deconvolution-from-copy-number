@@ -1,4 +1,4 @@
-var analysis_path="http://localhost/copy_number/analysis.php?code=";
+var analysis_path="analysis.php?code=";
 
 
 //////////////////////////////////////////////////////////////

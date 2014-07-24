@@ -53,7 +53,7 @@ do
         echo "-d: debug mode initiated" >&2;;
     c )
         code=$OPTARG
-        outdir=user_data/$code
+        outdir=$(pwd)/user_data/$code
         
         if [ ! -d $outdir ]; then
             echo ERROR: ----------Directory does not exist: $outdir------------
@@ -156,7 +156,7 @@ python -c "import deconvolve; deconvolve.collect_costs('$outdir')"
 echo "plotting everything"
 
 Dfilename_and_path=$outdir/$Dfilename
-python -c "import make_plots; make_plots.make_plots('$outdir','$Dfilename_and_path')" &> $outdir/plotting.log
+python -c "import os; os.environ[ 'MPLCONFIGDIR' ] = '/mnt/data/copycat/mplconfig/'; import make_plots; make_plots.make_plots('$outdir','$Dfilename_and_path')" &> $outdir/plotting.log
 
 
 

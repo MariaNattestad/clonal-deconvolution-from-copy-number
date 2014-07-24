@@ -38,7 +38,7 @@
                       <div id="code" class="panel-body">
                         <?php
                             $code=$_GET["code"];
-                            $url="http://localhost/copy_number/analysis.php?code=$code";
+                            $url="analysis.php?code=$code";
                             echo "Return to view your results at any time: <a href=\"$url\">$url</a>";
                         ?>
                       </div>

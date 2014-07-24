@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.mlab import *
 from numpy import *
@@ -11,6 +13,11 @@ import colorsys # for pseudocolor function
 
 import time
 import pylab
+
+
+
+
+
 
 def cost_value_plot(costs,filename=""):    
     

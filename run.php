@@ -21,7 +21,7 @@
     $aResult = array();
     if( !isset($_POST['code']) ) { $aResult['error'] = 'ERROR: No code passed to run.php';}
     $code=$_POST["code"];
-    $url="http://localhost/copy_number/analysis.php?code=$code";
+    $url="analysis.php?code=$code";
     $filename="user_uploads/$code";
     
     $back_button= "<form action=\"./\" method=GET><button type=\"submit\" class=\"center btn btn-danger\">Back</button></form>";
