@@ -1,0 +1,513 @@
+in run_copycat
+output directory: user_data/yYPsXxROG6cCy4smJAc6
+user_data/yYPsXxROG6cCy4smJAc6/info.txt exists--check
+samples
+5
+bins
+5000
+samples: 5
+bins: 5000
+Running algorithm on 2 up to 5 clones
+running algorithms one after the other
+====================================================
+in deconvolve_for_x_clones
+output directory: user_data/yYPsXxROG6cCy4smJAc6
+___________________________________________________
+Running algorithm for tumor with 2 clones
+Run directory: user_data/yYPsXxROG6cCy4smJAc6/2_clones/
+___________________________________________________
+progress_filename
+user_data/yYPsXxROG6cCy4smJAc6/D.txt
+====================================================
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/yYPsXxROG6cCy4smJAc6/D.txt','user_data/yYPsXxROG6cCy4smJAc6/2_clones/',numclones='2',testing='True',progress_file='progress_filename')
+Printing progress to user_data/yYPsXxROG6cCy4smJAc6/progress.txt
+(5, 5000)
+(5, 5000)
+in deconvolve()
+(5, 5000)
+running 100 random initializations
+number of samples: 5
+hypothetical number of clones: 2
+number of bins in genome: 5000
+progress: 1%
+progress: 2%
+progress: 3%
+progress: 4%
+progress: 5%
+progress: 6%
+progress: 7%
+progress: 8%
+progress: 9%
+progress: 10%
+progress: 11%
+progress: 12%
+progress: 13%
+progress: 14%
+progress: 15%
+progress: 16%
+progress: 17%
+progress: 18%
+progress: 19%
+progress: 20%
+progress: 21%
+progress: 22%
+progress: 23%
+progress: 24%
+progress: 25%
+progress: 26%
+progress: 27%
+progress: 28%
+progress: 29%
+progress: 30%
+progress: 31%
+progress: 32%
+progress: 33%
+progress: 34%
+progress: 35%
+progress: 36%
+progress: 37%
+progress: 38%
+progress: 39%
+progress: 40%
+progress: 41%
+progress: 42%
+progress: 43%
+progress: 44%
+progress: 45%
+progress: 46%
+progress: 47%
+progress: 48%
+progress: 49%
+progress: 50%
+progress: 51%
+progress: 52%
+progress: 53%
+progress: 54%
+progress: 55%
+progress: 56%
+progress: 57%
+progress: 58%
+progress: 59%
+progress: 60%
+progress: 61%
+progress: 62%
+progress: 63%
+progress: 64%
+progress: 65%
+progress: 66%
+progress: 67%
+progress: 68%
+progress: 69%
+progress: 70%
+progress: 71%
+progress: 72%
+progress: 73%
+progress: 74%
+progress: 75%
+progress: 76%
+progress: 77%
+progress: 78%
+progress: 79%
+progress: 80%
+progress: 81%
+progress: 82%
+progress: 83%
+progress: 84%
+progress: 85%
+progress: 86%
+progress: 87%
+progress: 88%
+progress: 89%
+progress: 90%
+progress: 91%
+progress: 92%
+progress: 93%
+progress: 94%
+progress: 95%
+progress: 96%
+progress: 97%
+progress: 98%
+progress: 99%
+progress: 100%
+elapsed time: 0 minutes, 0 seconds
+length of solutions set: 7
+finished deconvolve_for_x_clones
+====================================================
+in deconvolve_for_x_clones
+output directory: user_data/yYPsXxROG6cCy4smJAc6
+___________________________________________________
+Running algorithm for tumor with 3 clones
+Run directory: user_data/yYPsXxROG6cCy4smJAc6/3_clones/
+___________________________________________________
+progress_filename
+user_data/yYPsXxROG6cCy4smJAc6/D.txt
+====================================================
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/yYPsXxROG6cCy4smJAc6/D.txt','user_data/yYPsXxROG6cCy4smJAc6/3_clones/',numclones='3',testing='True',progress_file='progress_filename')
+Printing progress to user_data/yYPsXxROG6cCy4smJAc6/progress.txt
+(5, 5000)
+(5, 5000)
+in deconvolve()
+(5, 5000)
+running 100 random initializations
+number of samples: 5
+hypothetical number of clones: 3
+number of bins in genome: 5000
+progress: 1%
+progress: 2%
+progress: 3%
+progress: 4%
+progress: 5%
+progress: 6%
+progress: 7%
+progress: 8%
+progress: 9%
+progress: 10%
+progress: 11%
+progress: 12%
+progress: 13%
+progress: 14%
+progress: 15%
+progress: 16%
+progress: 17%
+progress: 18%
+progress: 19%
+progress: 20%
+progress: 21%
+progress: 22%
+progress: 23%
+progress: 24%
+progress: 25%
+progress: 26%
+progress: 27%
+progress: 28%
+progress: 29%
+progress: 30%
+progress: 31%
+progress: 32%
+progress: 33%
+progress: 34%
+progress: 35%
+progress: 36%
+progress: 37%
+progress: 38%
+progress: 39%
+progress: 40%
+progress: 41%
+progress: 42%
+progress: 43%
+progress: 44%
+progress: 45%
+progress: 46%
+progress: 47%
+progress: 48%
+progress: 49%
+progress: 50%
+progress: 51%
+progress: 52%
+progress: 53%
+progress: 54%
+progress: 55%
+progress: 56%
+progress: 57%
+progress: 58%
+progress: 59%
+progress: 60%
+progress: 61%
+progress: 62%
+progress: 63%
+progress: 64%
+progress: 65%
+progress: 66%
+progress: 67%
+progress: 68%
+progress: 69%
+progress: 70%
+progress: 71%
+progress: 72%
+progress: 73%
+progress: 74%
+progress: 75%
+progress: 76%
+progress: 77%
+progress: 78%
+progress: 79%
+progress: 80%
+progress: 81%
+progress: 82%
+progress: 83%
+update
+progress: 84%
+progress: 85%
+progress: 86%
+progress: 87%
+progress: 88%
+progress: 89%
+progress: 90%
+progress: 91%
+progress: 92%
+progress: 93%
+progress: 94%
+progress: 95%
+progress: 96%
+progress: 97%
+progress: 98%
+progress: 99%
+progress: 100%
+elapsed time: 0 minutes, 1 seconds
+length of solutions set: 78
+finished deconvolve_for_x_clones
+====================================================
+in deconvolve_for_x_clones
+output directory: user_data/yYPsXxROG6cCy4smJAc6
+___________________________________________________
+Running algorithm for tumor with 4 clones
+Run directory: user_data/yYPsXxROG6cCy4smJAc6/4_clones/
+___________________________________________________
+progress_filename
+user_data/yYPsXxROG6cCy4smJAc6/D.txt
+====================================================
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/yYPsXxROG6cCy4smJAc6/D.txt','user_data/yYPsXxROG6cCy4smJAc6/4_clones/',numclones='4',testing='True',progress_file='progress_filename')
+Printing progress to user_data/yYPsXxROG6cCy4smJAc6/progress.txt
+(5, 5000)
+(5, 5000)
+in deconvolve()
+(5, 5000)
+running 100 random initializations
+number of samples: 5
+hypothetical number of clones: 4
+number of bins in genome: 5000
+progress: 1%
+progress: 2%
+progress: 3%
+progress: 4%
+progress: 5%
+progress: 6%
+progress: 7%
+progress: 8%
+progress: 9%
+progress: 10%
+progress: 11%
+progress: 12%
+progress: 13%
+progress: 14%
+progress: 15%
+progress: 16%
+progress: 17%
+progress: 18%
+progress: 19%
+progress: 20%
+progress: 21%
+progress: 22%
+progress: 23%
+progress: 24%
+progress: 25%
+progress: 26%
+progress: 27%
+progress: 28%
+progress: 29%
+progress: 30%
+progress: 31%
+progress: 32%
+progress: 33%
+progress: 34%
+progress: 35%
+progress: 36%
+progress: 37%
+update
+progress: 38%
+progress: 39%
+progress: 40%
+progress: 41%
+progress: 42%
+progress: 43%
+progress: 44%
+progress: 45%
+progress: 46%
+progress: 47%
+progress: 48%
+progress: 49%
+progress: 50%
+progress: 51%
+progress: 52%
+progress: 53%
+progress: 54%
+progress: 55%
+progress: 56%
+progress: 57%
+progress: 58%
+progress: 59%
+progress: 60%
+progress: 61%
+progress: 62%
+progress: 63%
+progress: 64%
+progress: 65%
+progress: 66%
+progress: 67%
+progress: 68%
+progress: 69%
+progress: 70%
+progress: 71%
+progress: 72%
+progress: 73%
+progress: 74%
+progress: 75%
+update
+progress: 76%
+progress: 77%
+progress: 78%
+progress: 79%
+progress: 80%
+progress: 81%
+progress: 82%
+progress: 83%
+progress: 84%
+progress: 85%
+progress: 86%
+progress: 87%
+progress: 88%
+progress: 89%
+progress: 90%
+progress: 91%
+progress: 92%
+progress: 93%
+progress: 94%
+progress: 95%
+progress: 96%
+progress: 97%
+progress: 98%
+progress: 99%
+progress: 100%
+elapsed time: 0 minutes, 2 seconds
+length of solutions set: 100
+finished deconvolve_for_x_clones
+====================================================
+in deconvolve_for_x_clones
+output directory: user_data/yYPsXxROG6cCy4smJAc6
+___________________________________________________
+Running algorithm for tumor with 5 clones
+Run directory: user_data/yYPsXxROG6cCy4smJAc6/5_clones/
+___________________________________________________
+progress_filename
+user_data/yYPsXxROG6cCy4smJAc6/D.txt
+====================================================
+python -c import deconvolve; deconvolve.run_deconvolve_from_file('user_data/yYPsXxROG6cCy4smJAc6/D.txt','user_data/yYPsXxROG6cCy4smJAc6/5_clones/',numclones='5',testing='True',progress_file='progress_filename')
+Printing progress to user_data/yYPsXxROG6cCy4smJAc6/progress.txt
+(5, 5000)
+(5, 5000)
+in deconvolve()
+(5, 5000)
+running 100 random initializations
+number of samples: 5
+hypothetical number of clones: 5
+number of bins in genome: 5000
+progress: 1%
+progress: 2%
+progress: 3%
+progress: 4%
+progress: 5%
+progress: 6%
+progress: 7%
+progress: 8%
+progress: 9%
+progress: 10%
+progress: 11%
+progress: 12%
+progress: 13%
+progress: 14%
+progress: 15%
+progress: 16%
+progress: 17%
+progress: 18%
+progress: 19%
+progress: 20%
+progress: 21%
+progress: 22%
+progress: 23%
+progress: 24%
+progress: 25%
+progress: 26%
+progress: 27%
+progress: 28%
+progress: 29%
+progress: 30%
+progress: 31%
+update
+progress: 32%
+progress: 33%
+progress: 34%
+progress: 35%
+progress: 36%
+progress: 37%
+progress: 38%
+progress: 39%
+progress: 40%
+progress: 41%
+progress: 42%
+progress: 43%
+progress: 44%
+progress: 45%
+progress: 46%
+progress: 47%
+progress: 48%
+progress: 49%
+progress: 50%
+progress: 51%
+progress: 52%
+progress: 53%
+progress: 54%
+progress: 55%
+progress: 56%
+progress: 57%
+progress: 58%
+progress: 59%
+progress: 60%
+progress: 61%
+progress: 62%
+progress: 63%
+update
+progress: 64%
+progress: 65%
+progress: 66%
+progress: 67%
+progress: 68%
+progress: 69%
+progress: 70%
+progress: 71%
+progress: 72%
+progress: 73%
+progress: 74%
+progress: 75%
+progress: 76%
+progress: 77%
+progress: 78%
+progress: 79%
+progress: 80%
+progress: 81%
+progress: 82%
+progress: 83%
+progress: 84%
+progress: 85%
+progress: 86%
+progress: 87%
+progress: 88%
+progress: 89%
+progress: 90%
+progress: 91%
+progress: 92%
+progress: 93%
+progress: 94%
+update
+progress: 95%
+progress: 96%
+progress: 97%
+progress: 98%
+progress: 99%
+progress: 100%
+elapsed time: 0 minutes, 3 seconds
+length of solutions set: 100
+finished deconvolve_for_x_clones
+finished all calls to deconvolve_for_x_clones from run_copycat
+collecting costs from all analyses
+Collected costs in user_data/yYPsXxROG6cCy4smJAc6/costs.txt
+plotting everything

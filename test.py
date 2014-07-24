@@ -15,13 +15,15 @@ def test():
     #test1:
     filename = "test1_D.txt"
     print filename
-    outdir = "user_data/29384234/"
+    outdir = "user_data/yksbSYmai8lLaz8HnTHl/"
     print outdir
-    costs,allS = dec.run_deconvolve_from_file(filename,outdir,numclones=2,numtrials=100)
+    costs,allS = dec.run_deconvolve_from_file(filename,outdir,numclones=2,progress_file="%sprogress.txt" % outdir,testing=True)
     
     
     
-    
+test ()
+
+
 def plotting_test():
     #
     #D=plotting.loadmatrix("test1_D.txt")
@@ -32,6 +34,6 @@ def plotting_test():
     R=plotting.loadmatrix("user_data/003/5_clones/R_0")
     plotting.plot_R(R)
     
-plotting_test()
+#plotting_test()
     
 

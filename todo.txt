@@ -1,0 +1,27 @@
+To do:
+
+
+rename files for download by user 
+
+
+fix permissions issues on creating plots inside user_data/$code/
+
+Make sure running it again queues the job instead of interrupting the old job, so make sure there is no way the user can accidentally interrupt the run
+
+What to do if run is interrupted on server side?
+- Start over?
+- Enable starting from a certain point in the analysis?
+
+check intelligently for duplicate solutions using calc_S_similarity
+
+
+
+
+
+
+
+
+
+
+
+

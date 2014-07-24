@@ -1,0 +1,8 @@
+git push https://marianattestad@bitbucket.org/marianattestad/copy-number-clone-splitter.git web-app
+
+
+
+sudo chmod -R ug+rw user_data
+sudo chmod -R ug+rw user_uploads
+
+

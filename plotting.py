@@ -24,9 +24,10 @@ def cost_value_plot(costs,filename=""):
     bottom=numpy.min(costs,axis=1)
     top=numpy.max(costs,axis=1)
     
-    plt.errorbar(x, y, yerr=[y-bottom,top-y], fmt='b-o',ecolor='g')
+    #plt.errorbar(x, y, yerr=[y-bottom,top-y], fmt='b-o',ecolor='g')
+    plt.plot(x,y)
     
-    plt.title("Cost range of best solutions for each number of clones tested")
+    #plt.title("Cost range of best solutions for each number of clones tested")
     plt.ylabel("cost")
     plt.xlabel("number of clones")
     plt.xticks(x)

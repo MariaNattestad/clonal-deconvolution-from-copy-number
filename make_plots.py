@@ -4,15 +4,26 @@ import plotting
 reload(plotting)
 
 import os
-import shutil 
+import shutil
+from numpy.linalg import *
+
+def plot_D(outdir,Dfilename):
+    #########################################################################
+    #### input D plotted for comparison to results                                                
+    #########################################################################
+    
+    filename=Dfilename
+    
+    D_answer=plotting.loadmatrix(filename)
+    plotting.plotcells(D_answer,filename="%s/D_answer.png" % (outdir))
+
 
 def make_plots(outdir,Dfilename):
     if os.path.isdir(outdir)==False:
         print "Directory does not exist: %s" % outdir
         return
     
-    
-    
+    print "Dfilename in make_plots.py: %s" % Dfilename
     #########################################################################
     ########   costs                                                
     #########################################################################
@@ -26,12 +37,9 @@ def make_plots(outdir,Dfilename):
     #########################################################################
     ########   input D plotted for comparison to results                                                
     #########################################################################
-    
-    filename=Dfilename
-    D_answer=plotting.loadmatrix(filename)
-    plotting.plotcells(D_answer,filename="%s/D_answer.png" % (outdir))
-    
-    
+    print "Before plotting D"
+    plot_D(outdir,Dfilename)
+    print "After plotting D"
     #########################################################################
     ########   grab S and R, calculate D inferred from solutions                                         
     #########################################################################

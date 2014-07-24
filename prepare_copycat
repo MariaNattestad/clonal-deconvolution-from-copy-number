@@ -4,7 +4,7 @@ progname=prepare_copycat
 
 function usage () {
     cat <<EOF
-Usage: $progname -c code  -f Dfilename
+Usage: $progname -c code
 $progname -h for help
 EOF
     exit 0
@@ -18,50 +18,61 @@ Usage: $progname [-d] [-j threads]  -c code  -f Dfilename
 -c code *required field: a code value (can mix letters and numbers) so users can revisit their data later,
         this becomes the run directory inside user_data/
         must match the filename used next in run_copycat
--f Dfilename *required field: a name for the file a user uploaded from the web app
-        must match the filename used next in run_copycat
+
 EOF
     exit 0
 }
-
+#-f Dfilename *required field: a name for the file a user uploaded from the web app
+#        must match the filename used next in run_copycat
 
 
 code=0 # becomes the run directory inside user_data
 Dfilename=D.txt
 outdir=user_data/$code
 
-while getopts ":hc:f:" opt; do
+while getopts ":hc:" opt; do
   case $opt in
     h)
       guide;;
     c )
         code=$OPTARG
+        if [ ! -f user_uploads/$code ];then
+            echo "No such analysis--no uploaded file found"
+            exit 4
+        fi
         outdir=user_data/$code
-        echo "-c: code=$code" >&2
-        echo output directory: $outdir;;
-    f )
-        Dfilename=$OPTARG
-        echo "-f: filename of input data: $Dfilename" >&2;;
+        echo "-c: code=$code" >&2;;
+        
+    #f )
+    #    Dfilename=$OPTARG
+    #    echo "-f: filename of input data: $Dfilename" >&2;;
     \?) usage ;;
   esac
 done
 
-
-mkdir $outdir
+if [ ! -d $outdir ]; then
+    mkdir $outdir
+    if [ $? -ne 0 ] ; then
+        echo "Error: could not create directory. Check permissions on user_data/"
+    else
+        echo "success"
+    fi
+fi
 
 echo Run directory:  $outdir
 
 D=$outdir/$Dfilename
 
 ######################## change this to move the user's file into their run directory ###############################
-cp test1_D.txt $D
-#####################################################################################################################
 
+cp user_uploads/$code $D
+#####################################################################################################################
+touch $outdir/progress.txt
 
 
 python -c "import deconvolve; deconvolve.check_file('$D','$outdir')"
 
 
-
+echo finished prepare_copycat
 
 
