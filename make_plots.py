@@ -4,7 +4,8 @@ import plotting
 reload(plotting)
 
 import os
-import shutil 
+import shutil
+from numpy.linalg import *
 
 def plot_D(outdir,Dfilename):
     #########################################################################

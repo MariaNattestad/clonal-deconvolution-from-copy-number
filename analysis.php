@@ -58,29 +58,30 @@
         
         
         
-    <div class="center" id="landing_for_cost_plot">
+    <div class="center" id="landing_for_cost_plot" style="width:80%; margin-left:10%; margin-right:10%;">
     <!--COST PLOT-->
-    <canvas id="cost_plot_canvas" height="400px" width="400px"></canvas>
     </div>
     
-
-    <div class="center" id="landing_for_current_S">
-        <!--S PLOT-->
+    <div class="row" style="width:90%; margin-left:10%; margin-right:0%;">
+    <div class="center plot_frame"  id="landing_for_current_S">
         S
     </div>
-    <div class="center" id="landing_for_current_R">
+    <div class="center plot_frame" id="landing_for_current_R">
         <!--R PLOT-->
         R
     </div>
-    <div class="center" id="landing_for_current_D">
+    </div>
+    
+    <div class="row" style="width:90%; margin-left:10%; margin-right:0%;">
+    <div class="center plot_frame" id="landing_for_current_D">
         <!--D PLOT-->
         D
     </div>
-    <div class="center" id="landing_for_answer_D">
+    <div class="center plot_frame" id="landing_for_answer_D">
         <!--S PLOT-->
         D_answer
     </div>
-    
+    </div>
     
     
     

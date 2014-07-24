@@ -1,6 +1,8 @@
 To do:
 
 
+put continue button on run.php into a smaller column so it doesn't skip to the next line on small screens
+
 
 write grab_cost_data.php to take the costs.txt file data and display it using chart.js
 
