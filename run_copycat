@@ -28,13 +28,13 @@ EOF
 #        must match the filename used for prepare_copycat
 
 threads=1
-testing=False
+testing=false
 code=0
 Dfilename=D.txt
 outdir=user_data/0
 
-found_c=False
-found_f=False
+found_c=false
+found_f=false
 
 while getopts ":j:c:f:dh" option
 do
@@ -49,7 +49,7 @@ do
         fi
         ;;
     d )
-        testing=True
+        testing=true
         echo "-d: debug mode initiated" >&2;;
     c )
         code=$OPTARG
@@ -121,10 +121,11 @@ fi
 echo Running algorithm on 2 up to $max_num_clones clones
 
 
+Dfilename_and_path=$outdir/$Dfilename #for plotting
 
 if [ $threads -gt 1 ]; then
     echo "running algorithm in parallel"
-    if [ $testing ];then
+    if $testing ; then
         echo /data/schatz/software/bin/parallel -j $threads --dryrun ./deconvolve_for_x_clones -d -c $code -f $Dfilename -n {1} ::: $(seq 2 $max_num_clones)
     else
         echo /data/schatz/software/bin/parallel -j $threads ./deconvolve_for_x_clones -c $code -f $Dfilename -n {1} ::: $(seq 2 $max_num_clones)
@@ -133,11 +134,16 @@ else
     echo "running algorithms one after the other"
     for i in `seq 2 $max_num_clones`;
     do
-        if [ $testing ];then
+        if $testing ; then
             ./deconvolve_for_x_clones -d -c $code -f $Dfilename -n $i
         else
             ./deconvolve_for_x_clones -c $code -f $Dfilename -n $i
         fi
+####################
+	# do individual plotting here
+	python -c "import os; os.environ[ 'MPLCONFIGDIR' ] = '/mnt/data/copycat/mplconfig/'; import make_plots; 
+make_plots.makemake_plots('$outdir','$Dfilename_and_path',numclones='$i')" &> $outdir/plotting.log
+#####################
     done
 fi
 
@@ -155,8 +161,8 @@ python -c "import deconvolve; deconvolve.collect_costs('$outdir')"
 
 echo "plotting everything"
 
-Dfilename_and_path=$outdir/$Dfilename
-python -c "import os; os.environ[ 'MPLCONFIGDIR' ] = '/mnt/data/copycat/mplconfig/'; import make_plots; make_plots.make_plots('$outdir','$Dfilename_and_path')" &> $outdir/plotting.log
+#Dfilename_and_path=$outdir/$Dfilename
+#python -c "import os; os.environ[ 'MPLCONFIGDIR' ] = '/mnt/data/copycat/mplconfig/'; import make_plots; make_plots.make_plots('$outdir','$Dfilename_and_path')" &> $outdir/plotting.log
 
 
 

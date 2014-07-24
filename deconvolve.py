@@ -92,7 +92,13 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
     if progress_file != "":
         print "Printing progress to %s" % progress_file
     
-    testing = bool(testing)
+    if testing=="False" or testing=="false":
+	testing=False
+    elif testing=="True" or testing=="true":
+	testing=True
+    else:
+	print "cannot understand %s: expecting True/true or False/false" % testing
+    
     
     D=loadmatrix(filename)
     print D.shape
