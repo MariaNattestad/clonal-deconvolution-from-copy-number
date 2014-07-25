@@ -376,13 +376,22 @@ def deconvolve(D, numclones, testing=False, max_falling_iterations=15,progress_f
     seconds=time.time()-before
     print "elapsed time: %d minutes, %d seconds" % (seconds/60, seconds%60)
 
-    #costs=array(costs)
-    #allS=array(allS)
-    #allR=array(allR)
     
-    best_cost=array(best_cost)
-    best_S=array(best_S)
-    best_R=array(best_R)
+    good_costs=[]
+    good_R=[]
+    good_S=[]
+    good_counts=[]
+    for indx in xrange(len(best_S)):
+        if type(best_S[indx])==numpy.ndarray:
+            good_costs.append(best_cost[indx])
+            good_S.append(best_S[indx])
+            good_R.append(best_R[indx])
+            good_counts.append(count_occurrence[indx])
+    best_cost=array(good_costs)
+    best_S=array(good_S)
+    best_R=array(good_R)
+    count_occurrence=array(good_counts)
+    print "Found %d unique solutions" % (len(good_costs))
     #return costs, numfalls, best_R, best_cost, best_S,allS
     return best_cost,best_S,best_R,count_occurrence
 
