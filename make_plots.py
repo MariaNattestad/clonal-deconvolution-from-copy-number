@@ -22,6 +22,7 @@ def plot_D(outdir,Dfilename):
 
 
 def make_plots(outdir,Dfilename,numclones=0):
+    numclones=int(numclones)
     if os.path.isdir(outdir)==False:
         print "Directory does not exist: %s" % outdir
         return

@@ -141,8 +141,8 @@ else
         fi
 ####################
 	# do individual plotting here
-	python -c "import os; os.environ[ 'MPLCONFIGDIR' ] = '/mnt/data/copycat/mplconfig/'; import make_plots; 
-make_plots.makemake_plots('$outdir','$Dfilename_and_path',numclones='$i')" &> $outdir/plotting.log
+	python -c "import os; os.environ[ 'MPLCONFIGDIR' ] = '/mnt/data/copycat/mplconfig/'; import make_plots; make_plots.make_plots('$outdir','$Dfilename_and_path',numclones='$i')" &> $outdir/plotting_$i.log
+	#python -c "import os; os.environ[ 'MPLCONFIGDIR' ] = '/mnt/data/copycat/mplconfig/'; import make_plots; make_plots.make_plots('$outdir','$Dfilename_and_path',numclones='$i')" &> $outdir/plotting.log
 #####################
     done
 fi

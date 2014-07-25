@@ -17,6 +17,9 @@
 
 
 <?php
+    /////////////////////////////////////////////////////
+    //////////////     DEBUG MODE ///////////////////////
+    /////////////////////////////////////////////////////
     $debug="-d"; //put -d here when testing    
     $aResult = array();
     if( !isset($_POST['code']) ) { $aResult['error'] = 'ERROR: No code passed to run.php';}
