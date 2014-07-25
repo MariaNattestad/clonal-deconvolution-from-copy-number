@@ -1,6 +1,0 @@
-#!/bin/bash
-
-code = $1
-
-./prepare_copycat -c $code
-./run_copycat -d -c $code

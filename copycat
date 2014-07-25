@@ -1,0 +1,8 @@
+#!/bin/bash
+
+code=$1
+echo $code
+cp tests/example1.txt user_uploads/$code
+mkdir user_data/$code
+./prepare_copycat -c $code
+./run_copycat -d -c $code
