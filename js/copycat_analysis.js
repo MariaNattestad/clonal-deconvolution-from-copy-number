@@ -34,7 +34,7 @@ function showProgress() {
                 var alldone=true;
                 
                 
-                for (i = 2; i < prog.length; i++) {
+                for (i =2; i < prog.length; i++) {
                     var disabled="disabled";
                     var active="active";
                     var success="progress-bar-striped";
@@ -60,22 +60,19 @@ function showProgress() {
                     }
                     
                     message = message + "<div class=\"row\"><div class=\"col-md-2\">     <button id=\"" + i + "_clones_button\" type=\"button\" class=\"" + disabled + " btn btn-" + btn_colors[i] + "\" onclick=\"cost_plot_clicked("+ i + ")\">"+ i +" clones</button></div>       <div class=\"col-lg-10\"><div class=\"progress\" id=\"progress-bar\"><div class=\"progress-bar " + success +" " + active + "\"  role=\"progressbar\" aria-valuenow=\"" + prog[i] + "\" aria-valuemin=\"5\" aria-valuemax=\"100\" style=\"width: " + prog[i] + "%\"><span id=\"progress_shown_values\">" + prog[i] + "%</span></div></div></div></div>";
+                    document.getElementById("landing_for_progress_bars").innerHTML = message;
                 }
                 
                 
                 
                 
                 if (alldone==true) {
-                    make_cost_plot();
                     
-                    document.getElementById("landing_for_progress_bars").innerHTML = '<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Analysis Complete!</strong> </div>';
-                    
-                    document.getElementById("download_all_data").href = "./user_data/"+run_id_code+"/copycat_data_"+ run_id_code + ".zip";
-                    
+                    check_costs_exist(0);
                     
                 }
                 else {
-                    document.getElementById("landing_for_progress_bars").innerHTML = message;
+                    
                     setTimeout(function() {showProgress()},1000);
                 }
                 
@@ -100,7 +97,37 @@ function showProgress() {
 
 
 
-
+function check_costs_exist(counter)
+{
+    
+    var run_id_code=getUrlVars()["code"];
+    var cost_url="user_data/"+run_id_code + "/costs.txt";
+    
+    
+    if (counter>100) {
+        alert("Taking too long to find "+ cost_url + " counter: " + counter);
+    }
+    else {
+        
+        jQuery.ajax({ 
+            url: cost_url,
+            error: function() {
+                console.log(counter+1);
+                setTimeout(check_costs_exist(counter+1),500);
+                
+            },
+            success: function () {
+                //alert("inside success");
+                make_cost_plot();
+                
+                document.getElementById("landing_for_progress_bars").innerHTML = '<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Analysis Complete!</strong> </div>';
+                
+                document.getElementById("download_all_data").href = "./user_data/"+run_id_code+"/copycat_data_"+ run_id_code + ".zip";
+            }
+        });
+        
+    }
+}
 
 
 function makeid()

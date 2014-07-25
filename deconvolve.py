@@ -375,7 +375,6 @@ def deconvolve(D, numclones, testing=False, max_falling_iterations=15,progress_f
     f.close()
     seconds=time.time()-before
     print "elapsed time: %d minutes, %d seconds" % (seconds/60, seconds%60)
-
     
     good_costs=[]
     good_R=[]
