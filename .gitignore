@@ -2,5 +2,3 @@ $ cat .gitignore
 
 user_data/**/*
 user_uploads/**/*
-user_uploads/*
-
