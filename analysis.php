@@ -55,14 +55,12 @@
     </div>
     <input type="hidden" value="0" id="best_solution">
 	
+	    
+    <div class="center" id="landing_for_cost_plot" style="width:80%; margin-left:10%; margin-right:10%;">
+    <!--COST PLOT-->
+    </div>
 	
     <div id="results" style="visibility: hidden;">
-        
-	    
-	<div class="center" id="landing_for_cost_plot" style="width:80%; margin-left:10%; margin-right:10%;">
-	<!--COST PLOT-->
-	</div>
-	
 	
 	<div class="panel panel-info center">
 	  <div class="panel-heading">
@@ -70,7 +68,7 @@
 	  </div>
 	  <div class="panel-body">
 	    <div id="plot_info">
-		While the program finishes running on all numbers of clones, you can look at the solutions we found so far. 
+		While the program finishes running on all numbers of clones, you can look at the solutions we found so far. Click the buttons above when they turn green to see the results for each number of clones.
 	    </div>
 	  </div>
 	  <a href="" download class="btn btn-primary" id="download_all_data"  role="button">Download all data from all solutions</a>
