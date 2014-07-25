@@ -2,3 +2,6 @@ $ cat .gitignore
 
 user_data/**/*
 user_uploads/**/*
+*.pyc
+yowtf*
+
