@@ -113,7 +113,7 @@ function check_costs_exist(counter)
             url: cost_url,
             error: function() {
                 console.log(counter+1);
-                setTimeout(check_costs_exist(counter+1),500);
+                setTimeout(function(){check_costs_exist(counter+1);},500);
                 
             },
             success: function () {
