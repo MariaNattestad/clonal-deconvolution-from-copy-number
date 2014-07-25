@@ -72,16 +72,11 @@
 	</form>
 	
 	<!--    SUBMIT BUTTON with hidden field to transport code to next page   -->
-	<!--<form name="input_code_form" action="analysis.php" id="analysis_form" method="get">-->
-	<!--<!--		<!--    set from within copycat.js-->
-	<!--</form>-->
-
-
 	<form name="input_code_form" action="run.php" id="analysis_form" method="post">
-	<!--		<!--    set from within copycat.js-->
+	<!--    set from within copycat.js-->
 	</form>
-	 <form name="input_code_form_testing" action="run_testing.php" id="analysis_form_testing" method="post">
-	 
+	<form name="input_code_form_testing" action="run_testing.php" id="analysis_form_testing" method="post">
+	<!--    set from within copycat.js-->
 	</form>
 	</div>  
 	<p>
