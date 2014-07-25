@@ -96,7 +96,6 @@ function showProgress() {
 }
 
 
-
 function check_costs_exist(counter)
 {
     
@@ -169,6 +168,7 @@ function repeat() {
 
 function cost_plot_clicked(numclones) {
     
+    
     var beginning = '<img src="';
     var ending = '" class="plot_img">';
     var run_id_code=getUrlVars()["code"];
@@ -206,7 +206,7 @@ function cost_plot_clicked(numclones) {
     document.getElementById("down_img_D_answer").href = "./user_data/"+ run_id_code + "/D_answer.png";
     
     
-    
+    document.getElementById("results").style.visibility= 'visible';
 }
 
 
