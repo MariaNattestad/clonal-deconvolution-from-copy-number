@@ -246,7 +246,22 @@ function make_cost_plot() {
             gridLineColor: "rgb(220, 220, 220)",
             xlabel: "Number of clones in tumor model",
             ylabel: "cost (model vs data inaccuracy score)",
-            
+            axes: {
+                x: {
+                    axisLabelFormatter: function(x) {
+                        if (x==Math.floor(x)) {
+                            return x;
+                        }
+                        else {
+                            return "";
+                        }
+                        
+                    }
+                },
+                y: {
+                    
+                }
+            }
             
         }
     );
