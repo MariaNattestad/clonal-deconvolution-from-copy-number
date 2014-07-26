@@ -1,0 +1,13 @@
+Dfilename in make_plots.py: /Applications/XAMPP/htdocs/copycat/user_data/example2/D.txt
+(4, 5)
+Top solutions cost plot done
+Before plotting D
+After plotting D
+/Applications/XAMPP/htdocs/copycat/user_data/example2/3_clones is a directory
+/Applications/XAMPP/htdocs/copycat/user_data/example2/3_clones/R_0 is a file
+/Applications/XAMPP/htdocs/copycat/user_data/example2/3_clones/S_0 is a file
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "make_plots.py", line 91, in make_plots
+    D=numpy.dot(R,S)
+ValueError: matrices are not aligned

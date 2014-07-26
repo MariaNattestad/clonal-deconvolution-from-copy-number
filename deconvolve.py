@@ -145,9 +145,9 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 
     for i in xrange(num_solns_to_display):
         S = sorted_S[i]
-        print S.shape
+        
         R = sorted_R[i]
-        print R.shape
+        
         matrixtofile(S,"%s/S_%d" % (outdir,i), use_float=False,csv=False)
         matrixtofile(R,"%s/R_%d" % (outdir,i), use_float=True,csv=False)
 
