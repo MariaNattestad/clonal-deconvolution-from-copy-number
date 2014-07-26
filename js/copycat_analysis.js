@@ -239,7 +239,7 @@ function make_cost_plot() {
             drawPoints: true,
             labels: ["clones","cost"],
             xRangePad: 10,
-            yRangePad: 10,
+            yRangePad: 40,
             
             axisLineColor: "rgb(220, 220, 220)",
             drawGrid: true,
