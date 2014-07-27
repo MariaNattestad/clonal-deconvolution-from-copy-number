@@ -59,7 +59,7 @@ function showProgress() {
                         console.log("alldone=false");
                     }
                     
-                    message = message + "<div class=\"row\"><div class=\"col-md-2\">     <button id=\"" + i + "_clones_button\" type=\"button\" class=\"" + disabled + " btn btn-" + btn_colors[i] + "\" onclick=\"cost_plot_clicked("+ i + ")\">"+ i +" clones</button></div>       <div class=\"col-lg-10\"><div class=\"progress\" id=\"progress-bar\"><div class=\"progress-bar " + success +" " + active + "\"  role=\"progressbar\" aria-valuenow=\"" + prog[i] + "\" aria-valuemin=\"5\" aria-valuemax=\"100\" style=\"width: " + prog[i] + "%\"><span id=\"progress_shown_values\">" + prog[i] + "%</span></div></div></div></div>";
+                    message = message + "<div class=\"row\"><div class=\"col-md-2\">     <button id=\"" + i + "_clones_button\" type=\"button\" class=\"" + disabled + " btn btn-" + btn_colors[i] + "\" onclick=\"model_selected("+ i + ",0)\">"+ i +" clones</button></div>       <div class=\"col-lg-10\"><div class=\"progress\" id=\"progress-bar\"><div class=\"progress-bar " + success +" " + active + "\"  role=\"progressbar\" aria-valuenow=\"" + prog[i] + "\" aria-valuemin=\"5\" aria-valuemax=\"100\" style=\"width: " + prog[i] + "%\"><span id=\"progress_shown_values\">" + prog[i] + "%</span></div></div></div></div>";
                     document.getElementById("landing_for_progress_bars").innerHTML = message;
                 }
                 
@@ -100,7 +100,7 @@ function check_costs_exist(counter)
 {
     
     var run_id_code=getUrlVars()["code"];
-    var cost_url="user_data/"+run_id_code + "/costs.txt";
+    var cost_url="user_data/"+run_id_code + "/costs.csv";
     
     
     if (counter>100) {
@@ -117,7 +117,7 @@ function check_costs_exist(counter)
             },
             success: function () {
                 //alert("inside success");
-                make_cost_plot();
+                create_cost_plot();
                 
                 document.getElementById("landing_for_progress_bars").innerHTML = '<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Analysis Complete!</strong> </div>';
                 
@@ -129,16 +129,16 @@ function check_costs_exist(counter)
 }
 
 
-function makeid()
-{
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for( var i=0; i < 20; i++ )
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text;
-}
+//function makeid()
+//{
+//    var text = "";
+//    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//
+//    for( var i=0; i < 20; i++ )
+//        text += possible.charAt(Math.floor(Math.random() * possible.length));
+//
+//    return text;
+//}
 
 function getUrlVars() {
     var vars = {};
@@ -156,149 +156,151 @@ function test() {
 $(document).ready(function() {showProgress();});
 
 
-function repeat() {
-    showProgress();
-    alert(makeid());
-    setTimeout(repeat(),3000);
-}
+
+////for testing only
+//function repeat() {
+//    showProgress();
+//    alert(makeid());
+//    setTimeout(repeat(),3000);
+//}
 
 
 
 
-
-function cost_plot_clicked(numclones) {
-    
-    
-    var beginning = '<img src="';
-    var ending = '" class="plot_img">';
-    var run_id_code=getUrlVars()["code"];
-    var filepath = "user_data/" + run_id_code + "/" + numclones + "_clones/";
-   
-    var num_soln=0;
-    
-    
-    
-    var filename="S_" + num_soln + ".png";
-    document.getElementById("landing_for_current_S").innerHTML = beginning+filepath + filename+ending;
-    document.getElementById("down_txt_S").href = "./user_data/"+ run_id_code + "/" + numclones +"_clones/S_"+num_soln;
-    document.getElementById("down_img_S").href = "./user_data/"+ run_id_code + "/" + numclones +"_clones/S_"+num_soln+".png";
-    
-    
-    
-    var filename="R_" + num_soln + ".png";
-    document.getElementById("landing_for_current_R").innerHTML = beginning+filepath + filename+ending;
-    document.getElementById("down_txt_R").href = "./user_data/"+ run_id_code + "/" + numclones +"_clones/R_"+num_soln;
-    document.getElementById("down_img_R").href = "./user_data/"+ run_id_code + "/" + numclones +"_clones/R_"+num_soln+".png";
-    
-    
-    
-    var filename="D_" + num_soln + ".png";
-    document.getElementById("landing_for_current_D").innerHTML = beginning+filepath + filename+ending;
-    document.getElementById("down_txt_D").href = "./user_data/"+ run_id_code + "/" + numclones +"_clones/D_"+num_soln;
-    document.getElementById("down_img_D").href = "./user_data/"+ run_id_code + "/" + numclones +"_clones/D_"+num_soln+".png";
-    
-    
-    
-    var filepath = "user_data/" + run_id_code + "/";
-    var filename="D_answer.png";
-    document.getElementById("landing_for_answer_D").innerHTML = beginning+filepath + filename+ending;
-    document.getElementById("down_txt_D_answer").href = "./user_data/"+ run_id_code + "/D.txt";
-    document.getElementById("down_img_D_answer").href = "./user_data/"+ run_id_code + "/D_answer.png";
-    
-    
-    document.getElementById("results").style.visibility= 'visible';
-}
-
-
-
-
-function make_cost_plot() {
-    var run_id_code=getUrlVars()["code"];
-    
-//    remember ajax is asynchronous, so only the stuff inside the success: part will be called after retrieving information. If I put something after the statement, it can't use the info from check_progress.php because it is executed before this php script is called
-    
-    
-    g = new Dygraph(
-                
-        // containing div
-        document.getElementById("landing_for_cost_plot"),
-    
-        // CSV or path to a CSV file.
-        "user_data/"+run_id_code+"/min_costs.txt",
-        {
-            animatedZooms: true,
-            title: "Click a point to see the solution",
-            drawAxesAtZero: true,
-            includeZero: true,
-            fillGraph: true,
-            highlightCircleSize: 5,
-            pointClickCallback: function(event,point) {
-                cost_plot_clicked(point.xval);
-            },
-            logscale: true,
-            drawPoints: true,
-            labels: ["clones","cost"],
-            xRangePad: 10,
-            yRangePad: 40,
-            
-            axisLineColor: "rgb(220, 220, 220)",
-            drawGrid: true,
-            gridLineColor: "rgb(220, 220, 220)",
-            xlabel: "Number of clones in tumor model",
-            ylabel: "cost (model vs data inaccuracy score)",
-            axes: {
-                x: {
-                    axisLabelFormatter: function(x) {
-                        if (x==Math.floor(x)) {
-                            return x;
-                        }
-                        else {
-                            return "";
-                        }
-                        
-                    }
-                },
-                y: {
-                    
-                }
-            }
-            
-        }
-    );
-    
-    
-    jQuery.ajax({
-        type:"POST",
-        url: "grab_cost_data.php",
-        dataType: 'json',
-        data: {code: run_id_code},
-        success: function (obj) {
-            
-            if ( !('error' in obj) ) {
-                
-                var array = [];
-                var log_array=[];
-                
-                for (i=2;i < obj.length; ++i) {
-                    array.push(obj[i]);
-                    log_array.push(Math.log(obj[i]));
-                } //remove the first two elements: 0 clones and 1 clone make no sense
-                
-                
-                
-               
-                var index = argmin(array);
-                numclones=index+2;
-                
-                cost_plot_clicked(numclones);
-                document.getElementById("plot_info").innerHTML = "<p><strong>Best solution: Tumor is made up of "+ numclones+" clones</strong></p><p>The model with " + numclones + " clones has the lowest cost (inaccuracy score) of "+ array[index]+ ".</p><p>View the solutions for other numbers of clones by clicking on a point on the plot.</p>";
-                document.getElementById("best_solution").value=numclones;
-                
-                
-            }
-        }
-    });
-}
+//
+//function cost_plot_clicked(numclones) {
+//    
+//    
+//    var beginning = '<img src="';
+//    var ending = '" class="plot_img">';
+//    var run_id_code=getUrlVars()["code"];
+//    var filepath = "user_data/" + run_id_code + "/" + numclones + "_clones/";
+//   
+//    var num_soln=0;
+//    
+//    
+//    
+//    var filename="S_" + num_soln + ".png";
+//    document.getElementById("landing_for_current_S").innerHTML = beginning+filepath + filename+ending;
+//    document.getElementById("down_txt_S").href = "./user_data/"+ run_id_code + "/" + numclones +"_clones/S_"+num_soln;
+//    document.getElementById("down_img_S").href = "./user_data/"+ run_id_code + "/" + numclones +"_clones/S_"+num_soln+".png";
+//    
+//    
+//    
+//    var filename="R_" + num_soln + ".png";
+//    document.getElementById("landing_for_current_R").innerHTML = beginning+filepath + filename+ending;
+//    document.getElementById("down_txt_R").href = "./user_data/"+ run_id_code + "/" + numclones +"_clones/R_"+num_soln;
+//    document.getElementById("down_img_R").href = "./user_data/"+ run_id_code + "/" + numclones +"_clones/R_"+num_soln+".png";
+//    
+//    
+//    
+//    var filename="D_" + num_soln + ".png";
+//    document.getElementById("landing_for_current_D").innerHTML = beginning+filepath + filename+ending;
+//    document.getElementById("down_txt_D").href = "./user_data/"+ run_id_code + "/" + numclones +"_clones/D_"+num_soln;
+//    document.getElementById("down_img_D").href = "./user_data/"+ run_id_code + "/" + numclones +"_clones/D_"+num_soln+".png";
+//    
+//    
+//    
+//    var filepath = "user_data/" + run_id_code + "/";
+//    var filename="D_answer.png";
+//    document.getElementById("landing_for_answer_D").innerHTML = beginning+filepath + filename+ending;
+//    document.getElementById("down_txt_D_answer").href = "./user_data/"+ run_id_code + "/D.txt";
+//    document.getElementById("down_img_D_answer").href = "./user_data/"+ run_id_code + "/D_answer.png";
+//    
+//    
+//    document.getElementById("results").style.visibility= 'visible';
+//}
+//
+//
+//
+//
+//function make_cost_plot() {
+//    var run_id_code=getUrlVars()["code"];
+//    
+//
+//    
+//    g = new Dygraph(
+//                
+//        // containing div
+//        document.getElementById("landing_for_cost_plot"),
+//    
+//        // CSV or path to a CSV file.
+//        "user_data/"+run_id_code+"/min_costs.txt",
+//        {
+//            animatedZooms: true,
+//            title: "Click a point to see the solution",
+//            drawAxesAtZero: true,
+//            includeZero: true,
+//            fillGraph: true,
+//            highlightCircleSize: 5,
+//            pointClickCallback: function(event,point) {
+//                cost_plot_clicked(point.xval);
+//            },
+//            logscale: true,
+//            drawPoints: true,
+//            labels: ["clones","cost"],
+//            xRangePad: 10,
+//            yRangePad: 40,
+//            
+//            axisLineColor: "rgb(220, 220, 220)",
+//            drawGrid: true,
+//            gridLineColor: "rgb(220, 220, 220)",
+//            xlabel: "Number of clones in tumor model",
+//            ylabel: "cost (model vs data inaccuracy score)",
+//            axes: {
+//                x: {
+//                    axisLabelFormatter: function(x) {
+//                        if (x==Math.floor(x)) {
+//                            return x;
+//                        }
+//                        else {
+//                            return "";
+//                        }
+//                        
+//                    }
+//                },
+//                y: {
+//                    
+//                }
+//            }
+//            
+//        }
+//    );
+//    
+//    //    remember ajax is asynchronous, so only the stuff inside the success: part will be called after retrieving information. If I put something after the statement, it can't use the info from check_progress.php because it is executed before this php script is called
+//    
+//    jQuery.ajax({
+//        type:"POST",
+//        url: "grab_cost_data.php",
+//        dataType: 'json',
+//        data: {code: run_id_code},
+//        success: function (obj) {
+//            
+//            if ( !('error' in obj) ) {
+//                
+//                var array = [];
+//                var log_array=[];
+//                
+//                for (i=2;i < obj.length; ++i) {
+//                    array.push(obj[i]);
+//                    log_array.push(Math.log(obj[i]));
+//                } //remove the first two elements: 0 clones and 1 clone make no sense
+//                
+//                
+//                
+//               
+//                var index = argmin(array);
+//                numclones=index+2;
+//                
+//                cost_plot_clicked(numclones);
+//                document.getElementById("plot_info").innerHTML = "<p><strong>Best solution: Tumor is made up of "+ numclones+" clones</strong></p><p>The model with " + numclones + " clones has the lowest cost (inaccuracy score) of "+ array[index]+ ".</p><p>View the solutions for other numbers of clones by clicking on a point on the plot.</p>";
+//                document.getElementById("best_solution").value=numclones;
+//                
+//                
+//            }
+//        }
+//    });
+//}
 
 
 function argmin(array) {
@@ -315,5 +317,313 @@ function argmin(array) {
     return minIndex;
 
 }
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////
+///////////////////  new plots using Google API  ////////////////////////
+/////////////////////////////////////////////////////////////////////////
+
+function create_cost_plot(){
+    var run_id_code=getUrlVars()["code"];
+    
+    var filename="user_data/"+run_id_code+"/costs.csv";
+    console.log(filename)
+    
+    // grab the CSV
+   $.get(filename, function(csvString) {
+        // transform the CSV string into a 2-dimensional array
+        var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+        console.log("COST DATA:")
+        
+        console.log(arrayData);
+        console.log(arrayData.length);
+        
+        
+        var candidates=[];
+        for (i=1; i<arrayData.length; i++){
+            console.log(arrayData[i][1]);
+            candidates.push(arrayData[i][1]);
+        }
+        
+        console.log(candidates);
+        
+        console.log(argmin(candidates))
+        index=argmin(candidates)
+        
+        numclones=index+2;
+        
+        
+        console.log(numclones);
+        
+        
+        document.getElementById("plot_info").innerHTML = "<p><strong>Best solution: Tumor is made up of "+ numclones+" clones</strong></p><p>The model with " + numclones + " clones has the lowest cost (inaccuracy score) of "+ candidates[index]+ ".</p><p>View the solutions for other numbers of clones by clicking on a point on the plot.</p>";
+        document.getElementById("best_solution").value=numclones;
+        
+        
+        model_selected(numclones,0);
+        document.getElementById("results").style.visibility= 'visible';
+
+
+        
+        // this new DataTable object holds all the data
+        var data = new google.visualization.arrayToDataTable(arrayData);
+        
+        
+        
+        
+        console.log(data);
+        // this view can select a subset of the data at a time
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0,1]);
+        
+        // set chart options
+        var options = {
+            title: "Best solutions: Lower cost means better model. If adding an extra clone to the analysis does not really decrease the cost, then sticking with a simpler model is the best choice.",
+            hAxis: {title: data.getColumnLabel(0), minValue: data.getColumnRange(0).min-.1, maxValue: data.getColumnRange(0).max+.1,ticks: [2,3,4,5] },
+            vAxis: {title: data.getColumnLabel(1), minValue: 0, maxValue: (data.getColumnRange(1).max)*2,logScale: true},
+            legend: 'none',
+            lineWidth: 4,
+            pointSize: 10,
+            
+            
+        };
+        
+        // create the chart object and draw it
+        var chart = new google.visualization.LineChart(document.getElementById('landing_for_cost_plot'));
+        
+        // The select handler. Call the chart's getSelection() method
+        function selectHandler() {
+            var selectedItem = chart.getSelection()[0];
+            if (selectedItem) {
+                
+                var value = data.getValue(selectedItem.row, 0);
+                model_selected(value); // so numclones=value
+            }
+        }
+        
+        // Listen for the 'select' event, and call my function selectHandler() when
+        // the user selects something on the chart.
+        google.visualization.events.addListener(chart, 'select', selectHandler);
+        
+        chart.draw(view, options);
+        
+    });
+   
+    
+}
+
+
+
+
+function model_selected(numclones,num_soln) {
+    create_S_plot(numclones,num_soln);
+    create_R_plot(numclones,num_soln);
+    create_D_plot(numclones,num_soln);
+    create_D_input_plot();
+}
+
+
+function create_S_plot(numclones,num_soln){
+    var run_id_code=getUrlVars()["code"];
+    
+    var filename="user_data/"+run_id_code+"/"+numclones+"_clones/"+numclones+"_clones_S_soln_"+num_soln+".csv";
+    console.log(filename)
+    
+
+    //grab the CSV
+    $.get(filename, function(csvString) {
+    // transform the CSV string into a 2-dimensional array
+    var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+    
+    console.log(arrayData);
+    // this new DataTable object holds all the data
+    var data = new google.visualization.arrayToDataTable(arrayData);
+    
+    // this view can select a subset of the data at a time
+    var view = new google.visualization.DataView(data);
+    view.setColumns([0,1]);
+    
+    var v_ticks=[]
+    var v_tick_max=Math.ceil(data.getColumnRange(1).max)
+    for (i=0; i<v_tick_max+2; i++){
+        v_ticks.push(i);
+    }
+    
+    // set chart options
+    var options = {
+        //width: 600,
+        //height: 400,
+        legend: { position: 'top', maxLines: 3 },
+        bar: { groupWidth: '75%' },
+        isStacked: false,
+        areaOpacity: 0.0,
+        //connectSteps: false,
+        hAxis: {title: data.getColumnLabel(0)},
+        vAxis: {title: "copy number of DNA segment", maxValue: v_tick_max, ticks: v_ticks},
+    };
+    
+    var chart = new google.visualization.SteppedAreaChart(document.getElementById('landing_for_current_S'));
+    chart.draw(data, options);
+    
+    });
+
+    
+}
+
+
+function create_D_plot(numclones,num_soln){
+    var run_id_code=getUrlVars()["code"];
+    
+    var filename="user_data/"+run_id_code+"/"+numclones+"_clones/"+numclones+"_clones_D_soln_"+num_soln+".csv";
+    console.log(filename)
+    
+
+    //grab the CSV
+    //grab the CSV
+    $.get(filename, function(csvString) {
+    // transform the CSV string into a 2-dimensional array
+    var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+    
+    console.log(arrayData);
+    // this new DataTable object holds all the data
+    var data = new google.visualization.arrayToDataTable(arrayData);
+    
+    // this view can select a subset of the data at a time
+    var view = new google.visualization.DataView(data);
+    view.setColumns([0,1]);
+    
+    var v_ticks=[]
+    var v_tick_max=Math.ceil(data.getColumnRange(1).max)
+    for (i=0; i<v_tick_max+2; i++){
+        v_ticks.push(i);
+    }
+    
+    // set chart options
+    var options = {
+        //width: 600,
+        //height: 400,
+        legend: { position: 'top', maxLines: 3 },
+        bar: { groupWidth: '75%' },
+        isStacked: false,
+        areaOpacity: 0.0,
+        //connectSteps: false,
+        hAxis: {title: data.getColumnLabel(0)},
+        vAxis: {title: "copy number of DNA segment", maxValue: v_tick_max+2, ticks: v_ticks},
+    };
+    
+    var chart = new google.visualization.SteppedAreaChart(document.getElementById('landing_for_current_D'));
+    chart.draw(data, options);
+    
+    });
+
+    
+}
+
+
+function create_D_input_plot(){
+    var run_id_code=getUrlVars()["code"];
+    
+    var filename="user_data/"+run_id_code+"/D_input.csv";
+    console.log(filename)
+    
+
+    //grab the CSV
+    //grab the CSV
+    $.get(filename, function(csvString) {
+    // transform the CSV string into a 2-dimensional array
+    var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+    
+    console.log(arrayData);
+    // this new DataTable object holds all the data
+    var data = new google.visualization.arrayToDataTable(arrayData);
+    
+    // this view can select a subset of the data at a time
+    var view = new google.visualization.DataView(data);
+    view.setColumns([0,1]);
+    
+    var v_ticks=[]
+    var v_tick_max=Math.ceil(data.getColumnRange(1).max)
+    for (i=0; i<v_tick_max+2; i++){
+        v_ticks.push(i);
+    }
+    
+    // set chart options
+    var options = {
+        //width: 600,
+        //height: 400,
+        legend: { position: 'top', maxLines: 3 },
+        bar: { groupWidth: '75%' },
+        isStacked: false,
+        areaOpacity: 0.0,
+        //connectSteps: false,
+        hAxis: {title: data.getColumnLabel(0)},
+        vAxis: {title: "copy number of DNA segment", maxValue: v_tick_max+2, ticks: v_ticks},
+    };
+    
+    var chart = new google.visualization.SteppedAreaChart(document.getElementById('landing_for_answer_D'));
+    chart.draw(data, options);
+    
+    });
+
+    
+}
+
+
+
+function create_R_plot(numclones,num_soln){
+    var run_id_code=getUrlVars()["code"];
+    
+    var filename="user_data/"+run_id_code+"/"+numclones+"_clones/"+numclones+"_clones_R_soln_"+num_soln+".csv";
+    
+    console.log(filename)
+    
+    
+    //grab the CSV
+    $.get(filename, function(csvString) {
+    // transform the CSV string into a 2-dimensional array
+    var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+    
+    
+    console.log(arrayData);
+    // this new DataTable object holds all the data
+    var data = new google.visualization.arrayToDataTable(arrayData);
+    console.log(data);
+    // this view can select a subset of the data at a time
+    var view = new google.visualization.DataView(data);
+    view.setColumns([0,1]);
+    
+    // set chart options
+    var options = {
+        //width: 600,
+        //height: 400,
+        legend: { position: 'top', maxLines: 3 },
+        bar: { groupWidth: '75%' },
+        isStacked: true,
+        hAxis: {title: data.getColumnLabel(0)},
+        vAxis: {title: "fraction of sample"},
+    };
+    
+    var chart = new google.visualization.ColumnChart(document.getElementById('landing_for_current_R'));
+    chart.draw(data, options);
+    
+    });
+
+}
+
+$(window).resize(function() {
+    if(this.resizeTO) clearTimeout(this.resizeTO);
+    this.resizeTO = setTimeout(function() {
+        $(this).trigger('resizeEnd');
+    }, 500);
+});
+
+//redraw graph when window resize is completed  
+$(window).on('resizeEnd', function() {
+    console.log("resizing")
+});
 
 

@@ -75,33 +75,33 @@
 	  <a href="" download class="btn btn-primary" id="download_all_data"  role="button">Download all data from all solutions</a>
 	</div>
 	    
-	<div class="row">
-	    <div class="thumbnail plot_frame"">
-		    <div id="landing_for_current_S" class="plot_img"></div>
-		    <div class="caption">
-			<h2>Copy number profiles of clones</h3>
-			<p>The copy number profiles of the clones that best reproduce the original input data.</p>
-			<p><a href="" download class="btn btn-primary" id="down_img_S" role="button">Download plot image</a>
-			    <a href="" download class="btn btn-default" id="down_txt_S"  role="button">Download data file</a>
-			</p>
-		    </div>
-		
+	
+	<div class="thumbnail plot_frame"">
+		<div id="landing_for_current_S" class="plot_img"></div>
+		<div class="caption">
+		<h2>Copy number profiles of clones</h3>
+		<p>The copy number profiles of the clones that best reproduce the original input data.</p>
+		<p><a href="" download class="btn btn-primary" id="down_img_S" role="button">Download plot image</a>
+			<a href="" download class="btn btn-default" id="down_txt_S"  role="button">Download data file</a>
+		</p>
 		</div>
-	    <div class="thumbnail plot_frame"">
-		    <div id="landing_for_current_R" class="plot_img"></div>
-		    <div class="caption">
-			<h2>Ratios of clones per sample</h3>
-			<p>The ratios of each clone in each sample, showing how each sample is a mixture of the clones.</p>
-			<p><a href="" download class="btn btn-primary" id="down_img_R" role="button">Download plot image</a>
-			    <a href="" download class="btn btn-default" id="down_txt_R" role="button">Download data file</a>
-			</p>
-		    </div>
-		
-	    </div>
+	
 	</div>
+	<div class="thumbnail plot_frame"">
+		<div id="landing_for_current_R" class="plot_img"></div>
+		<div class="caption">
+		<h2>Ratios of clones per sample</h3>
+		<p>The ratios of each clone in each sample, showing how each sample is a mixture of the clones.</p>
+		<p><a href="" download class="btn btn-primary" id="down_img_R" role="button">Download plot image</a>
+			<a href="" download class="btn btn-default" id="down_txt_R" role="button">Download data file</a>
+		</p>
+		</div>
+	
+	</div>
+
 	
 	
-	<div class="row">
+	
 	    <div class="thumbnail plot_frame"">
 		<div id="landing_for_current_D" class="plot_img"></div>
 		<div class="caption">
@@ -115,7 +115,7 @@
 	    </div>
 	
 	
-	    <div class="thumbnail plot_frame"">
+	   <div class="thumbnail plot_frame"">
 		<div id="landing_for_answer_D" class="plot_img"></div>
 		<div class="caption">
 		    <h2>Input sample profiles</h3>
@@ -126,7 +126,6 @@
 		</div>
 	    
 	    </div>
-	</div>
 	
 	
 
@@ -135,13 +134,35 @@
    
     </div>    <!--end of centered middle of body-->
     
+    
+    <div id="chart_cost"></div> <!--For experimenting with Google charts API-->
+    <div id="chart_R"></div> <!--For experimenting with Google charts API-->
+    <div id="chart_S"></div> <!--For experimenting with Google charts API-->
+    <div id="chart_D"></div> <!--For experimenting with Google charts API-->
+    
+    
 <!--   jquery must be first because bootstrap depends on it   -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/dygraph-combined.js"></script>
 <script src="js/copycat_analysis.js"></script>
 
+<script src="js/jquery.csv-0.71.min.js"></script>
 
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      //// Set a callback to run when the Google Visualization API is loaded.
+      //google.setOnLoadCallback(function(){create_R_plot(3,0);});
+      ////google.setOnLoadCallback(function(){create_S_plot(3,0);});
+      //google.setOnLoadCallback(function(){create_cost_plot(3,0);});
+      ////google.setOnLoadCallback(function(){create_D_plot(3,0);});
+    </script>
+
+    
 </body>
 </html>
 

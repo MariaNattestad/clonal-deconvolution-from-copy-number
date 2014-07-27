@@ -29,6 +29,7 @@ EOF
 
 threads=1
 testing=false
+plotting=false
 code=0
 Dfilename=D.txt
 outdir=user_data/0
@@ -141,12 +142,14 @@ else
         fi
 ####################
 	# do individual plotting here
-        if [ -d /mnt/data ];then
-            echo found mplconfigdir, running on QB server
-            python -c "import os; os.environ[ 'MPLCONFIGDIR' ] = '/mnt/data/copycat/mplconfig/'; import make_plots; make_plots.make_plots('$outdir','$Dfilename_and_path',numclones='$i')" &> $outdir/plotting_$i.log
-        else
-            echo didn\'t find mplconfigdir
-            python -c "import make_plots; make_plots.make_plots('$outdir','$Dfilename_and_path',numclones='$i')" &> $outdir/plotting_$i.log
+        if $plotting ; then
+            if [ -d /mnt/data ];then
+                echo found mplconfigdir, running on QB server
+                python -c "import os; os.environ[ 'MPLCONFIGDIR' ] = '/mnt/data/copycat/mplconfig/'; import make_plots; make_plots.make_plots('$outdir','$Dfilename_and_path',numclones='$i')" &> $outdir/plotting_$i.log
+            else
+                echo didn\'t find mplconfigdir
+                python -c "import make_plots; make_plots.make_plots('$outdir','$Dfilename_and_path',numclones='$i')" &> $outdir/plotting_$i.log
+            fi
         fi
 	
 #####################
@@ -165,7 +168,6 @@ echo "collecting costs from all analyses"
 
 python -c "import deconvolve; deconvolve.collect_costs('$outdir')"
 
-echo "plotting everything"
 
 #Dfilename_and_path=$outdir/$Dfilename
 #python -c "import os; os.environ[ 'MPLCONFIGDIR' ] = '/mnt/data/copycat/mplconfig/'; import make_plots; make_plots.make_plots('$outdir','$Dfilename_and_path')" &> $outdir/plotting.log

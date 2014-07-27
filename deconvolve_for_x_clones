@@ -96,7 +96,7 @@ progress_filename=user_data/$code/progress.txt
 echo progress_filename
 echo $D
 echo ====================================================
-echo python -c "import deconvolve; deconvolve.run_deconvolve_from_file('$D','$outdir',numclones='$numclones',testing='$testing',progress_file='progress_filename')"
-python -c "import deconvolve; deconvolve.run_deconvolve_from_file('$D','$outdir',numclones='$numclones',testing='$testing',progress_file='$progress_filename')"
+echo python -c "import deconvolve; deconvolve.run_deconvolve_from_file('$D','$outdir',numclones='$numclones',testing='$testing',progress_file='progress_filename',general_directory='user_data/$code/')"
+python -c "import deconvolve; deconvolve.run_deconvolve_from_file('$D','$outdir',numclones='$numclones',testing='$testing',progress_file='$progress_filename',general_directory='user_data/$code/')"
 
 echo finished deconvolve_for_x_clones

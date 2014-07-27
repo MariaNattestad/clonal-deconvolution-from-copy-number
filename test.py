@@ -29,11 +29,11 @@ def test_deconvolve_from_file():
     print outdir
     progress_file=outdir+"progress.txt"
     
-    dec.run_deconvolve_from_file(outdir+Dfilename,outdir+subdir,numclones=3,progress_file="%sprogress.txt" % outdir,testing=True)
+    dec.run_deconvolve_from_file(outdir+Dfilename,outdir+subdir,numclones=3,progress_file="%sprogress.txt" % outdir,testing=True,general_directory="%s")
     
     
     
-test_deconvolve_from_file ()
+#test_deconvolve_from_file()
 
 
 def test_deconvolve():
@@ -77,8 +77,12 @@ def test2():
     
     
 #test2()
-        
-        
+def test_arrays():
+    A =numpy.zeros([10,3])
+    print A
+    print A.T
+test_arrays()
+
 def plotting_test():
     #
     #D=plotting.loadmatrix("test1_D.txt")

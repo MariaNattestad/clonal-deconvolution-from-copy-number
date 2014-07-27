@@ -23,3 +23,16 @@ clones	5	progress	26
 clones	5	progress	9
 clones	5	progress	82
 clones	5	progress	100
+clones	2	progress	80
+clones	2	progress	100
+clones	3	progress	60
+clones	3	progress	100
+clones	4	progress	31
+clones	4	progress	64
+clones	4	progress	97
+clones	4	progress	100
+clones	5	progress	23
+clones	5	progress	47
+clones	5	progress	72
+clones	5	progress	98
+clones	5	progress	100
