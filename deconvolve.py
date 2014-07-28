@@ -225,7 +225,7 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 			line=D[b]
 			f.write("bin %d" % (b+1))
 			for s in xrange(numsamples):
-				f.write(",%.6f" % (line[s]))
+				f.write(",%.2f" % (line[s]))
 			f.write("\n")
 		f.close()
 
@@ -245,7 +245,7 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 			line=D_input[b]
 			f.write("bin %d" % (b+1))
 			for s in xrange(numsamples):
-				f.write(",%.6f" % (line[s]))
+				f.write(",%.2f" % (line[s]))
 			f.write("\n")
 		f.close()
 
@@ -303,9 +303,80 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 #			f.close()
 #		
 
-		f = open("%s/cost_%d" % (outdir,i),'w')
-		f.write("%.10f" % sorted_costs[i])
-		f.close()
+
+
+
+
+###########################################################################################
+#########  WRITE OPTIMIZED FILES FOR FASTER GOOGLE CHARTS JAVASCRIPT RENDERING  ###########
+###########################################################################################
+#
+##		Write S to file
+#		f=open("%s/%d_clones_S_soln_%d_opt.csv" % (outdir,numclones,i),'w')
+#		header="bins"
+#		previousline=array([0])
+#		for c in xrange(numclones):
+#			header+=",clone %d" % (c+1)
+#		f.write(header+"\n")
+#		for b in xrange(numbins):
+#			line=S[b]
+#			
+#			allmatch=(previousline==line).all()
+#			if allmatch==False:
+#				f.write("bin %d" % (b+1))
+#				for c in xrange(numclones):
+#					f.write(",%d" % (line[c]))
+#				f.write("\n")
+#			previousline=line
+#		f.close()
+#		
+#
+#		#		Write D to file
+#		f=open("%s/%d_clones_D_soln_%d_opt.csv" % (outdir,numclones,i),'w')
+#		header="bins"
+#		previousline=array([0])
+#		for s in xrange(numsamples):
+#			header+=",sample %d" % (s+1)
+#		f.write(header+"\n")
+#		for b in xrange(numbins):
+#			line=D[b]
+#			allmatch=(previousline==line).all()
+#			if allmatch==False:
+#				f.write("bin %d" % (b+1))
+#				for s in xrange(numsamples):
+#					f.write(",%.6f" % (line[s]))
+#				f.write("\n")
+#			previousline=line
+#		f.close()
+#
+#
+#		##	Write D_input to file but only if it doesn't exist already
+#	
+#		D_input_filename="%s/D_input_opt.csv" % (general_directory)
+#		if True: #os.path.exists(D_input_filename)==False:
+#			f=open(D_input_filename,'w')
+#			header="bins"
+#			previousline=array([0])
+#			for s in xrange(numsamples):
+#				header+=",sample %d" % (s+1)
+#			f.write(header+"\n")
+#			for b in xrange(numbins):
+#				line=D_input[b]
+#				allmatch=(previousline==line).all()
+#				if allmatch==False:
+#					f.write("bin %d" % (b+1))
+#					for s in xrange(numsamples):
+#						f.write(",%.6f" % (line[s]))
+#					f.write("\n")
+#				previousline=line
+#			f.close()
+#
+#		f = open("%s/cost_%d" % (outdir,i),'w')
+#		f.write("%.10f" % sorted_costs[i])
+#		f.close()
+
+
+
 
 def loadmatrix(filename):
 	# load a matrix from the file

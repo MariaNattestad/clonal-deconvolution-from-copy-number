@@ -1,6 +1,0 @@
-Run directory: user_data/yYPsXxROG6cCy4smJAc6
-checking file user_data/yYPsXxROG6cCy4smJAc6/D.txt
-(5, 5000)
-Data indicates 5 samples, and the genome is split into 5000 bins
-(If this is false, make sure the input file has the samples as rows and the bins as columns)
-finished prepare_copycat

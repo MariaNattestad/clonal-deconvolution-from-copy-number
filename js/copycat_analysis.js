@@ -153,8 +153,6 @@ function test() {
     alert(run_id_code);
 }
 
-$(document).ready(function() {showProgress();});
-
 
 
 ////for testing only
@@ -401,7 +399,7 @@ function create_cost_plot(){
             if (selectedItem) {
                 
                 var value = data.getValue(selectedItem.row, 0);
-                model_selected(value); // so numclones=value
+                model_selected(value,0); // so numclones=value, num_soln=0 (best solution)
             }
         }
         
@@ -420,10 +418,17 @@ function create_cost_plot(){
 
 
 function model_selected(numclones,num_soln) {
+    document.getElementById("results").style.visibility= 'visible';
+  
+    
     create_S_plot(numclones,num_soln);
+    
     create_R_plot(numclones,num_soln);
+    
     create_D_plot(numclones,num_soln);
+    
     create_D_input_plot();
+    
 }
 
 
@@ -436,43 +441,57 @@ function create_S_plot(numclones,num_soln){
 
     //grab the CSV
     $.get(filename, function(csvString) {
-    // transform the CSV string into a 2-dimensional array
-    var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+        var before=new Date().getTime();
     
-    console.log(arrayData);
-    // this new DataTable object holds all the data
-    var data = new google.visualization.arrayToDataTable(arrayData);
-    
-    // this view can select a subset of the data at a time
-    var view = new google.visualization.DataView(data);
-    view.setColumns([0,1]);
-    
-    var v_ticks=[]
-    var v_tick_max=Math.ceil(data.getColumnRange(1).max)
-    for (i=0; i<v_tick_max+2; i++){
-        v_ticks.push(i);
-    }
-    
-    // set chart options
-    var options = {
-        //width: 600,
-        //height: 400,
-        legend: { position: 'top', maxLines: 3 },
-        bar: { groupWidth: '75%' },
-        isStacked: false,
-        areaOpacity: 0.0,
-        //connectSteps: false,
-        hAxis: {title: data.getColumnLabel(0)},
-        vAxis: {title: "copy number of DNA segment", maxValue: v_tick_max, ticks: v_ticks},
-    };
-    
-    var chart = new google.visualization.SteppedAreaChart(document.getElementById('landing_for_current_S'));
-    chart.draw(data, options);
-    
+        
+        // transform the CSV string into a 2-dimensional array
+        var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+        
+        
+        // this new DataTable object holds all the data
+        var data = new google.visualization.arrayToDataTable(arrayData);
+        
+        // this view can select a subset of the data at a time
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0,1]);
+        
+        var v_ticks=[]
+        var v_tick_max=Math.ceil(data.getColumnRange(1).max)
+        for (i=0; i<v_tick_max+2; i++){
+            v_ticks.push(i);
+        }
+        
+        // set chart options
+        var options = {
+            //width: 600,
+            //height: 400,
+            legend: { position: 'top', maxLines: 3 },
+            bar: { groupWidth: '75%' },
+            isStacked: false,
+            areaOpacity: 0.0,
+            //connectSteps: false,
+            hAxis: {title: data.getColumnLabel(0)},
+            vAxis: {title: "copy number of DNA segment", maxValue: v_tick_max, ticks: v_ticks},
+        };
+        
+        var now=new Date().getTime();
+        var millis=now-before;
+        console.log("Create_S_plot took "+ millis + " milliseconds to get data from file");
+        before=now;
+        
+        var chart = new google.visualization.SteppedAreaChart(document.getElementById('landing_for_current_S'));
+        chart.draw(data, options);
+        
+        var now=new Date().getTime();
+        var millis=now-before;
+        console.log("Create_S_plot took "+ millis + " milliseconds to draw the chart");
+        
+        
     });
 
     
 }
+
 
 
 function create_D_plot(numclones,num_soln){
@@ -481,6 +500,8 @@ function create_D_plot(numclones,num_soln){
     var filename="user_data/"+run_id_code+"/"+numclones+"_clones/"+numclones+"_clones_D_soln_"+num_soln+".csv";
     console.log(filename)
     
+    var before=new Date().getTime();
+
 
     //grab the CSV
     //grab the CSV
@@ -488,7 +509,7 @@ function create_D_plot(numclones,num_soln){
     // transform the CSV string into a 2-dimensional array
     var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
     
-    console.log(arrayData);
+    
     // this new DataTable object holds all the data
     var data = new google.visualization.arrayToDataTable(arrayData);
     
@@ -515,14 +536,24 @@ function create_D_plot(numclones,num_soln){
         vAxis: {title: "copy number of DNA segment", maxValue: v_tick_max+2, ticks: v_ticks},
     };
     
+    
+    var now=new Date().getTime();
+    var millis=now-before;
+    console.log("Create_D_plot took "+ millis + " milliseconds to get data from file");
+    before=now;
+
     var chart = new google.visualization.SteppedAreaChart(document.getElementById('landing_for_current_D'));
     chart.draw(data, options);
     
+    var now=new Date().getTime();
+    var millis=now-before;
+    console.log("Create_D_plot took "+ millis + " milliseconds to draw the chart");
+
     });
 
+   
     
 }
-
 
 function create_D_input_plot(){
     var run_id_code=getUrlVars()["code"];
@@ -530,6 +561,8 @@ function create_D_input_plot(){
     var filename="user_data/"+run_id_code+"/D_input.csv";
     console.log(filename)
     
+    var before=new Date().getTime();
+
 
     //grab the CSV
     //grab the CSV
@@ -537,7 +570,7 @@ function create_D_input_plot(){
     // transform the CSV string into a 2-dimensional array
     var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
     
-    console.log(arrayData);
+   
     // this new DataTable object holds all the data
     var data = new google.visualization.arrayToDataTable(arrayData);
     
@@ -564,9 +597,20 @@ function create_D_input_plot(){
         vAxis: {title: "copy number of DNA segment", maxValue: v_tick_max+2, ticks: v_ticks},
     };
     
+    var now=new Date().getTime();
+    var millis=now-before;
+    console.log("Create_D_input_plot took "+ millis + " milliseconds to get data from file");
+    before=now;
+
     var chart = new google.visualization.SteppedAreaChart(document.getElementById('landing_for_answer_D'));
     chart.draw(data, options);
     
+    
+        
+    var now=new Date().getTime();
+    var millis=now-before;
+    console.log("Create_D_input_plot took "+ millis + " milliseconds to draw the chart");
+
     });
 
     
@@ -580,7 +624,8 @@ function create_R_plot(numclones,num_soln){
     var filename="user_data/"+run_id_code+"/"+numclones+"_clones/"+numclones+"_clones_R_soln_"+num_soln+".csv";
     
     console.log(filename)
-    
+    var before=new Date().getTime();
+
     
     //grab the CSV
     $.get(filename, function(csvString) {
@@ -588,10 +633,9 @@ function create_R_plot(numclones,num_soln){
     var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
     
     
-    console.log(arrayData);
     // this new DataTable object holds all the data
     var data = new google.visualization.arrayToDataTable(arrayData);
-    console.log(data);
+    
     // this view can select a subset of the data at a time
     var view = new google.visualization.DataView(data);
     view.setColumns([0,1]);
@@ -607,9 +651,21 @@ function create_R_plot(numclones,num_soln){
         vAxis: {title: "fraction of sample"},
     };
     
+    var now=new Date().getTime();
+    var millis=now-before;
+    console.log("Create_R_plot took "+ millis + " milliseconds to get data from file");
+    before=now;
+
     var chart = new google.visualization.ColumnChart(document.getElementById('landing_for_current_R'));
     chart.draw(data, options);
     
+    
+    
+    var now=new Date().getTime();
+    var millis=now-before;
+    console.log("Create_R_plot took "+ millis + " milliseconds to draw the chart");
+
+
     });
 
 }
@@ -627,3 +683,11 @@ $(window).on('resizeEnd', function() {
 });
 
 
+
+
+//
+//
+$(document).ready(function() {showProgress();});
+////
+//
+//$(document).ready(function() {create_cost_plot();});
