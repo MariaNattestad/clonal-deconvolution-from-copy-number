@@ -61,7 +61,7 @@
     <!--COST PLOT-->
     </div>
 	
-    <div id="results" style="visibility: hidden;">
+    <div class = "center" id="results" style="visibility: hidden;">
 	
 	<div class="panel panel-info center">
 	  <div class="panel-heading">
@@ -155,14 +155,9 @@
       // Load the Visualization API and the piechart package.
       google.load('visualization', '1.0', {'packages':['corechart']});
 
-      //// Set a callback to run when the Google Visualization API is loaded.
-      //google.setOnLoadCallback(function(){create_R_plot(3,0);});
-      ////google.setOnLoadCallback(function(){create_S_plot(3,0);});
-      //google.setOnLoadCallback(function(){create_cost_plot(3,0);});
-      ////google.setOnLoadCallback(function(){create_D_plot(3,0);});
     </script>
 
-    
+ 
 </body>
 </html>
 
