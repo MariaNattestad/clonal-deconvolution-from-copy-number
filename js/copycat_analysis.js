@@ -429,6 +429,8 @@ function model_selected(numclones,num_soln) {
     
     create_D_input_plot();
     
+    
+    console.log(input_D);
 }
 
 
@@ -554,6 +556,7 @@ function create_D_plot(numclones,num_soln){
    
     
 }
+var input_D;
 
 function create_D_input_plot(){
     var run_id_code=getUrlVars()["code"];
@@ -563,14 +566,57 @@ function create_D_input_plot(){
     
     var before=new Date().getTime();
 
-
-    //grab the CSV
-    //grab the CSV
-    $.get(filename, function(csvString) {
-    // transform the CSV string into a 2-dimensional array
-    var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+    if (typeof input_D == 'undefined') {
+        console.log("input_D has not been loaded previously, grabbing it from file.")
+        
+        $.get(filename, function(csvString) {
+            // transform the CSV string into a 2-dimensional array
+            var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+            
+           
+            input_D=arrayData;
+            
+            var now=new Date().getTime();
+            var millis=now-before;
+            console.log("Create_D_input_plot took "+ millis + " milliseconds to get data from file");
+            before=now;
+            
+            
+            create_D_input_plot_from_array();
+            
+            
+            var now=new Date().getTime();
+            var millis=now-before;
+            console.log("Create_D_input_plot took "+ millis + " milliseconds to draw the chart");
+            
+            
+        });
+        
+    }
+    else {
+        
+        var now=new Date().getTime();
+        var millis=now-before;
+        console.log("Create_D_input_plot took "+ millis + " milliseconds to get data from global variable");
+        before=now;
+        
+        create_D_input_plot_from_array();
+        
+        var now=new Date().getTime();
+        var millis=now-before;
+        console.log("Create_D_input_plot took "+ millis + " milliseconds to draw the chart");
+        
+    }
     
-   
+    
+}
+
+
+
+function create_D_input_plot_from_array() {
+    
+    arrayData=input_D; //input_D is global 
+    
     // this new DataTable object holds all the data
     var data = new google.visualization.arrayToDataTable(arrayData);
     
@@ -597,25 +643,13 @@ function create_D_input_plot(){
         vAxis: {title: "copy number of DNA segment", maxValue: v_tick_max+2, ticks: v_ticks},
     };
     
-    var now=new Date().getTime();
-    var millis=now-before;
-    console.log("Create_D_input_plot took "+ millis + " milliseconds to get data from file");
-    before=now;
-
+    
     var chart = new google.visualization.SteppedAreaChart(document.getElementById('landing_for_answer_D'));
     chart.draw(data, options);
     
     
-        
-    var now=new Date().getTime();
-    var millis=now-before;
-    console.log("Create_D_input_plot took "+ millis + " milliseconds to draw the chart");
 
-    });
-
-    
 }
-
 
 
 function create_R_plot(numclones,num_soln){
