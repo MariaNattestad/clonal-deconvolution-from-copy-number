@@ -17,15 +17,18 @@
 
 
 <?php
-    $debug="-d"; //put -d here when testing    
+    $debug=""; //put -d here when testing    
     $aResult = array();
     if( !isset($_POST['code']) ) { $aResult['error'] = 'ERROR: No code passed to run.php';}
     $code=$_POST["code"];
     $url="analysis.php?code=$code";
+    $run_url="run_now.php";
     $filename="user_uploads/$code";
     
     $back_button= "<form action=\"./\" method=GET><button type=\"submit\" class=\"center btn btn-danger\">Back</button></form>";
-    $continue_button= "<form action=\"$url\"><input type=\"hidden\" name = \"code\" value=\"$code\"><button type=\"submit\" class=\"center btn btn-success\">Continue</button></form>";
+    //$continue_button= "<form action=\"$url\"><input type=\"hidden\" name = \"code\" value=\"$code\"><button type=\"submit\" class=\"center btn btn-success\">Continue</button></form>";
+    
+    $continue_button= "<form action=\"$run_url\" method=\"post\"><input type=\"hidden\" name = \"code\" value=\"$code\"><button type=\"submit\" class=\"center btn btn-success\">Continue</button></form>";
     
     
     if (!file_exists ($filename)) {
@@ -72,12 +75,13 @@
         }
         
         if (!file_exists("user_data/$code")) {
-            $oldmask = umask(0);
-            mkdir("user_data/$code");
-            umask($oldmask);
+            //$oldmask = umask(0);
+            //mkdir("user_data/$code");
+            //umask($oldmask);
+            //
+            //echo shell_exec("./prepare_copycat -c $code &> user_data/$code/prepare_copycat.log"); 
+            //echo shell_exec("./run_copycat $debug -c $code &> user_data/$code/run_copycat.log &");
             
-            echo shell_exec("./prepare_copycat -c $code &> user_data/$code/prepare_copycat.log"); 
-            echo shell_exec("./run_copycat $debug -c $code &> user_data/$code/run_copycat.log &");
         }
         else {
             echo "<div class=\"alert center alert-info\" role=\"alert\">File already submitted once. Please continue.</div>";
