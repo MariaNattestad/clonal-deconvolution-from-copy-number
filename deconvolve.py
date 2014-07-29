@@ -171,10 +171,23 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 
 
 	for i in xrange(num_solns_to_display):
+		
+	#	Write costs to individual files for later pickup by collect_costs() into costs.csv
+		f = open("%s/cost_%d" % (outdir,i),'w')
+		f.write("%.10f" % sorted_costs[i])
+		f.close()
+	
+	
+	
 		S = sorted_S[i]
 		
 		R = sorted_R[i]
 		D=numpy.dot(R,S)
+		
+		
+		S=S.T
+		D=D.T
+		
 		
 #	Write R to file
 		f=open("%s/%d_clones_R_soln_%d.csv" % (outdir,numclones,i),'w')
@@ -192,8 +205,6 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 		f.close()
 		
 		
-		S=S.T
-		D=D.T
 		
 		
 		
@@ -215,7 +226,7 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 		
 		
 		
-		#		Write D to file
+	#		Write D to file
 		f=open("%s/%d_clones_D_soln_%d.csv" % (outdir,numclones,i),'w')
 		header="bins"
 		
@@ -288,10 +299,11 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 		f.close()
 	
 	
-		
 
 
 	D_input=D_input.T
+	
+	
 ##	Write D_input to file but only if it doesn't exist already
 
 	D_input_filename="%s/D_input.csv" % (general_directory)
@@ -310,7 +322,7 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 			f.write("\n")
 		f.close()
 	
-	##	Write D_input to file but only if it doesn't exist already
+##	Write D_input to file but only if it doesn't exist already
 	
 	D_input_filename="%s/D_input_opt.csv" % (general_directory)
 	if True: #os.path.exists(D_input_filename)==False:
@@ -337,10 +349,6 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 			previousline=line
 		f.close()
 
-#	Write costs to individual files for later pickup by collect_costs() into costs.csv
-	f = open("%s/cost_%d" % (outdir,i),'w')
-	f.write("%.10f" % sorted_costs[i])
-	f.close()
 
 
 

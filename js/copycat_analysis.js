@@ -44,8 +44,6 @@ function showProgress() {
                         disabled="";
                         active="";
                         success="progress-bar-success";
-                        ready_input();
-                        ready_solution(i,0);
                     }
                     else if (prog[i]>=50) {
                         colors[i]="warning";
@@ -100,8 +98,7 @@ function showProgress() {
 }
 
 
-function check_costs_exist(counter)
-{
+function check_costs_exist(counter) {
     
     var run_id_code=getUrlVars()["code"];
     var cost_url="user_data/"+run_id_code + "/costs.csv";
@@ -148,21 +145,19 @@ function getUrlVars() {
 //}
 //
 
-function argmin(array) {
-    var min = parseFloat(array[0]);
-    var minIndex = 0;
 
+function argmin(array) {
+    var min = parseFloat(array[0])
+    var minIndex = 0
     for (var i = 1; i < array.length; i++) {
-       
         if (parseFloat(array[i]) < min) {
             minIndex = i;
             min = array[i];
         }
     }
-    return minIndex;
-
-}
-
+    return minIndex
+};
+//
 
 
 
@@ -172,7 +167,7 @@ function argmin(array) {
 ///////////////////  new plots using Google API  ////////////////////////
 /////////////////////////////////////////////////////////////////////////
 
-function create_cost_plot(){
+function create_cost_plot() {
     var run_id_code=getUrlVars()["code"];
     
     var filename="user_data/"+run_id_code+"/costs.csv";
@@ -252,19 +247,19 @@ function create_cost_plot(){
 
 
 function model_selected(numclones,num_soln) {
+    
     document.getElementById("results").style.visibility= 'visible';
-  
-    create_all_plots(numclones,num_soln);
-    //create_S_plot(numclones,num_soln);
-    //
-    //create_R_plot(numclones,num_soln);
-    //
-    //create_D_plot(numclones,num_soln);
-    //
+
+    create_S_plot(numclones,num_soln);
+    create_R_plot(numclones,num_soln);
+    create_D_plot(numclones,num_soln);
+    
     create_D_input_plot();
-    
-    
+       
 }
+
+
+
 
 
 function create_S_plot(numclones,num_soln){
@@ -282,17 +277,6 @@ function create_S_plot(numclones,num_soln){
         // transform the CSV string into a 2-dimensional array
         var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
         
-         if (typeof solutions=='undefined') {
-            console.log("No solutions loaded previously");
-            solutions=[];
-            solutions[numclones] = {D: [],R: [], S: []};
-        }
-        else if (typeof solutions[numclones]=='undefined') {
-            solutions[numclones] = {D: [],R: [], S: []};
-        }
-        
-        solutions[numclones].D=arrayData;
-        
         plot_S_from_array(arrayData);
         
         
@@ -303,10 +287,8 @@ function create_S_plot(numclones,num_soln){
 
 function plot_S_from_array(arrayData) {
     
-    // this new DataTable object holds all the data
     var data = new google.visualization.arrayToDataTable(arrayData);
     
-    // this view can select a subset of the data at a time
     var view = new google.visualization.DataView(data);
     view.setColumns([0,1]);
     
@@ -314,19 +296,9 @@ function plot_S_from_array(arrayData) {
     var v_tick_max=Math.ceil(data.getColumnRange(1).max)
     var h_tick_max=Math.ceil(data.getColumnRange(0).max)
     
-    // set chart options
+    
     var options = DS_options(v_tick_max,h_tick_max);
-    //var options = {
-    //    width: DS_width,
-    //    height: DS_height,
-    //    legend: { position: 'top', maxLines: 3 },
-    //    bar: { groupWidth: '75%' },
-    //    isStacked: false,
-    //    areaOpacity: 0.0,
-    //    //connectSteps: false,
-    //    hAxis: {title: data.getColumnLabel(0)},
-    //    vAxis: {title: "copy number of DNA segment", maxValue: v_tick_max, ticks: v_ticks},
-    //};
+    
     
     var before=new Date().getTime();
   
@@ -347,10 +319,11 @@ function plot_S_from_array(arrayData) {
     
 }
 
+
 function create_D_plot(numclones,num_soln){
     var run_id_code=getUrlVars()["code"];
     
-    var filename="user_data/"+run_id_code+"/"+numclones+"_clones/"+numclones+"_clones_D_soln_"+num_soln+"opt.csv";
+    var filename="user_data/"+run_id_code+"/"+numclones+"_clones/"+numclones+"_clones_D_soln_"+num_soln+"_opt.csv";
     console.log(filename)
     
     var before=new Date().getTime();
@@ -361,22 +334,10 @@ function create_D_plot(numclones,num_soln){
         // transform the CSV string into a 2-dimensional array
         var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
         
-        if (typeof solutions=='undefined') {
-            console.log("No solutions loaded previously");
-            solutions=[];
-            solutions[numclones] = {D: [],R: [], S: []};
-        }
-        else if (typeof solutions[numclones]=='undefined') {
-            solutions[numclones] = {D: [],R: [], S: []};
-        }
-        
-        solutions[numclones].D=arrayData;
-        
         plot_D_from_array(arrayData);
         
     });    
 }
-
 
 function plot_D_from_array(arrayData) {
     // this new DataTable object holds all the data
@@ -391,19 +352,7 @@ function plot_D_from_array(arrayData) {
     
     // set chart options
     var options = DS_options(v_tick_max,h_tick_max);
-    //var options = {
-    //    width: DS_width,
-    //    height: DS_height,
-    //    legend: { position: 'top', maxLines: 3 },
-    //    bar: { groupWidth: '75%' },
-    //    isStacked: false,
-    //    areaOpacity: 0.0,
-    //    //connectSteps: false,
-    //    hAxis: {title: data.getColumnLabel(0)},
-    //    vAxis: {title: "copy number of DNA segment", maxValue: v_tick_max+2, ticks: v_ticks},
-    //};
-    //
-    
+
     var before=new Date().getTime();
 
     
@@ -449,7 +398,7 @@ function create_D_input_plot(){
             before=now;
             
             
-            create_D_input_plot_from_array();
+            plot_D_input_from_array();
             
             
             var now=new Date().getTime();
@@ -467,7 +416,7 @@ function create_D_input_plot(){
         console.log("Create_D_input_plot took "+ millis + " milliseconds to get data from global variable");
         before=now;
         
-        create_D_input_plot_from_array();
+        plot_D_input_from_array();
         
         var now=new Date().getTime();
         var millis=now-before;
@@ -478,35 +427,19 @@ function create_D_input_plot(){
     
 }
 
-
-
-function create_D_input_plot_from_array() {
+function plot_D_input_from_array() {
     
     arrayData=input_D; //input_D is global 
     
-    // this new DataTable object holds all the data
     var data = new google.visualization.arrayToDataTable(arrayData);
-    
-    // this view can select a subset of the data at a time
+     
     var view = new google.visualization.DataView(data);
     view.setColumns([0,1]);
     
     var v_tick_max=Math.ceil(data.getColumnRange(1).max)
     var h_tick_max=Math.ceil(data.getColumnRange(0).max)
-    
-    // set chart options
+   
     var options = DS_options(v_tick_max,h_tick_max);
-    //var options = {
-    //    width: DS_width,
-    //    height: DS_height,
-    //    legend: { position: 'top', maxLines: 3 },
-    //    bar: { groupWidth: '75%' },
-    //    isStacked: false,
-    //    areaOpacity: 0.0,
-    //    //connectSteps: false,
-    //    hAxis: {title: data.getColumnLabel(0)},
-    //    vAxis: {title: "copy number of DNA segment", maxValue: v_tick_max+2, ticks: v_ticks},
-    //};
     
     var chart_div = document.getElementById('landing_for_answer_D')
     var chart = new google.visualization.LineChart(chart_div);
@@ -536,54 +469,10 @@ function create_R_plot(numclones,num_soln){
     $.get(filename, function(csvString) {
         // transform the CSV string into a 2-dimensional array
         var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
-        
-         if (typeof solutions=='undefined') {
-            console.log("No solutions loaded previously");
-            solutions=[];
-            solutions[numclones] = {D: [],R: [], S: []};
-        }
-        else if (typeof solutions[numclones]=='undefined') {
-            solutions[numclones] = {D: [],R: [], S: []};
-        }
-        
-        solutions[numclones].R=arrayData;
-        
+    
         plot_R_from_array(arrayData);
-        //// this new DataTable object holds all the data
-        //var data = new google.visualization.arrayToDataTable(arrayData);
-        //
-        //// this view can select a subset of the data at a time
-        //var view = new google.visualization.DataView(data);
-        //view.setColumns([0,1]);
-        //
-        //// set chart options
-        //var options = {
-        //    //width: 600,
-        //    //height: 400,
-        //    legend: { position: 'top', maxLines: 3 },
-        //    bar: { groupWidth: '75%' },
-        //    isStacked: true,
-        //    hAxis: {title: data.getColumnLabel(0)},
-        //    vAxis: {title: "fraction of sample"},
-        //};
-        //
-        //var now=new Date().getTime();
-        //var millis=now-before;
-        //console.log("Create_R_plot took "+ millis + " milliseconds to get data from file");
-        //before=now;
-        //
-        //var chart = new google.visualization.ColumnChart(document.getElementById('landing_for_current_R'));
-        //chart.draw(data, options);
-        //
-        //
-        //
-        //var now=new Date().getTime();
-        //var millis=now-before;
-        //console.log("Create_R_plot took "+ millis + " milliseconds to draw the chart");
-
-
+        
     });
-
 }
 
 function plot_R_from_array(arrayData) {
@@ -638,17 +527,7 @@ function plot_D_diff(numclones,num_soln){
         // transform the CSV string into a 2-dimensional array
         var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
         
-        //if (typeof solutions=='undefined') {
-        //	console.log("No solutions loaded previously");
-        //	solutions=[];
-        //	solutions[numclones] = {D: [],R: [], S: []};
-        //}
-        //else if (typeof solutions[numclones]=='undefined') {
-        //	solutions[numclones] = {D: [],R: [], S: []};
-        //}
-        //
-        //solutions[numclones].D=arrayData;
-        //
+        
         plot_D_diff_from_array(arrayData);
         
     });    
@@ -668,28 +547,17 @@ function plot_D_diff_from_array(arrayData) {
     
     // set chart options
     var options = DS_options(v_tick_max,h_tick_max);
-    //var options = {
-    //    width: DS_width,
-    //    height: DS_height,
-    //    legend: { position: 'top', maxLines: 3 },
-    //    bar: { groupWidth: '75%' },
-    //    isStacked: false,
-    //    areaOpacity: 0.0,
-    //    //connectSteps: false,
-    //    hAxis: {title: data.getColumnLabel(0)},
-    //    vAxis: {title: "copy number of DNA segment", maxValue: v_tick_max+2, ticks: v_ticks},
-    //};
-    //
+   
     
     var before=new Date().getTime();
     
     var chart_div = document.getElementById('landing_for_D_diff')
     var chart = new google.visualization.LineChart(chart_div);
     
-    google.visualization.events.addListener(chart, 'ready', function () {
-        chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
-        console.log(chart_div.innerHTML);
-    });
+    //google.visualization.events.addListener(chart, 'ready', function () {
+    //    chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+    //    console.log(chart_div.innerHTML);
+    //});
         
         
     chart.draw(data, options);
@@ -717,157 +585,7 @@ $(window).on('resizeEnd', function() {
 });
 
 
-function ready_solution(numclones,num_soln) {
-    if (typeof solutions=='undefined') {
-        console.log("No solutions loaded previously");
-        solutions=[];
-    }
-    solutions[numclones] = {D: [],R: [], S: []};
-   
-    var run_id_code=getUrlVars()["code"];
-    
-    
-    
-    ////////////   D   /////////////////
-    var D_filename="user_data/"+run_id_code+"/"+numclones+"_clones/"+numclones+"_clones_D_soln_"+num_soln+"_opt.csv";
-    var before=new Date().getTime();
-    $.get(D_filename, function(csvString) {
-        // transform the CSV string into a 2-dimensional array
-        var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
-        
-        
-        solutions[numclones].D = arrayData;
-        
-        var now=new Date().getTime();
-        var millis=now-before;
-        console.log("D: ready_solution took "+ millis + " milliseconds to get data from file");
-        
-    });
-    
-    ////////////   R   /////////////////
-    var R_filename="user_data/"+run_id_code+"/"+numclones+"_clones/"+numclones+"_clones_R_soln_"+num_soln+".csv";
-    var before=new Date().getTime();
-    $.get(R_filename, function(csvString) {
-        // transform the CSV string into a 2-dimensional array
-        var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
-        
-        
-        solutions[numclones].R = arrayData;
-        
-        var now=new Date().getTime();
-        var millis=now-before;
-        console.log("R: ready_solution took "+ millis + " milliseconds to get data from file");
-        
-    });
-    
-    ////////////   S   /////////////////
-    var S_filename="user_data/"+run_id_code+"/"+numclones+"_clones/"+numclones+"_clones_S_soln_"+num_soln+"_opt.csv";
-    var before=new Date().getTime();
-    $.get(S_filename, function(csvString) {
-        // transform the CSV string into a 2-dimensional array
-        var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
-        
-        
-        solutions[numclones].S = arrayData;
-        
-        var now=new Date().getTime();
-        var millis=now-before;
-        console.log("S: ready_solution took "+ millis + " milliseconds to get data from file");
-        
-    });
 
- 
-}
-
-function ready_input() {
-    var run_id_code=getUrlVars()["code"];
-    
-    var filename="user_data/"+run_id_code+"/D_input_opt.csv";
-    console.log(filename)
-    
-    var before=new Date().getTime();
-
-    if (typeof input_D == 'undefined') {
-        console.log("input_D has not been loaded previously, grabbing it from file.")
-        
-        $.get(filename, function(csvString) {
-            // transform the CSV string into a 2-dimensional array
-            var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
-            
-            
-            input_D=arrayData;
-            
-            var now=new Date().getTime();
-            var millis=now-before;
-            console.log("Create_D_input_plot took "+ millis + " milliseconds to get data from file");
-            
-        });
-    }
-    else {
-        console.log("input_D has been loaded already")
-    }
-}
-
-
-
-
-
-
-
-function create_all_plots(numclones,num_soln){
-    var run_id_code=getUrlVars()["code"];
-    
-    
-    if (typeof solutions == 'undefined') {
-        console.log("No solutions have not been loaded previously, grabbing solution for " + numclones + " from file.")
-        create_S_plot(numclones,num_soln);
-        create_R_plot(numclones,num_soln);
-        create_D_plot(numclones,num_soln);
-    
-    }
-    else if (typeof solutions[numclones] == 'undefined') {
-        console.log("The solution for "+ numclones +" has not been loaded previously, grabbing it from file")
-        create_S_plot(numclones,num_soln);
-        create_R_plot(numclones,num_soln);
-        create_D_plot(numclones,num_soln);
-    }
-    else {
-        
-        var before=new Date().getTime();
-        
-        
-        
-        // PLOT EVERYTHING FROM GLOBAL VARIABLES
-        
-        ////////////////// R ////////////////////
-        plot_R_from_array(solutions[numclones].R)
-        
-        var now=new Date().getTime();
-        var millis=now-before;
-        console.log("R took "+ millis + " milliseconds to draw the chart");
-        before=now;
-        
-        /////////////////// D ///////////////////
-        plot_D_from_array(solutions[numclones].D)
-        
-         var now=new Date().getTime();
-        var millis=now-before;
-        console.log("D took "+ millis + " milliseconds to draw the chart");
-        before=now;
-        
-        
-        /////////////////// S ///////////////////
-        plot_S_from_array(solutions[numclones].S)
-        
-        
-        var now=new Date().getTime();
-        var millis=now-before;
-        console.log("S took "+ millis + " milliseconds to draw the chart");
-        before=now;
-    }
-    
-    
-}
 //    var filename="D_answer.png";
 //    document.getElementById("down_txt_D_answer").href = "./user_data/"+ run_id_code + "/D.txt";
 //    document.getElementById("down_img_D_answer").href = "./user_data/"+ run_id_code + "/D_answer.png";
@@ -909,10 +627,111 @@ function DS_options(v_tick_max,h_tick_max) {
 
 var input_D;
 
-var solutions;
+//var solutions;
 //
 //
 $(document).ready(function() {showProgress();});
 ////
 //
 //$(document).ready(function() {create_all_plots();});
+
+
+
+
+
+//
+//function ready_solution(numclones,num_soln) {
+//    if (typeof solutions=='undefined') {
+//        console.log("No solutions loaded previously");
+//        solutions=[];
+//    }
+//    solutions[numclones] = {D: [],R: [], S: []};
+//   
+//    var run_id_code=getUrlVars()["code"];
+//    
+//    
+//    
+//    ////////////   D   /////////////////
+//    var D_filename="user_data/"+run_id_code+"/"+numclones+"_clones/"+numclones+"_clones_D_soln_"+num_soln+"_opt.csv";
+//    var before=new Date().getTime();
+//    $.get(D_filename, function(csvString) {
+//        // transform the CSV string into a 2-dimensional array
+//        var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+//        
+//        
+//        solutions[numclones].D = arrayData;
+//        
+//        var now=new Date().getTime();
+//        var millis=now-before;
+//        console.log("D: ready_solution took "+ millis + " milliseconds to get data from file");
+//        
+//    });
+//    
+//    ////////////   R   /////////////////
+//    var R_filename="user_data/"+run_id_code+"/"+numclones+"_clones/"+numclones+"_clones_R_soln_"+num_soln+".csv";
+//    var before=new Date().getTime();
+//    $.get(R_filename, function(csvString) {
+//        // transform the CSV string into a 2-dimensional array
+//        var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+//        
+//        
+//        solutions[numclones].R = arrayData;
+//        
+//        var now=new Date().getTime();
+//        var millis=now-before;
+//        console.log("R: ready_solution took "+ millis + " milliseconds to get data from file");
+//        
+//    });
+//    
+//    ////////////   S   /////////////////
+//    var S_filename="user_data/"+run_id_code+"/"+numclones+"_clones/"+numclones+"_clones_S_soln_"+num_soln+"_opt.csv";
+//    var before=new Date().getTime();
+//    $.get(S_filename, function(csvString) {
+//        // transform the CSV string into a 2-dimensional array
+//        var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+//        
+//        
+//        solutions[numclones].S = arrayData;
+//        
+//        var now=new Date().getTime();
+//        var millis=now-before;
+//        console.log("S: ready_solution took "+ millis + " milliseconds to get data from file");
+//        
+//    });
+//
+// 
+//}
+//
+//function ready_input() {
+//    var run_id_code=getUrlVars()["code"];
+//    
+//    var filename="user_data/"+run_id_code+"/D_input_opt.csv";
+//    console.log(filename)
+//    
+//    var before=new Date().getTime();
+//
+//    if (typeof input_D == 'undefined') {
+//        console.log("input_D has not been loaded previously, grabbing it from file.")
+//        
+//        $.get(filename, function(csvString) {
+//            // transform the CSV string into a 2-dimensional array
+//            var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+//            
+//            
+//            input_D=arrayData;
+//            
+//            var now=new Date().getTime();
+//            var millis=now-before;
+//            console.log("Create_D_input_plot took "+ millis + " milliseconds to get data from file");
+//            
+//        });
+//    }
+//    else {
+//        console.log("input_D has been loaded already")
+//    }
+//}
+
+
+
+
+
