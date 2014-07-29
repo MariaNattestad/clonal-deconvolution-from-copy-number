@@ -96,7 +96,7 @@ def check_file(filename,outdir):
 		print "There must be at least 2 samples from a tumor to run this program."
 
 	f = open('%s/info.txt' % outdir,'w')
-	f.write("samples\t%d \nbins\t%d" % (numsignals,numbins))
+	f.write("samples\t%d\nbins\t%d" % (numsignals,numbins))
 	f.write("\n")
 	f.close()
 
@@ -124,7 +124,8 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 			f=open(progress_file,'w')
 			f.write("")
 			f.close()
-
+	if general_directory=="user_data/testing/":
+		print "Using default general_directory: user_data/testing/"
 	if testing=="False" or testing=="false":
 		testing=False
 	elif testing=="True" or testing=="true":
@@ -175,7 +176,7 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 		R = sorted_R[i]
 		D=numpy.dot(R,S)
 		
-#		Write R to file
+#	Write R to file
 		f=open("%s/%d_clones_R_soln_%d.csv" % (outdir,numclones,i),'w')
 		header="sample"
 		
@@ -193,10 +194,10 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 		
 		S=S.T
 		D=D.T
-		D_input=D_input.T
 		
 		
-		#		Write S to file
+		
+#	Write S to file
 		f=open("%s/%d_clones_S_soln_%d.csv" % (outdir,numclones,i),'w')
 		header="bins"
 		
@@ -205,7 +206,7 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 		f.write(header+"\n")
 		for b in xrange(numbins):
 			line=S[b]
-			f.write("bin %d" % (b+1))
+			f.write("%d" % (b+1))
 			for c in xrange(numclones):
 				f.write(",%d" % (line[c]))
 			f.write("\n")
@@ -223,14 +224,74 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 		f.write(header+"\n")
 		for b in xrange(numbins):
 			line=D[b]
-			f.write("bin %d" % (b+1))
+			f.write("%d" % (b+1))
 			for s in xrange(numsamples):
-				f.write(",%.2f" % (line[s]))
+				f.write(",%.6f" % (line[s]))
 			f.write("\n")
 		f.close()
+		
+		
+		
+###########################################################################################
+#########  WRITE OPTIMIZED FILES FOR FASTER GOOGLE CHARTS JAVASCRIPT RENDERING  ###########
+###########################################################################################
+	
+#		Write S to file
+	
+		f=open("%s/%d_clones_S_soln_%d_opt.csv" % (outdir,numclones,i),'w')
+		header="bins"
+		previousline=array([0])
+		for c in xrange(numclones):
+			header+=",clone %d" % (c+1)
+		f.write(header+"\n")
+		for b in xrange(numbins):
+			line=S[b]
+			
+			allmatch=(previousline==line).all()
+			if allmatch==False:
+				if len(previousline)==len(line):
+					f.write("%d" % (b+1))
+					for c in xrange(numclones):
+						f.write(",%d" % (previousline[c]))
+					f.write("\n")
+				
+				f.write("%d" % (b+1))
+				for c in xrange(numclones):
+					f.write(",%d" % (line[c]))
+				f.write("\n")
+			previousline=line
+		f.close()
+		
+	
+		#		Write D to file
+		f=open("%s/%d_clones_D_soln_%d_opt.csv" % (outdir,numclones,i),'w')
+		header="bins"
+		previousline=array([0])
+		for s in xrange(numsamples):
+			header+=",sample %d" % (s+1)
+		f.write(header+"\n")
+		for b in xrange(numbins):
+			line=D[b]
+			allmatch=(previousline==line).all()
+			if allmatch==False:
+				if len(previousline)==len(line):
+					f.write("%d" % (b+1))
+					for s in xrange(numsamples):
+						f.write(",%.6f" % (previousline[s]))
+					f.write("\n")
+					
+				f.write("%d" % (b+1))
+				for s in xrange(numsamples):
+					f.write(",%.6f" % (line[s]))
+				f.write("\n")
+			previousline=line
+		f.close()
+	
+	
+		
 
 
-
+	D_input=D_input.T
 ##	Write D_input to file but only if it doesn't exist already
 
 	D_input_filename="%s/D_input.csv" % (general_directory)
@@ -243,137 +304,45 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 		f.write(header+"\n")
 		for b in xrange(numbins):
 			line=D_input[b]
-			f.write("bin %d" % (b+1))
+			f.write("%d" % (b+1))
 			for s in xrange(numsamples):
-				f.write(",%.2f" % (line[s]))
+				f.write(",%.6f" % (line[s]))
 			f.write("\n")
 		f.close()
+	
+	##	Write D_input to file but only if it doesn't exist already
+	
+	D_input_filename="%s/D_input_opt.csv" % (general_directory)
+	if True: #os.path.exists(D_input_filename)==False:
+		f=open(D_input_filename,'w')
+		header="bins"
+		previousline=array([0])
+		for s in xrange(numsamples):
+			header+=",sample %d" % (s+1)
+		f.write(header+"\n")
+		for b in xrange(numbins):
+			line=D_input[b]
+			allmatch=(previousline==line).all()
+			if allmatch==False:
+				if len(previousline)==len(line):
+					f.write("%d" % (b+1))
+					for s in xrange(numsamples):
+						f.write(",%.6f" % (previousline[s]))
+					f.write("\n")
+				
+				f.write("%d" % (b+1))
+				for s in xrange(numsamples):
+					f.write(",%.6f" % (line[s]))
+				f.write("\n")
+			previousline=line
+		f.close()
 
-#		
-#		
-#		
-##		Write S to file
-#		f=open("%s/%d_clones_S_soln_%d.csv" % (outdir,numclones,i),'w')
-#		header="bins"
-#		
-#		for j in xrange(numbins):
-#			header+=",%d" % (j+1)
-#		f.write(header+"\n")
-#		for c in xrange(numclones):
-#			line=S[c]
-#			f.write("clone %d" % (c+1))
-#			for b in xrange(numbins):
-#				f.write(",%d" % (line[b]))
-#			f.write("\n")
-#		f.close()
-#		
-#
-##		Write D to file
-#		f=open("%s/%d_clones_D_soln_%d.csv" % (outdir,numclones,i),'w')
-#		header="bins"
-#		
-#		for j in xrange(numbins):
-#			header+=",%d" % (j+1)
-#		f.write(header+"\n")
-#		for s in xrange(numsamples):
-#			line=D[s]
-#			f.write("sample %d" % (s+1))
-#			for b in xrange(numbins):
-#				f.write(",%.6f" % (line[b]))
-#			f.write("\n")
-#		f.close()
-#		
-##		Write D_input to file but only if it doesn't exist already
-#
-#		
-#		D_input_filename="%s/D_input.csv" % (general_directory)
-#		if os.path.exists(D_input_filename)==False:
-#			f=open(D_input_filename,'w')
-#			header="bins"
-#			
-#			for j in xrange(numbins):
-#				header+=",%d" % (j+1)
-#			f.write(header+"\n")
-#			for s in xrange(numsamples):
-#				line=D_input[s]
-#				f.write("sample %d" % (s+1))
-#				for b in xrange(numbins):
-#					f.write(",%.6f" % (line[b]))
-#				f.write("\n")
-#			f.close()
-#		
+#	Write costs to individual files for later pickup by collect_costs() into costs.csv
+	f = open("%s/cost_%d" % (outdir,i),'w')
+	f.write("%.10f" % sorted_costs[i])
+	f.close()
 
 
-
-
-
-###########################################################################################
-#########  WRITE OPTIMIZED FILES FOR FASTER GOOGLE CHARTS JAVASCRIPT RENDERING  ###########
-###########################################################################################
-#
-##		Write S to file
-#		f=open("%s/%d_clones_S_soln_%d_opt.csv" % (outdir,numclones,i),'w')
-#		header="bins"
-#		previousline=array([0])
-#		for c in xrange(numclones):
-#			header+=",clone %d" % (c+1)
-#		f.write(header+"\n")
-#		for b in xrange(numbins):
-#			line=S[b]
-#			
-#			allmatch=(previousline==line).all()
-#			if allmatch==False:
-#				f.write("bin %d" % (b+1))
-#				for c in xrange(numclones):
-#					f.write(",%d" % (line[c]))
-#				f.write("\n")
-#			previousline=line
-#		f.close()
-#		
-#
-#		#		Write D to file
-#		f=open("%s/%d_clones_D_soln_%d_opt.csv" % (outdir,numclones,i),'w')
-#		header="bins"
-#		previousline=array([0])
-#		for s in xrange(numsamples):
-#			header+=",sample %d" % (s+1)
-#		f.write(header+"\n")
-#		for b in xrange(numbins):
-#			line=D[b]
-#			allmatch=(previousline==line).all()
-#			if allmatch==False:
-#				f.write("bin %d" % (b+1))
-#				for s in xrange(numsamples):
-#					f.write(",%.6f" % (line[s]))
-#				f.write("\n")
-#			previousline=line
-#		f.close()
-#
-#
-#		##	Write D_input to file but only if it doesn't exist already
-#	
-#		D_input_filename="%s/D_input_opt.csv" % (general_directory)
-#		if True: #os.path.exists(D_input_filename)==False:
-#			f=open(D_input_filename,'w')
-#			header="bins"
-#			previousline=array([0])
-#			for s in xrange(numsamples):
-#				header+=",sample %d" % (s+1)
-#			f.write(header+"\n")
-#			for b in xrange(numbins):
-#				line=D_input[b]
-#				allmatch=(previousline==line).all()
-#				if allmatch==False:
-#					f.write("bin %d" % (b+1))
-#					for s in xrange(numsamples):
-#						f.write(",%.6f" % (line[s]))
-#					f.write("\n")
-#				previousline=line
-#			f.close()
-#
-#		f = open("%s/cost_%d" % (outdir,i),'w')
-#		f.write("%.10f" % sorted_costs[i])
-#		f.close()
 
 
 
