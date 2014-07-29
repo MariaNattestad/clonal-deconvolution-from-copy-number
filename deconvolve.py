@@ -297,6 +297,53 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 				f.write("\n")
 			previousline=line
 		f.close()
+		
+		
+		
+		
+		#		Write D_diff to file
+		D_diff = D - D_input.T
+		
+		#		Write D_diff to file--normal
+		f=open("%s/%d_clones_D_diff_soln_%d.csv" % (outdir,numclones,i),'w')
+		header="bins"
+		
+		for s in xrange(numsamples):
+			header+=",sample %d" % (s+1)
+		f.write(header+"\n")
+		for b in xrange(numbins):
+			line=D_diff[b]
+			f.write("%d" % (b+1))
+			for s in xrange(numsamples):
+				f.write(",%.6f" % (line[s]))
+			f.write("\n")
+		f.close()
+		
+		
+		#		Write D_diff to file--optimized
+		
+		f=open("%s/%d_clones_D_diff_soln_%d_opt.csv" % (outdir,numclones,i),'w')
+		header="bins"
+		previousline=array([0])
+		for s in xrange(numsamples):
+			header+=",sample %d" % (s+1)
+		f.write(header+"\n")
+		for b in xrange(numbins):
+			line=D_diff[b]
+			allmatch=(previousline==line).all()
+			if allmatch==False:
+				if len(previousline)==len(line):
+					f.write("%d" % (b+1))
+					for s in xrange(numsamples):
+						f.write(",%.6f" % (previousline[s]))
+					f.write("\n")
+					
+				f.write("%d" % (b+1))
+				for s in xrange(numsamples):
+					f.write(",%.6f" % (line[s]))
+				f.write("\n")
+			previousline=line
+		f.close()
 	
 	
 

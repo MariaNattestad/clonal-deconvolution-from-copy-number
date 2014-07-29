@@ -72,7 +72,7 @@
 		While the program finishes running on all numbers of clones, you can look at the solutions we found so far. Click the buttons above when they turn green to see the results for each number of clones.
 	    </div>
 	  </div>
-	  <a href="" download class="btn btn-primary" id="download_all_data"  role="button">Download all data from all solutions</a>
+	  <a href="" download class="btn btn-primary" id="download_all_data" role="button">Download all data from all solutions</a>
 	</div>
 	    
 	
@@ -81,8 +81,8 @@
 		<div class="caption">
 		<h2>Copy number profiles of clones</h3>
 		<p>The copy number profiles of the clones that best reproduce the original input data.</p>
-		<p><a href="" download class="btn btn-primary" id="down_img_S" role="button">Download plot image</a>
-			<a href="" download class="btn btn-default" id="down_txt_S"  role="button">Download data file</a>
+		<p><a href="" download class="btn btn-primary" class="download_btn" id="down_img_S" role="button">Download plot image</a>
+			<a href="" download class="btn btn-default" class="download_btn" id="down_txt_S"  role="button">Download data file</a>
 		</p>
 		</div>
 	
@@ -92,8 +92,8 @@
 		<div class="caption">
 		<h2>Ratios of clones per sample</h3>
 		<p>The ratios of each clone in each sample, showing how each sample is a mixture of the clones.</p>
-		<p><a href="" download class="btn btn-primary" id="down_img_R" role="button">Download plot image</a>
-			<a href="" download class="btn btn-default" id="down_txt_R" role="button">Download data file</a>
+		<p><a href="" download class="btn btn-primary" class="download_btn"  id="down_img_R" role="button">Download plot image</a>
+			<a href="" download class="btn btn-default" class="download_btn" id="down_txt_R" role="button">Download data file</a>
 		</p>
 		</div>
 	
@@ -107,8 +107,8 @@
 		<div class="caption">
 		    <h2>Inferred sample profiles</h3>
 		    <p>Copy number profiles of samples as inferred from the model. If the model is good, this should match the original input profiles very well.</p>
-		    <p><a href="" download class="btn btn-primary" id="down_img_D" role="button">Download plot image</a>
-			<a href="" download class="btn btn-default" id="down_txt_D" role="button">Download data file</a>
+		    <p><a href="" download class="btn btn-primary" class="download_btn" id="down_img_D" role="button">Download plot image</a>
+			<a href="" download class="btn btn-default" class="download_btn" id="down_txt_D" role="button">Download data file</a>
 		    </p>
 		</div>
 	    
@@ -120,8 +120,20 @@
 		<div class="caption">
 		    <h2>Input sample profiles</h3>
 		    <p>Copy number profiles of samples directly from original input data (this is the same for all solutions).</p>
-		    <p><a href="" download class="btn btn-primary" id="down_img_D_answer" role="button">Download plot image</a>
-			<a href="" download class="btn btn-default" id="down_txt_D_answer" role="button">Download data file</a>
+		    <p><a href="" download class="btn btn-primary" class="download_btn"  id="down_img_D_input" role="button">Download plot image</a>
+			<a href="" download class="btn btn-default" class="download_btn" id="down_txt_D_input" role="button">Download data file</a>
+		    </p>
+		</div>
+	    
+	    </div>
+	
+	<div class="thumbnail plot_frame"">
+		<div id="landing_for_D_diff" class="plot_img"></div>
+		<div class="caption">
+		    <h2>Difference in sample profiles</h3>
+		    <p>Inferred sample profiles minus input sample profiles: Visual representation of how well the model fits the input data. Adding up these differences is what gave the cost plot at the top of this page.</p>
+		    <p><a href="" download class="btn btn-primary" class="download_btn" id="down_img_D_diff" role="button">Download plot image</a>
+			<a href="" download class="btn btn-default" class="download_btn"  id="down_txt_D_diff" role="button">Download data file</a>
 		    </p>
 		</div>
 	    
@@ -145,21 +157,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/dygraph-combined.js"></script>
-<script src="js/copycat_analysis.js"></script>
+
 
 <script src="js/jquery.csv-0.71.min.js"></script>
 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
+<script type="text/javascript">
 
-      // Load the Visualization API and the piechart package.
-      google.load('visualization', '1.0', {'packages':['corechart']});
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
 
-    </script>
+</script>
+<script src="js/copycat_analysis.js"></script>
 
 
 
-<div id="landing_for_D_diff"></div>
 </body>
 </html>
 
