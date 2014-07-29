@@ -6,6 +6,7 @@
 <!--    NAVIGATION BAR-->
     <?php include "header.html";?>
     
+	
     
     
 <!--    GRAY AREA -- jumbotron   -->
@@ -49,6 +50,7 @@
         </div>
     </div>
     
+	
     <!--centered middle of body-->
     <div class="center" id="landing_for_progress_bars">
 <!--PROGRESS BARS-->
@@ -56,12 +58,12 @@
     </div>
     <input type="hidden" value="0" id="best_solution">
 	
-	    
-    <div class="center" id="landing_for_cost_plot" style="width:80%; margin-left:10%; margin-right:10%;">
-    <!--COST PLOT-->
-    </div>
-	
-    <div class = "center" id="results" style="visibility: hidden;">
+	<div class="thumbnail plot_frame">   
+		<div class="center plot_img" id="landing_for_cost_plot">
+		<!--COST PLOT-->
+		</div>
+	</div>
+    
 	
 	<div class="panel panel-info center">
 	  <div class="panel-heading">
@@ -74,10 +76,16 @@
 	  </div>
 	  <a href="" download class="btn btn-primary" id="download_all_data" role="button">Download all data from all solutions</a>
 	</div>
-	    
 	
-	<div class="thumbnail plot_frame"">
-		<div id="landing_for_current_S" class="plot_img"></div>
+	
+	
+	<div class = "center" id="results">
+		
+	
+	<div id="currently_showing_text">Number of Clones</div>
+	
+	<div class="thumbnail plot_frame">
+		<div id="landing_for_current_S" class="plot_img">S</div>
 		<div class="caption">
 		<h2>Copy number profiles of clones</h3>
 		<p>The copy number profiles of the clones that best reproduce the original input data.</p>
@@ -87,8 +95,8 @@
 		</div>
 	
 	</div>
-	<div class="thumbnail plot_frame"">
-		<div id="landing_for_current_R" class="plot_img"></div>
+	<div class="thumbnail plot_frame">
+		<div id="landing_for_current_R" class="plot_img">R</div>
 		<div class="caption">
 		<h2>Ratios of clones per sample</h3>
 		<p>The ratios of each clone in each sample, showing how each sample is a mixture of the clones.</p>
@@ -102,11 +110,11 @@
 	
 	
 	
-	    <div class="thumbnail plot_frame"">
-		<div id="landing_for_current_D" class="plot_img"></div>
+	    <div class="thumbnail plot_frame">
+		<div id="landing_for_current_D" class="plot_img">D</div>
 		<div class="caption">
 		    <h2>Inferred sample profiles</h3>
-		    <p>Copy number profiles of samples as inferred from the model. If the model is good, this should match the original input profiles very well.</p>
+		    <p>Copy number profiles of samples as inferred from the model. If the model is good, this should match the original input profiles very well. See the discrepancies below.</p>
 		    <p><a href="" download class="btn btn-primary" class="download_btn" id="down_img_D" role="button">Download plot image</a>
 			<a href="" download class="btn btn-default" class="download_btn" id="down_txt_D" role="button">Download data file</a>
 		    </p>
@@ -115,8 +123,8 @@
 	    </div>
 	
 	
-	   <div class="thumbnail plot_frame"">
-		<div id="landing_for_answer_D" class="plot_img"></div>
+	   <div class="thumbnail plot_frame">
+		<div id="landing_for_answer_D" class="plot_img">D_input</div>
 		<div class="caption">
 		    <h2>Input sample profiles</h3>
 		    <p>Copy number profiles of samples directly from original input data (this is the same for all solutions).</p>
@@ -127,11 +135,11 @@
 	    
 	    </div>
 	
-	<div class="thumbnail plot_frame"">
-		<div id="landing_for_D_diff" class="plot_img"></div>
+	<div class="thumbnail plot_frame">
+		<div id="landing_for_D_diff" class="plot_img">D_diff</div>
 		<div class="caption">
-		    <h2>Difference in sample profiles</h3>
-		    <p>Inferred sample profiles minus input sample profiles: Visual representation of how well the model fits the input data. Adding up these differences is what gave the cost plot at the top of this page.</p>
+		    <h2>Difference between model and original input data</h3>
+		    <p>Inferred sample profiles minus input sample profiles: Visual representation of how well the model fits the input data. Adding up these differences is what gave the corresponding point in the cost plot at the top of this page.</p>
 		    <p><a href="" download class="btn btn-primary" class="download_btn" id="down_img_D_diff" role="button">Download plot image</a>
 			<a href="" download class="btn btn-default" class="download_btn"  id="down_txt_D_diff" role="button">Download data file</a>
 		    </p>

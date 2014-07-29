@@ -271,6 +271,12 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 					f.write(",%d" % (line[c]))
 				f.write("\n")
 			previousline=line
+			
+		line=S[numbins-1]
+		f.write("%d" % (b+1))
+		for c in xrange(numclones):
+			f.write(",%d" % (line[c]))
+		f.write("\n")
 		f.close()
 		
 	
@@ -296,6 +302,12 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 					f.write(",%.6f" % (line[s]))
 				f.write("\n")
 			previousline=line
+			
+		line=D[numbins-1]
+		f.write("%d" % (b+1))
+		for s in xrange(numsamples):
+			f.write(",%.6f" % (line[s]))
+		f.write("\n")
 		f.close()
 		
 		
@@ -343,6 +355,12 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 					f.write(",%.6f" % (line[s]))
 				f.write("\n")
 			previousline=line
+		
+		line=D_diff[numbins-1]
+		f.write("%d" % (b+1))
+		for s in xrange(numsamples):
+			f.write(",%.6f" % (line[s]))
+		f.write("\n")
 		f.close()
 	
 	
@@ -394,6 +412,12 @@ def run_deconvolve_from_file(filename,outdir,numclones=2,testing=False,progress_
 					f.write(",%.6f" % (line[s]))
 				f.write("\n")
 			previousline=line
+			
+		line=D_input[numbins-1]
+		f.write("%d" % (b+1))
+		for s in xrange(numsamples):
+			f.write(",%.6f" % (line[s]))
+		f.write("\n")
 		f.close()
 
 

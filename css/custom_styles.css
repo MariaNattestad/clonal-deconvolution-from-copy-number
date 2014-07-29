@@ -1,0 +1,83 @@
+<style>
+    .center {
+        margin:2% 2% 2% 2%;
+    }
+    
+    .jumbotron {
+        margin-top:-20px; padding-top:10px;
+        background-color:#6f5499;
+    }
+    h3 {
+        color: #cdbfe3;
+    }
+    .jumbotron>h1 {
+        
+    }
+    .kitty_icon {width:50px; float:left; padding:4px 4px 4px 4px; margin-left:80px;}
+    #codepanel {
+    word-break:break-all;
+	}
+	#submit_button {
+	    
+	    /*float:right;*/
+	   /* margin: 20px 40px 40px 40px;*/
+	    
+	}
+    .dropzone {
+        
+    }
+    #progress-bar {
+        height:35px;
+        
+    }
+    #progress-bar>* {
+        padding-top:8px;
+        padding-left:10px;
+    }
+    .progress-bar {
+        min-width: 45px;
+    }
+    #progress_shown_values {
+        margin-top:20px;
+        font-size:20px;
+    }
+    .panel-info {
+        margin:2% 2% 2% 2%;
+    }
+    .panel-info>.panel-heading{
+        background-image:-webkit-linear-gradient(top,#cdbfe3 0,#c4e3f3 100%);
+        background-image:-o-linear-gradient(top,#cdbfe3 0,#c4e3f3 100%);
+        background-image:-webkit-gradient(linear,left top,left bottom,from(#cdbfe3),to(#c4e3f3));
+        background-image:linear-gradient(to bottom,#cdbfe3 0,#c4e3f3 100%);
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd9edf7', endColorstr='#ffc4e3f3', GradientType=0);
+        background-repeat:repeat-x;
+        color:#6f5499;
+    }
+	
+	.dygraph-label {
+	    font-family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
+	}
+	#landing_for_cost_plot {
+        /*display: block;
+	    width:80%;
+        margin-left:10%;
+        margin-right:10%;*/
+	}
+	
+	#results {
+	    visibility: hidden;
+	}
+	#currently_showing_text {
+		
+		text-align: center;
+		font-size: 3em;
+		margin-bottom:10px;
+	}
+   
+    .plot_frame {
+        margin:2% 2% 2% 2%;
+    }
+
+
+
+

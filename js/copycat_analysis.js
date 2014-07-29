@@ -59,7 +59,7 @@ function showProgress() {
                         console.log("alldone=false");
                     }
                     
-                    message = message + "<div class=\"row\"><div class=\"col-md-2\">     <button id=\"" + i + "_clones_button\" type=\"button\" class=\"" + disabled + " btn btn-" + btn_colors[i] + "\" onclick=\"model_selected("+ i + ",0)\">"+ i +" clones</button></div>       <div class=\"col-lg-10\"><div class=\"progress\" id=\"progress-bar\"><div class=\"progress-bar " + success +" " + active + "\"  role=\"progressbar\" aria-valuenow=\"" + prog[i] + "\" aria-valuemin=\"5\" aria-valuemax=\"100\" style=\"width: " + prog[i] + "%\"><span id=\"progress_shown_values\">" + prog[i] + "%</span></div></div></div></div>";
+                    message = message + "<div class=\"row\"><div class=\"col-md-2\">     <button id=\"" + i + "_clones_button\" type=\"button\" class=\"" + disabled + " btn btn-" + btn_colors[i] + "\" onclick=\"model_selected("+ i + ",0,true)\">"+ i +" clones</button></div>       <div class=\"col-lg-10\"><div class=\"progress\" id=\"progress-bar\"><div class=\"progress-bar " + success +" " + active + "\"  role=\"progressbar\" aria-valuenow=\"" + prog[i] + "\" aria-valuemin=\"5\" aria-valuemax=\"100\" style=\"width: " + prog[i] + "%\"><span id=\"progress_shown_values\">" + prog[i] + "%</span></div></div></div></div>";
                     document.getElementById("landing_for_progress_bars").innerHTML = message;
                     
                     
@@ -192,7 +192,7 @@ function create_cost_plot() {
         document.getElementById("best_solution").value=numclones;
         
         
-        model_selected(numclones,0);
+        model_selected(numclones,0,false);
         document.getElementById("results").style.visibility= 'visible';
         
         
@@ -207,9 +207,9 @@ function create_cost_plot() {
         
         // set chart options
         var options = {
-            height: cost_height,
-            width: cost_width,
-            title: "Best solutions: Lower cost means better model. If adding an extra clone to the analysis does not really decrease the cost, then sticking with a simpler model is the best choice.",
+            //height: cost_height,
+            //width: cost_width,
+            title: "Best solution for each possible number of clones",
             hAxis: {title: data.getColumnLabel(0), minValue: data.getColumnRange(0).min-.1, maxValue: data.getColumnRange(0).max+.1,ticks: [2,3,4,5] },
             vAxis: {title: data.getColumnLabel(1), minValue: 0, maxValue: (data.getColumnRange(1).max)*2,logScale: true},
             legend: 'none',
@@ -228,7 +228,7 @@ function create_cost_plot() {
             if (selectedItem) {
                 
                 var value = data.getValue(selectedItem.row, 0);
-                model_selected(value,0); // so numclones=value, num_soln=0 (best solution)
+                model_selected(value,0,true); // so numclones=value, num_soln=0 (best solution)
             }
         }
         
@@ -246,7 +246,13 @@ function create_cost_plot() {
 
 
 
-function model_selected(numclones,num_soln) {
+
+
+
+
+function model_selected(numclones,num_soln,scrolling) {
+    
+    set_sizes();
     
     document.getElementById("results").style.visibility= 'visible';
 
@@ -259,8 +265,55 @@ function model_selected(numclones,num_soln) {
     create_D_diff_plot(numclones,num_soln);
        
     set_buttons(numclones,num_soln);
+    display_numclones(numclones,num_soln);
+    if (scrolling==true) {
+        smooth_scroll_to_results();
+    }
+    
+   
 }
 
+function set_sizes() {
+    //var cw = $('.plot_frame').width();
+    //$('.plot_frame').css({
+    //    'height': cw + 'px'
+    //});
+    
+    var width = $('.plot_img').width();
+    height=width*.35;
+    $('.plot_img').css({
+        'height': height + 'px'
+    });
+}
+
+
+
+
+
+
+
+
+function smooth_scroll_to_results() {
+    var target = $("#download_all_data");
+    target = target.length ? target : $('[name=' + target.slice(1) +']');
+       if (target.length) {
+            $('html,body').animate({
+              scrollTop: target.offset().top
+            }, 1200);
+       }
+}    
+
+
+function display_numclones(numclones,num_soln) {
+    
+    if (num_soln==0) {
+        document.getElementById("currently_showing_text").innerHTML = numclones + " Clones";
+    }
+    else {
+        document.getElementById("currently_showing_text").innerHTML = numclones + " Clones (not the best 3-clone model)";
+    }
+	
+}
 
 function set_buttons(numclones,num_soln) {
     var run_id_code=getUrlVars()["code"];
@@ -269,7 +322,6 @@ function set_buttons(numclones,num_soln) {
     DRS_list=["D","R","S","D_diff"]
     for (i in DRS_list) {
         DRS=DRS_list[i]
-        console.log(DRS);
         document.getElementById("down_txt_"+DRS).href = "user_data/"+run_id_code+"/"+numclones+"_clones/"+numclones+"_clones_"+DRS+"_soln_"+num_soln+".csv";
         document.getElementById("down_img_"+DRS).download = run_id_code+"_"+numclones+"_clones_"+DRS+"_soln_"+num_soln+".png";
     }
@@ -311,9 +363,18 @@ function plot_S_from_array(arrayData) {
     var view = new google.visualization.DataView(data);
     view.setColumns([0,1]);
     
+    var maxes=[]
     
-    var v_tick_max=Math.ceil(data.getColumnRange(1).max)
-    var h_tick_max=Math.ceil(data.getColumnRange(0).max)
+    for (var i=1; i < data.getNumberOfColumns(); i++) {
+        maxes.push(data.getColumnRange(i).max);
+    }
+   
+    var v_tick_max=Math.ceil(Math.max.apply(null,maxes));
+   
+    var h_tick_max=Math.ceil(data.getColumnRange(0).max);
+   
+    
+
     
     
     var options = DS_options(v_tick_max,h_tick_max);
@@ -366,7 +427,15 @@ function plot_D_from_array(arrayData) {
     var view = new google.visualization.DataView(data);
     view.setColumns([0,1]);
     
-    var v_tick_max=Math.ceil(data.getColumnRange(1).max)
+    
+    var maxes=[]
+    
+    for (var i=1; i < data.getNumberOfColumns(); i++) {
+        maxes.push(data.getColumnRange(i).max);
+    }
+   
+    var v_tick_max=Math.ceil(Math.max.apply(null,maxes));
+   
     var h_tick_max=Math.ceil(data.getColumnRange(0).max)
     
     // set chart options
@@ -421,7 +490,15 @@ function plot_D_input_from_array(arrayData) {
     var view = new google.visualization.DataView(data);
     view.setColumns([0,1]);
     
-    var v_tick_max=Math.ceil(data.getColumnRange(1).max)
+    
+    var maxes=[]
+    
+    for (var i=1; i < data.getNumberOfColumns(); i++) {
+        maxes.push(data.getColumnRange(i).max);
+    }
+   
+    var v_tick_max=Math.ceil(Math.max.apply(null,maxes));
+   
     var h_tick_max=Math.ceil(data.getColumnRange(0).max)
    
     var options = DS_options(v_tick_max,h_tick_max);
@@ -474,8 +551,8 @@ function plot_R_from_array(arrayData) {
     
     // set chart options
     var options = {
-        width: R_width,
-        height: R_height,
+        //width: R_width,
+        //height: R_height,
         legend: { position: 'top', maxLines: 3 },
         bar: { groupWidth: '75%' },
         isStacked: true,
@@ -532,7 +609,14 @@ function plot_D_diff_from_array(arrayData) {
     var view = new google.visualization.DataView(data);
     view.setColumns([0,1]);
     
-    var v_tick_max=Math.ceil(data.getColumnRange(1).max)
+   var maxes=[]
+    
+    for (var i=1; i < data.getNumberOfColumns(); i++) {
+        maxes.push(data.getColumnRange(i).max);
+    }
+   
+    var v_tick_max=Math.ceil(Math.max.apply(null,maxes));
+  
     var h_tick_max=Math.ceil(data.getColumnRange(0).max)
     
     // set chart options
@@ -569,6 +653,7 @@ $(window).resize(function() {
 //redraw graph when window resize is completed  
 $(window).on('resizeEnd', function() {
     console.log("resizing")
+    showProgress();
 });
 
 
@@ -586,8 +671,8 @@ var cost_height=500;
 function DS_options(v_tick_max,h_tick_max) {
     var v_ticks=[]
     
-    if (v_tick_max > 14) {
-        step = Math.floor(v_tick_max/12)
+    if (v_tick_max > 12) {
+        step = Math.floor(v_tick_max/10)
         for (i=0; i<v_tick_max+2; i=i+step){
             v_ticks.push(i);
         }
@@ -598,8 +683,8 @@ function DS_options(v_tick_max,h_tick_max) {
     }
     
     var options = {
-        width: DS_width,
-        height: DS_height,
+        //width: DS_width,
+        //height: DS_height,
         legend: { position: 'top', maxLines: 3 },
         //bar: { groupWidth: '75%' },
         //isStacked: false,
@@ -612,8 +697,6 @@ function DS_options(v_tick_max,h_tick_max) {
 }
 
 $(document).ready(function() {showProgress();});
-
-
 
 
 // How to execute code after getting info from multiple files:
