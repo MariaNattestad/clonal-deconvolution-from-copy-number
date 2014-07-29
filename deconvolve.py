@@ -721,24 +721,25 @@ def calc_S_similarity(S1,S2):
 	diff=sum((s1-s2)**2)
 	return diff
 
-def tab_to_csv(filename):
-	f = open(filename,'r')
-	f2=open("%s.csv" % filename,'w')
-
-	firstline=True
-	for line in f:
-		bare=line.strip()
-		if (bare != ""):
-			data=bare.split()
-
-		csv_line=""
-		for item in data:
-			csv_line+=item + ","
-		if firstline==True:
-			f2.write(csv_line)
-			firstline=False
-		else:
-			f2.write("\n%s" % (csv_line))
-
-	f.close()
-	f2.close()
+#
+#def tab_to_csv(filename):
+#	f = open(filename,'r')
+#	f2=open("%s.csv" % filename,'w')
+#
+#	firstline=True
+#	for line in f:
+#		bare=line.strip()
+#		if (bare != ""):
+#			data=bare.split()
+#
+#		csv_line=""
+#		for item in data:
+#			csv_line+=item + ","
+#		if firstline==True:
+#			f2.write(csv_line)
+#			firstline=False
+#		else:
+#			f2.write("\n%s" % (csv_line))
+#
+#	f.close()
+#	f2.close()
