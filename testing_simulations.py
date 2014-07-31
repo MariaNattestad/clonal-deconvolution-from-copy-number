@@ -175,8 +175,10 @@ def copycat(D, numclones, testing=False, max_falling_iterations=15,progress_file
                 if sum(count_occurrence)-count_occurrence[best_index] >= 20:
                     alldone=True
                     print "Best solution has occurred 10 times: solution accepted"
-
-
+                    
+            if count_occurrence[best_index] >= 300:
+                alldone=True
+                print "Best solution has occurred 300 times: solution accepted"
 
 
 
@@ -376,9 +378,14 @@ def generate_noisy_D(R,S, noise_std=0):
 
 
 def test1():
-    random_sim=False
-    noise_STD=0
-    directory="user_data/testing/simulations/test1/"
+    random_sim=True
+    noise_STD=0.02
+    #directory="user_data/testing/simulations/test1/"
+    directory="user_data/testing/simulations/random/"
+    
+    
+    
+    
     
     
     R=0
@@ -426,21 +433,33 @@ def test1():
     
     D=generate_noisy_D(R,S, noise_std=noise_STD)
     
+    clean_input_D=generate_noisy_D(R,S, noise_std=0)
     
     
     ####################################################################################
     ##                    Generate model and run algorithm
     ####################################################################################
     
-    best_cost,best_S,best_R,count_occurrence=copycat(D, numclones=numsources, testing=False, max_falling_iterations=15,progress_file="",outdir="",maxnumtrials=10000,filename_sim=directory+"cost_occurrence.txt")
-
+    best_cost,best_S,best_R,count_occurrence=copycat(D, numclones=numsources, testing=False, max_falling_iterations=15,progress_file="",outdir="",maxnumtrials=2000,filename_sim=directory+"cost_occurrence.txt")
+    
+    
     best_indices=numpy.argsort(best_cost)
+    index=best_indices[0]
     print best_cost[best_indices]
     print count_occurrence[best_indices]
     
+    output_S = best_S[index]
+    output_R = best_R[index]
+    output_D = numpy.dot(output_R,output_S)
     
     
+    diff = calc_S_similarity(output_D,clean_input_D)
     
+    print diff
+    
+    diff = sum((output_D - clean_input_D)**2)
+    
+    print diff
     
     
     
